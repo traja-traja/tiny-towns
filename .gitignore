@@ -50,3 +50,10 @@ output/
 hlaseni/wrangler.jsonc
 wrangler.toml
 !hlaseni/migrations/*.sql
+
+# Tiny Towns: pracovni data a lokalni nastroje
+/.work/
+/.runtime/
+/.transfer/
+cities/*/terrain-reference/
+cities/*/*.bak

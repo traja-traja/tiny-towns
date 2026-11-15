@@ -1,3 +1,33 @@
+# Tiny Towns
+
+Velešín a České Budějovice nad společným základem [Izomapa od Adama Klatovského](https://github.com/adamklatovsky/izomapa).
+
+Městské konfigurace, hranice a vlastní doplňky jsou v `cities/`. Sdílený renderer zůstává v kořeni. Každá mapa i její zkušební výřez mají oddělené pracovní soubory.
+
+- [Sestavení a náhled obou měst](docs/MULTI_CITY.md)
+- [Aktualizace, vlastní modely a budoucí 3D mapa](docs/UPDATES.md)
+- [Původ použitého základu](upstream.json)
+
+První fáze připravuje hranice a sestavení map. Samotné vygenerování konfigurace neznamená hotovou mapu: je nutné stáhnout geografická data, vyrenderovat dlaždice a prohlédnout výsledek. Dopravní simulace, ruční modely dominant a městské projekty zatím nejsou implementované.
+
+## Rychlý start
+
+Potřebuješ Python 3.11+, Node a na Windows také Git Bash. Závislosti připraví původní `setup.sh` spuštěný z Git Bash. Pak lze ovládat jednotlivá města i z PowerShellu:
+
+```text
+python scripts/towns.py status
+python scripts/towns.py build velesin --profile preview
+python scripts/towns.py preview velesin --profile preview --port 8000
+python scripts/towns.py build ceske-budejovice --profile preview
+python scripts/towns.py preview ceske-budejovice --profile preview --port 8001
+```
+
+Po kontrole výřezů stejné příkazy bez `--profile preview` sestaví a zobrazí celé mapy. Vygenerované weby jsou v `.work/<město>/site/`, zkušební výřezy v `.work/.preview/<město>/site/`. Adresa veřejného webu zatím není vybraná.
+
+Následuje původní dokumentace Izomapy; její příkazy s jedním kořenovým `mesto.json` patří původnímu režimu jednoho města. Pro Tiny Towns používej výše uvedený správce měst. Licence a autorské kredity zůstávají zachovány.
+
+---
+
 # izomapa
 
 Izometrická pixel-art mapa českého města z otevřených dat, ve stylu SimCity 2000. Celé město s budovami, výškami

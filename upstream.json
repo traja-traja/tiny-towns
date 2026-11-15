@@ -1,0 +1,303 @@
+{
+  "repository": "https://github.com/adamklatovsky/izomapa",
+  "target_repository": "https://github.com/traja-traja/tiny-towns",
+  "branch": "main",
+  "commit": "a053a434336dbcfbf1b4f9580118b154cff6dfd6",
+  "tree": "a053a434336dbcfbf1b4f9580118b154cff6dfd6",
+  "checked_at": "2026-11-15",
+  "materialization": "Files downloaded through the GitHub connector and verified against Git blob SHA-1 values. This records the imported base, not a successful local Git commit or remote push.",
+  "files": [
+    {
+      "path": ".gitignore",
+      "git_blob_sha": "e9921ea8c3081a5aae161a825a0c05646b599e29"
+    },
+    {
+      "path": "AGENTS.md",
+      "git_blob_sha": "e2b0cb9adbfcc28e7d188e302621e1ec7e99acc5"
+    },
+    {
+      "path": "CLAUDE.md",
+      "git_blob_sha": "c8d10e0cecdf0ad85ccca17a12df375a1ae60e78"
+    },
+    {
+      "path": "LICENSE",
+      "git_blob_sha": "be3f7b28e564e7dd05eaf59d64adba1a4065ac0e"
+    },
+    {
+      "path": "README.md",
+      "git_blob_sha": "a5e275d6dec69e5ea3a83f2db88874ad45216f93"
+    },
+    {
+      "path": "build_html.py",
+      "git_blob_sha": "4f6faf30d756ad84443b49a0344f75bcf4f2cdcf"
+    },
+    {
+      "path": "compose.py",
+      "git_blob_sha": "c729f85a5a3061cf103674a467264b0c035be411"
+    },
+    {
+      "path": "dmp_fetch.py",
+      "git_blob_sha": "9969eaac6b0b7178d6050f997a4b0273a167110c"
+    },
+    {
+      "path": "dmp_vysky.py",
+      "git_blob_sha": "1b014ee3abafdd2d6cf119555e545c1253bdc6e7"
+    },
+    {
+      "path": "dzi.py",
+      "git_blob_sha": "711d04b1d15fd78e6f7c53e47a4e55a97ad8e808"
+    },
+    {
+      "path": "fetch_data.py",
+      "git_blob_sha": "69cc7ba59b6502fee0567e73a631c594027c7a02"
+    },
+    {
+      "path": "functions/api/flights.js",
+      "git_blob_sha": "cedee7be4de2d15b1cc5aeb8a71de52ddd6714db"
+    },
+    {
+      "path": "geo.py",
+      "git_blob_sha": "cd47f11f4ccaafc358afbe2b8a50d0c8cf2e03a5"
+    },
+    {
+      "path": "hlaseni/admin.html",
+      "git_blob_sha": "af255b89af31b0b8b2d1edc37932c89170612805"
+    },
+    {
+      "path": "hlaseni/migrations/0001_reports.sql",
+      "git_blob_sha": "fef41d643afff463893968889d97001a1c98f5b9"
+    },
+    {
+      "path": "hlaseni/worker.js",
+      "git_blob_sha": "c656da65d4bb40eff517a506f3a2c864f6d848e6"
+    },
+    {
+      "path": "hlaseni/wrangler.example.jsonc",
+      "git_blob_sha": "b90ecf61f1e29b5720e95a11dc091b18e7d468ac"
+    },
+    {
+      "path": "mhd.py",
+      "git_blob_sha": "3707de848facc05059a0140576241d68e1aa92fd"
+    },
+    {
+      "path": "nastroje/gtfs_casy.py",
+      "git_blob_sha": "755d6095b56929f0ffc4c5d394130d06eaa697fe"
+    },
+    {
+      "path": "nastroje/hrebeny.py",
+      "git_blob_sha": "e900c8f81c3b8b43557d7849915a6c6a87a817d1"
+    },
+    {
+      "path": "nastroje/hriste.py",
+      "git_blob_sha": "6a2026cdc37f36f630565bed85ccf297e2d262bb"
+    },
+    {
+      "path": "nastroje/kominy.py",
+      "git_blob_sha": "06aa4a1c9402d5b5390efaa9beca76330c00e4d1"
+    },
+    {
+      "path": "nastroje/kruhace.py",
+      "git_blob_sha": "f89e45d4b0264e506fddbe10de08254b66323751"
+    },
+    {
+      "path": "nastroje/les.py",
+      "git_blob_sha": "2d94a9e3d1506923560aef499e786f7f24148e9f"
+    },
+    {
+      "path": "nastroje/otisk.py",
+      "git_blob_sha": "20237db8d2d435835d73f8cbab5001a1e1ea9f86"
+    },
+    {
+      "path": "nastroje/pole.py",
+      "git_blob_sha": "d29d92688ea08fad70e2e8ae48dc69a03fd1969b"
+    },
+    {
+      "path": "nastroje/povrchy.py",
+      "git_blob_sha": "c7f6b68dc2ea1cf3221061fb29f633d2dd247901"
+    },
+    {
+      "path": "nastroje/prejezdy.py",
+      "git_blob_sha": "87841b53bb10470df8791d45770f5bdfb2f29db6"
+    },
+    {
+      "path": "nastroje/ruian.py",
+      "git_blob_sha": "a14f8fc00cd3636f18f9874fde23adfa269cef2f"
+    },
+    {
+      "path": "nastroje/scitani.py",
+      "git_blob_sha": "815ba68bac0dc9294ab3c41ee49a374f28b80553"
+    },
+    {
+      "path": "nastroje/semafory.py",
+      "git_blob_sha": "79737bba186cae2c5e43d3c4c8ac38846cab8081"
+    },
+    {
+      "path": "nastroje/strechy.py",
+      "git_blob_sha": "474e92bd897a355c692fa040a34ceace3af00ee6"
+    },
+    {
+      "path": "nastroje/vlaky.py",
+      "git_blob_sha": "975eb7c4b64a943b88e300f2045d951c24a2ad57"
+    },
+    {
+      "path": "nastroje/vlaky_vyber.py",
+      "git_blob_sha": "d0efdef4d9aefb0051fa1a22c70951f5a1415bf0"
+    },
+    {
+      "path": "nastroje/vyrez.py",
+      "git_blob_sha": "1bac9990bca6d9031983e0451575e8f27be94ae5"
+    },
+    {
+      "path": "nastroje/zabaged.py",
+      "git_blob_sha": "505621958bf6b0740659f400bfd8cb3de5fea139"
+    },
+    {
+      "path": "novy_mesto.py",
+      "git_blob_sha": "a597619c664778019790f9791fa48677157cfe7d"
+    },
+    {
+      "path": "overlay.py",
+      "git_blob_sha": "9e3f23d152ffa6d44e17a9779a925089c4ae7456"
+    },
+    {
+      "path": "package-lock.json",
+      "git_blob_sha": "b958e2b6738be8f0f81f846ceebaa5d7cecdf9f9"
+    },
+    {
+      "path": "package.json",
+      "git_blob_sha": "eacbda4ddc1f0dc711ca05e9f292c16f6a1488ce"
+    },
+    {
+      "path": "postav.sh",
+      "git_blob_sha": "49365b93e0f0a782d5b4ddc7f8457137a3409293"
+    },
+    {
+      "path": "prep.py",
+      "git_blob_sha": "3f39127fd585cc52cb326d474aac3d861ca335fd"
+    },
+    {
+      "path": "preview.py",
+      "git_blob_sha": "3efdee2b71afbbdec47beb35a7a0306e790a03cf"
+    },
+    {
+      "path": "priklady/chrastava.webp",
+      "git_blob_sha": "2c742a04a3580c57ba28281ef2551877b85f92b1"
+    },
+    {
+      "path": "priklady/custom_models.js",
+      "git_blob_sha": "5ac46d4752272d03ef43fed67385dfe4cd6e0e0c"
+    },
+    {
+      "path": "priklady/custom_prep.py",
+      "git_blob_sha": "46c99b5b8478e426731f3bfb7796636366e625f0"
+    },
+    {
+      "path": "priklady/dominanty.json",
+      "git_blob_sha": "b9d9c3fdc42c1e4088c075efdf640ff55130dafe"
+    },
+    {
+      "path": "priklady/liberec.webp",
+      "git_blob_sha": "38ee17cd0ea1b7acdcff79d9a42e13b318f698dc"
+    },
+    {
+      "path": "priklady/mesto.json",
+      "git_blob_sha": "29df9978080689a475d3fa634174fd4cc381fb69"
+    },
+    {
+      "path": "priklady/mista.json",
+      "git_blob_sha": "d3eedc995eb33af6827d395f7f47e29239d7a02f"
+    },
+    {
+      "path": "priklady/upresneni.json",
+      "git_blob_sha": "95b7a77d94d4efd4db94dd1333f444c49ac34853"
+    },
+    {
+      "path": "render.html",
+      "git_blob_sha": "fe80b60a81d4de0f7d9f4b2ca1ec51b5eeb8512d"
+    },
+    {
+      "path": "render.mjs",
+      "git_blob_sha": "9b08e95748eeb72e294a3ce0387f368860533aab"
+    },
+    {
+      "path": "render_all.sh",
+      "git_blob_sha": "68ed1c534756f3882fb80481e8a63459a688d961"
+    },
+    {
+      "path": "render_chunk.sh",
+      "git_blob_sha": "832a062f31cdeb912794ccd555abfc5f62aa9e9a"
+    },
+    {
+      "path": "render_ctverec.sh",
+      "git_blob_sha": "1e04d21e0afba98021befea9efe02fc0c535c14e"
+    },
+    {
+      "path": "render_par.sh",
+      "git_blob_sha": "c151d886ec5205a8cfcf41b7af6c5d0f8472022a"
+    },
+    {
+      "path": "road_route.py",
+      "git_blob_sha": "59bd48dcbc328eba50d02239c0d58d871c6cb1b7"
+    },
+    {
+      "path": "set_status.py",
+      "git_blob_sha": "c09a70084ce2a31d026dcebee22b2f5ee05a1506"
+    },
+    {
+      "path": "setup.sh",
+      "git_blob_sha": "646e190cd6a542eed017ff0bc78d997c2b2c8ef2"
+    },
+    {
+      "path": "tests/test-flights.mjs",
+      "git_blob_sha": "f8a96bffd3df5b77e7b1f2be4ba1f13892b17e17"
+    },
+    {
+      "path": "tests/test-limit.mjs",
+      "git_blob_sha": "d59bc43867161ade90ac166020dc4fc7f63e48fb"
+    },
+    {
+      "path": "tests/test_cekani.py",
+      "git_blob_sha": "8ee1d1578da86fdea9a1a0fb82b7b25eebf4e0f7"
+    },
+    {
+      "path": "tests/test_gtfs_casy.py",
+      "git_blob_sha": "e17ec77e11276e9b56b2911406d581f2ecdd5a55"
+    },
+    {
+      "path": "tests/test_kominy.py",
+      "git_blob_sha": "f3b8f0377576a9164587cc16575636eb697700f1"
+    },
+    {
+      "path": "tests/test_kruhace.py",
+      "git_blob_sha": "5ea0603003c2a7d510532200ca7fe30a0a3ceee5"
+    },
+    {
+      "path": "tests/test_letadla.py",
+      "git_blob_sha": "aae9b67f9c23d09ee70a9f6ceb501e2892f70ede"
+    },
+    {
+      "path": "tests/test_obce.py",
+      "git_blob_sha": "3ed1f768a08e125823372006a50a8d43f6784660"
+    },
+    {
+      "path": "tests/test_prejezdy.py",
+      "git_blob_sha": "56a5ce5e7aa288386bc9c765f490dbcf01c63a37"
+    },
+    {
+      "path": "tests/test_sousedi.py",
+      "git_blob_sha": "8786c8423cc84146298875388542beb5a1af1982"
+    },
+    {
+      "path": "tests/test_stada.py",
+      "git_blob_sha": "3d6e37611f1ac40588a0d916b6cf634eb49b3fa1"
+    },
+    {
+      "path": "tests/test_zastaveni.py",
+      "git_blob_sha": "75df65466e53ea2794c69993231af2f8dd60f6aa"
+    },
+    {
+      "path": "web/app.html",
+      "git_blob_sha": "1b0699fa72f07b03e2418fea10ebe2654e7a1524"
+    }
+  ]
+}
