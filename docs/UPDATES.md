@@ -40,7 +40,7 @@ Výměna kódu sama neaktualizuje data uložená v cache. Některé nástroje up
 
 ## Hranice a reproducibilita
 
-`boundary.geojson` je uložená hranice obce z OSM s původem v `boundary-source.json`. Jde o hranici pro vizualizaci, nikoli podklad pro rozhodování o parcelách. `profile.json` obsahuje texty, střed a rozšíření mapy; vygenerovaný `mesto.json` používá přímo Izomapa. `coverage.json` dokládá pokrytí polygonu. Uložená hranice zachovává i oddělené části obce a malé úseky u okrajů. Čtverce sahají za administrativní hranici.
+`boundary.geojson` je uložená hranice obce s poskytovatelem, URL a datem stažení v `boundary-source.json`. Jde o hranici pro vizualizaci, nikoli podklad pro rozhodování o parcelách. `profile.json` obsahuje texty, střed a rozšíření mapy; vygenerovaný `mesto.json` používá přímo Izomapa. `coverage.json` dokládá pokrytí polygonu. Uložená hranice zachovává i oddělené části obce a malé úseky u okrajů. Čtverce sahají za administrativní hranici.
 
 ```text
 .venv/Scripts/python scripts/configure_city.py plan velesin
@@ -48,7 +48,7 @@ Výměna kódu sama neaktualizuje data uložená v cache. Některé nástroje up
 .venv/Scripts/python scripts/configure_city.py generate velesin --preview 1
 ```
 
-Na Linuxu/macOS použij `.venv/bin/python`. `plan` vypíše potřebné referenční dlaždice terénu a jejich URL; musí být uložené do uvedených cest. `terrain-source.json` zaznamenává stažené soubory a jejich kontrolní součty. Generátor bez nich výškovou referenci nevymýšlí. Volba `--replace` nejprve zálohuje existující konfiguraci. Preview má stejnou výškovou referenci jako celá mapa, ale nepředstavuje celé území.
+Na Linuxu/macOS použij `.venv/bin/python`. `scripts/fetch_city_inputs.py <město>` umí načíst hranici z ČÚZK, obnovit chybějící referenční terén a připravit konfigurace. Existující podklady zachovává a ověřuje jejich identitu; aktualizaci hranice a konfigurací provede jen s `--replace`. `plan` vypíše potřebné referenční dlaždice terénu a jejich URL; při ručním stahování musí být uložené do uvedených cest. `terrain-source.json` zaznamenává stažené soubory a jejich kontrolní součty. Generátor bez nich výškovou referenci nevymýšlí. Volba `--replace` nejprve zálohuje existující konfiguraci. Preview má stejnou výškovou referenci jako celá mapa, ale nepředstavuje celé území.
 
 ## Budoucí mapa v reálném 3D
 

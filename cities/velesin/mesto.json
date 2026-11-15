@@ -1,0 +1,68 @@
+{
+  "nazev": "Velešín",
+  "titulek": "Tiny Velešín",
+  "h1": [
+    "Tiny",
+    "Velešín"
+  ],
+  "podtitul": "Velešín a jeho okolí v izometrické mapě.",
+  "popis": "Izometrická mapa Velešína, Holkova, Chodče, Skřidel a Boru, rozšířená o okolí hradu Velešín.",
+  "url": "",
+  "mhd": {
+    "gtfs": null,
+    "zdroj": null,
+    "zdroj_url": null
+  },
+  "vanocni_strom": null,
+  "letadla": false,
+  "potoky": true,
+  "hlaseni": false,
+  "vitr": false,
+  "pocasi": false,
+  "sousedi": [],
+  "stred": [
+    14.4625,
+    48.82944
+  ],
+  "polovina": 1150.0,
+  "ctverce": [
+    [
+      -1,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      -1,
+      0
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      -1,
+      -1
+    ],
+    [
+      0,
+      -1
+    ],
+    [
+      1,
+      -1
+    ]
+  ],
+  "href": 515.6,
+  "dno": -119
+}

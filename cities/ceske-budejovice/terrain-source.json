@@ -1,0 +1,67 @@
+{
+  "provider": "Terrain Tiles / Mapzen / AWS Open Data",
+  "dataset": "Terrarium",
+  "zoom": 12,
+  "metadata_url": "https://registry.opendata.aws/terrain-tiles/",
+  "purpose": "Reference height for Izomapa grid; detailed render terrain is fetched separately at z14.",
+  "tiles": [
+    {
+      "path": "terrain-reference/12/2211/1406.png",
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/12/2211/1406.png",
+      "retrieved_at": "2026-11-15T16:11:28.941Z",
+      "sha256": "a91dfb63d71c14d6f49628c80c9030d633e28c5b093087d22bb5f4e530c797d7",
+      "bytes": 98215
+    },
+    {
+      "path": "terrain-reference/12/2211/1407.png",
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/12/2211/1407.png",
+      "retrieved_at": "2026-11-15T16:11:29.488Z",
+      "sha256": "d1d9bb5d938cd484ba0c0ee52362ed31e4e6b30f3d188f2d3d431deb24ddbd49",
+      "bytes": 106768
+    },
+    {
+      "path": "terrain-reference/12/2212/1406.png",
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/12/2212/1406.png",
+      "retrieved_at": "2026-11-15T16:11:29.721Z",
+      "sha256": "96b6bc36ccb41cb39b1d4de542a71f467a277b76b8e9decf8fbeff4807baaf5c",
+      "bytes": 99815
+    },
+    {
+      "path": "terrain-reference/12/2212/1407.png",
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/12/2212/1407.png",
+      "retrieved_at": "2026-11-15T16:11:29.781Z",
+      "sha256": "0e19b6cb98a619852dd4a7a6b8a8e6bdcb0ef98624a74f0c07412989a1b8f0c0",
+      "bytes": 100412
+    },
+    {
+      "path": "terrain-reference/12/2213/1406.png",
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/12/2213/1406.png",
+      "retrieved_at": "2026-11-15T16:11:29.383Z",
+      "sha256": "6a03955898628c80c1ee8da76c5c751da59d67aa6191c18e78de3db73f314127",
+      "bytes": 107072
+    },
+    {
+      "path": "terrain-reference/12/2213/1407.png",
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/12/2213/1407.png",
+      "retrieved_at": "2026-11-15T16:11:29.375Z",
+      "sha256": "9a02ab7d97ff4c6f019c771b1a28eb9537b2931314c1ae0986be1f2c1a09cd7e",
+      "bytes": 106261
+    },
+    {
+      "path": "terrain-reference/12/2214/1406.png",
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/12/2214/1406.png",
+      "retrieved_at": "2026-11-15T16:11:29.413Z",
+      "sha256": "5cf0ca582604c9a9de0bf0940a72621e148830904f8e4c7274b0d1cc2356a9be",
+      "bytes": 102860
+    },
+    {
+      "path": "terrain-reference/12/2214/1407.png",
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/12/2214/1407.png",
+      "retrieved_at": "2026-11-15T16:11:29.402Z",
+      "sha256": "fa60e5bebc3c7fb4aed6a9d7b57f6597452d101c3eab9259bfcb15738ca81d8e",
+      "bytes": 103214
+    }
+  ],
+  "attribution_reference": "https://registry.opendata.aws/terrain-tiles/",
+  "verified_at": "2026-11-15T16:17:02+00:00"
+}

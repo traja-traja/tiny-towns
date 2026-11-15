@@ -1,0 +1,49 @@
+{
+  "center": [
+    14.4625,
+    48.82944
+  ],
+  "municipality_code": "545821",
+  "map": {
+    "nazev": "Velešín",
+    "titulek": "Tiny Velešín",
+    "h1": [
+      "Tiny",
+      "Velešín"
+    ],
+    "podtitul": "Velešín a jeho okolí v izometrické mapě.",
+    "popis": "Izometrická mapa Velešína, Holkova, Chodče, Skřidel a Boru, rozšířená o okolí hradu Velešín.",
+    "url": "",
+    "letadla": false,
+    "potoky": true,
+    "hlaseni": false,
+    "vitr": false,
+    "pocasi": false,
+    "mhd": {
+      "gtfs": null,
+      "zdroj": null,
+      "zdroj_url": null
+    },
+    "vanocni_strom": null,
+    "sousedi": []
+  },
+  "extensions": [
+    {
+      "name": "Hrad Velešín a nejbližší okolí",
+      "center": [
+        14.47946,
+        48.831942
+      ],
+      "radius_m": 300
+    }
+  ],
+  "notes": {
+    "center": "Přibližný střed pro umístění mřížky; nepoužívat jako zaměření konkrétní budovy.",
+    "scope": "Celá obec včetně odloučených částí a samostatné rozšíření na druhém břehu Malše. Nezahrnuje celé správní území Svatého Jana nad Malší.",
+    "castle_position_sources": [
+      "https://www.ohradech.eu/velesin.html",
+      "https://www.hrady-zriceniny.cz/hrad_velesin.htm"
+    ],
+    "castle_position_accuracy_m": 30
+  }
+}

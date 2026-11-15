@@ -1,0 +1,128 @@
+{
+  "nazev": "České Budějovice",
+  "titulek": "Tiny České Budějovice",
+  "h1": [
+    "Tiny",
+    "České Budějovice"
+  ],
+  "podtitul": "České Budějovice v izometrické mapě.",
+  "popis": "Izometrická mapa Českých Budějovic z otevřených geografických dat.",
+  "url": "",
+  "mhd": {
+    "gtfs": null,
+    "zdroj": null,
+    "zdroj_url": null
+  },
+  "vanocni_strom": null,
+  "letadla": false,
+  "potoky": false,
+  "hlaseni": false,
+  "vitr": false,
+  "pocasi": false,
+  "sousedi": [],
+  "stred": [
+    14.475588,
+    48.97468
+  ],
+  "polovina": 1150.0,
+  "ctverce": [
+    [
+      -3,
+      2
+    ],
+    [
+      -2,
+      2
+    ],
+    [
+      -1,
+      2
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      -3,
+      1
+    ],
+    [
+      -2,
+      1
+    ],
+    [
+      -1,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      -2,
+      0
+    ],
+    [
+      -1,
+      0
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      2,
+      0
+    ],
+    [
+      3,
+      0
+    ],
+    [
+      4,
+      0
+    ],
+    [
+      -1,
+      -1
+    ],
+    [
+      0,
+      -1
+    ],
+    [
+      1,
+      -1
+    ],
+    [
+      2,
+      -1
+    ],
+    [
+      3,
+      -1
+    ],
+    [
+      4,
+      -1
+    ],
+    [
+      0,
+      -2
+    ]
+  ],
+  "href": 394.1,
+  "dno": -52
+}

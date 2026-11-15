@@ -1,0 +1,36 @@
+{
+  "center": [
+    14.475588,
+    48.97468
+  ],
+  "municipality_code": "544256",
+  "map": {
+    "nazev": "České Budějovice",
+    "titulek": "Tiny České Budějovice",
+    "h1": [
+      "Tiny",
+      "České Budějovice"
+    ],
+    "podtitul": "České Budějovice v izometrické mapě.",
+    "popis": "Izometrická mapa Českých Budějovic z otevřených geografických dat.",
+    "url": "",
+    "letadla": false,
+    "potoky": false,
+    "hlaseni": false,
+    "vitr": false,
+    "pocasi": false,
+    "mhd": {
+      "gtfs": null,
+      "zdroj": null,
+      "zdroj_url": null
+    },
+    "vanocni_strom": null,
+    "sousedi": []
+  },
+  "extensions": [],
+  "notes": {
+    "center": "Bod u náměstí Přemysla Otakara II. použitý jako střed mřížky, nikoli zaměření konkrétní budovy.",
+    "center_source": "https://tanecpraha.cz/cs/node/3419",
+    "traffic": "Dopravní model a scénáře uzavírek budou samostatná etapa; animace vozidel v Izomapě není kalibrovaná simulace."
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "center": [
+    14.475588,
+    48.97468
+  ],
+  "cell_size_m": 2300.0,
+  "cell_count": 1,
+  "full_cell_count": 24,
+  "cells": [
+    [
+      0,
+      0
+    ]
+  ],
+  "municipality": {
+    "area_m2": 55290547.933540694,
+    "covered_area_m2": 5290000.0,
+    "omitted_area_m2": 50000547.933540694,
+    "coverage_percent": 9.56763895043794
+  },
+  "extensions": [],
+  "target": {
+    "area_m2": 55290547.933540694,
+    "covered_area_m2": 5290000.000000082,
+    "omitted_area_m2": 50000547.93354061,
+    "coverage_percent": 9.567638950438095
+  },
+  "mode": "preview",
+  "terrain": {
+    "dataset": "Terrarium",
+    "zoom": 12,
+    "tile_count": 8,
+    "sample_count": 338374,
+    "minimum_m": 372.33203125,
+    "percentile_25_m": 394.1484375,
+    "href": 394.1,
+    "dno": -52
+  },
+  "terrain_bounds_lon_lat": [
+    14.365419082273654,
+    48.92267862535496,
+    14.617233751362445,
+    49.02668137464504
+  ]
+}

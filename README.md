@@ -4,11 +4,12 @@ Velešín a České Budějovice nad společným základem [Izomapa od Adama Klat
 
 Městské konfigurace, hranice a vlastní doplňky jsou v `cities/`. Sdílený renderer zůstává v kořeni. Každá mapa i její zkušební výřez mají oddělené pracovní soubory.
 
+- [Aktuální stav, rozsah map a další spuštění](docs/STATUS.md)
 - [Sestavení a náhled obou měst](docs/MULTI_CITY.md)
 - [Aktualizace, vlastní modely a budoucí 3D mapa](docs/UPDATES.md)
 - [Původ použitého základu](upstream.json)
 
-První fáze připravuje hranice a sestavení map. Samotné vygenerování konfigurace neznamená hotovou mapu: je nutné stáhnout geografická data, vyrenderovat dlaždice a prohlédnout výsledek. Dopravní simulace, ruční modely dominant a městské projekty zatím nejsou implementované.
+Jsou připravené hranice z ČÚZK, konfigurace 9 čtverců Velešína a 24 čtverců Českých Budějovic a samostatné výřezy pro první render. Samotné vygenerování konfigurace neznamená hotovou mapu: je nutné stáhnout geografická data, vyrenderovat dlaždice a prohlédnout výsledek. Dopravní simulace, ruční modely dominant a městské projekty zatím nejsou implementované.
 
 ## Rychlý start
 

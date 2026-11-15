@@ -1,0 +1,13 @@
+{
+  "provider": "ČÚZK",
+  "dataset": "RÚIAN – Obec",
+  "municipality_code": "545821",
+  "name": "Velešín",
+  "url": "https://ags.cuzk.gov.cz/arcgis/rest/services/RUIAN/MapServer/12/query?where=kod%3D545821&outFields=kod%2Cnazev%2Cplatiod%2Cnespravny&returnGeometry=true&outSR=4326&f=geojson",
+  "retrieved_at": "2026-11-15T16:10:37.789Z",
+  "sha256": "0b0842258702395833c8aa14afb0ed0c8e9cc0fc848f6c35cb05765362259f88",
+  "coordinate_system": "EPSG:4326",
+  "attribution": "© ČÚZK",
+  "metadata_url": "https://ags.cuzk.gov.cz/arcgis/rest/services/RUIAN/MapServer/12?f=json",
+  "geometry_modified": false
+}

@@ -1,0 +1,58 @@
+{
+  "center": [
+    14.4625,
+    48.82944
+  ],
+  "cell_size_m": 2300.0,
+  "cell_count": 1,
+  "full_cell_count": 9,
+  "cells": [
+    [
+      0,
+      0
+    ]
+  ],
+  "municipality": {
+    "area_m2": 13133762.191203324,
+    "covered_area_m2": 4991222.104808042,
+    "omitted_area_m2": 8142540.086395282,
+    "coverage_percent": 38.002988269050896
+  },
+  "extensions": [
+    {
+      "name": "Hrad Velešín a nejbližší okolí",
+      "center": [
+        14.47946,
+        48.831942
+      ],
+      "radius_m": 300,
+      "area_m2": 282714.9525839496,
+      "covered_area_m2": 86543.18341641358,
+      "omitted_area_m2": 196171.76916753603,
+      "coverage_percent": 30.611463109902324
+    }
+  ],
+  "target": {
+    "area_m2": 13307145.366765108,
+    "covered_area_m2": 5028436.673267246,
+    "omitted_area_m2": 8278708.693497862,
+    "coverage_percent": 37.78749337048559
+  },
+  "mode": "preview",
+  "terrain": {
+    "dataset": "Terrarium",
+    "zoom": 12,
+    "tile_count": 4,
+    "sample_count": 75624,
+    "minimum_m": 427.0390625,
+    "percentile_25_m": 515.5810546875,
+    "href": 515.6,
+    "dno": -119
+  },
+  "terrain_bounds_lon_lat": [
+    14.41542175994275,
+    48.79823917521298,
+    14.50957824005725,
+    48.86064082478702
+  ]
+}

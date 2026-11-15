@@ -1,0 +1,39 @@
+{
+  "provider": "Terrain Tiles / Mapzen / AWS Open Data",
+  "dataset": "Terrarium",
+  "zoom": 12,
+  "metadata_url": "https://registry.opendata.aws/terrain-tiles/",
+  "purpose": "Reference height for Izomapa grid; detailed render terrain is fetched separately at z14.",
+  "tiles": [
+    {
+      "path": "terrain-reference/12/2212/1409.png",
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/12/2212/1409.png",
+      "retrieved_at": "2026-11-15T16:11:28.394Z",
+      "sha256": "243245a07ce456579e177fa0172c5fcc4d59bd6bc6b1ff0c279b6c0b9d27407c",
+      "bytes": 106755
+    },
+    {
+      "path": "terrain-reference/12/2212/1410.png",
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/12/2212/1410.png",
+      "retrieved_at": "2026-11-15T16:11:28.272Z",
+      "sha256": "f6a3d3765f225dc380a9a1c98785237d8bbea57366ab75151763d5c91f11d947",
+      "bytes": 110475
+    },
+    {
+      "path": "terrain-reference/12/2213/1409.png",
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/12/2213/1409.png",
+      "retrieved_at": "2026-11-15T16:11:28.545Z",
+      "sha256": "c207d1c5d32f5756c00cd76373375efe2011521d81cbe43288253fd966746516",
+      "bytes": 111200
+    },
+    {
+      "path": "terrain-reference/12/2213/1410.png",
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/12/2213/1410.png",
+      "retrieved_at": "2026-11-15T16:11:28.497Z",
+      "sha256": "c4e94a1a32f2cf4547204985fd56161f2cf8169ead90d4540c3b4eabbb350299",
+      "bytes": 114736
+    }
+  ],
+  "attribution_reference": "https://registry.opendata.aws/terrain-tiles/",
+  "verified_at": "2026-11-15T16:17:00+00:00"
+}
