@@ -1,0 +1,59 @@
+[
+  {
+    "street": "Česká",
+    "number": "145",
+    "unit": "58"
+  },
+  {
+    "street": "Husova tř.",
+    "number": "1825",
+    "unit": "8"
+  },
+  {
+    "street": "Husova tř.",
+    "number": "1829",
+    "unit": "12"
+  },
+  {
+    "street": "Kněžská",
+    "number": "410",
+    "unit": "8"
+  },
+  {
+    "street": "nám. Přemysla Otakara II.",
+    "number": "114",
+    "unit": "30"
+  },
+  {
+    "street": "Dr. Stejskala",
+    "number": "113",
+    "unit": "2"
+  },
+  {
+    "street": "Jirsíkova",
+    "number": "423",
+    "unit": "1"
+  },
+  {
+    "street": "Jirsíkova",
+    "number": "422",
+    "unit": "3"
+  },
+  {
+    "street": "Široká",
+    "number": "421",
+    "unit": "1"
+  },
+  {
+    "street": "Široká",
+    "number": "428",
+    "unit": "3",
+    "requested_address": "Široká 422/3",
+    "resolution_note": "Předpoklad k potvrzení uživatelem: požadovaná Široká 422/3 není v místních datech; Široká má 428/3, zatímco 422/3 patří Jirsíkově."
+  },
+  {
+    "street": "Dr. Stejskala",
+    "number": "426",
+    "unit": "15"
+  }
+]

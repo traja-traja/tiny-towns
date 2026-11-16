@@ -805,7 +805,7 @@ dialog.help ol.vd-list { margin: 0; padding-left: 22px; } ol.vd-list li { margin
   if (!myPlaces.length) $('placesBox').hidden = true;      // bez mista.json
 
   // ---------- karta ----------
-  const ROOF = { flat: 'plochá', gabled: 'sedlová', hipped: 'valbová', pyramidal: 'stanová' };
+  const ROOF = { flat: 'plochá', gabled: 'sedlová', hipped: 'valbová', pyramidal: 'stanová', barrel: 'oblouková' };
   function showCard({ title, text, rows, lon, lat, k, link, linkText, target }) {
     $('cardTitle').textContent = title;
     if (k && !(LAYERS.find((l) => l.key === k) || {}).status?.startsWith('hotovo')) { const t = document.createElement('span'); t.className = 'wip-tag'; t.textContent = 'Rozpracováno'; $('cardTitle').append(' ', t); }

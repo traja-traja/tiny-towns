@@ -57,3 +57,33 @@ wrangler.toml
 /.transfer/
 cities/*/terrain-reference/
 cities/*/*.bak
+
+# Local tools, secrets and bulky measurement/render output
+/.agents/
+/.codex/
+/.aws/
+*.pem
+*.key
+*.p12
+*.pfx
+*.las
+*.laz
+*.copc
+*.npz
+*.npy
+*.parquet
+*.zip
+*.7z
+*.log
+*.log.json
+# Keep experiment documentation and two small reproducibility manifests.
+cities/*/experiments/**
+!cities/*/experiments/**/
+!cities/*/experiments/**/*.md
+!cities/*/experiments/protocol.json
+!cities/*/experiments/round-2-candidates.json
+!cities/ceske-budejovice/experiments/roof-modular-batch-43/inputs.json
+!cities/ceske-budejovice/experiments/roof-modular-batch-43/config.json
+cities/*/roof-pilot/report.html
+cities/*/roof-pilot/results.json
+cities/*/preview-build-report.json

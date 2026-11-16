@@ -1,0 +1,14 @@
+[
+  {"street": "Česká", "number": "152", "unit": "40", "requested": "Česká 40"},
+  {"street": "Hroznová", "number": "65", "unit": "1"},
+  {"street": "Hroznová", "number": "314", "unit": "18"},
+  {"street": "Hroznová", "number": "247", "unit": "32"},
+  {"street": "Hroznová", "number": "312", "unit": "22"},
+  {"street": "U Černé věže", "number": "69", "unit": "1"},
+  {"street": "Kněžská", "number": "354", "unit": "34", "requested": "Sněžská 354/34"},
+  {"street": "Biskupská", "number": "129", "unit": "1"},
+  {"street": "Biskupská", "number": "132", "unit": "4"},
+  {"street": "Zátkovo nábř.", "number": "450", "unit": "11"},
+  {"street": "nám. Přemysla Otakara II.", "number": "6", "unit": "3"},
+  {"street": "nám. Přemysla Otakara II.", "number": "123", "unit": "36"}
+]

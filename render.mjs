@@ -12,7 +12,10 @@ const outDir = path.join(ROOT, args.out || 'build/tiles');
 fs.mkdirSync(outDir, { recursive: true });
 
 const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.png': 'image/png' };
-const server = http.createServer((req, res) => {
+// offline=1 renders the same local assets through Playwright's request handler.
+// No HTTP listener or outbound request is needed in restricted build environments.
+const offline = args.offline === '1';
+const server = offline ? null : http.createServer((req, res) => {
   const deny = (c) => { res.writeHead(c); res.end(); };
   // jen požadavky na tuhle adresu (cizí stránka v prohlížeči se sem přes jinou doménu nedostane)
   if (req.headers.host !== `127.0.0.1:${server.address().port}`) return deny(403);
@@ -26,8 +29,8 @@ const server = http.createServer((req, res) => {
     res.end(data);
   });
 }).listen(0, '127.0.0.1');   // jen z tohoto počítače, ne z celé sítě
-await new Promise((r) => server.once('listening', r));
-const port = server.address().port;
+if (server) await new Promise((r) => server.once('listening', r));
+const port = server ? server.address().port : 8000;
 
 // Mac: Metal, Windows: Direct3D 11, Linux: HW GPU přes EGL (pokud je v /dev/dri a WebGL není jen SW rasterizer), jinak SwiftShader
 const SWIFTSHADER = ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
@@ -61,6 +64,22 @@ if (process.platform === 'linux') {
 page.on('console', (m) => console.log('[page]', m.text()));
 page.on('requestfailed', (r) => console.log('[rf]', r.url(), r.failure()?.errorText));
 page.on('pageerror', (e) => { console.log('[pageerror]', e.message); process.exit(1); });
+if (offline) {
+  await page.route('**/*', async (route) => {
+    const url = new URL(route.request().url());
+    if (url.origin !== `http://127.0.0.1:${port}`) return route.abort('blockedbyclient');
+    let rel;
+    try { rel = decodeURIComponent(url.pathname); } catch { return route.fulfill({ status: 400 }); }
+    const p = path.join(ROOT, rel);
+    if (rel.includes('\0') || !p.startsWith(ROOT + path.sep) || rel.split(/[\\/]/).some((s) => s.startsWith('.')) || !(path.extname(p) in MIME)) {
+      return route.fulfill({ status: 403 });
+    }
+    try {
+      await route.fulfill({ status: 200, contentType: MIME[path.extname(p)], body: await fs.promises.readFile(p) });
+    } catch { await route.fulfill({ status: 404 }); }
+  });
+  console.log('Offline render: local project files only');
+}
 const t0 = Date.now();
 await page.goto(`http://127.0.0.1:${port}/render.html?mpp=${mpp}&tile=${tile}&season=${args.season || 'autumn'}&mode=${args.mode || 'day'}&dir=${encodeURIComponent(args.dir || 'build')}&alpha=${args.alpha || '0'}${args.skirt ? `&skirt=${args.skirt}` : ''}${args.gx0 ? `&gx0=${args.gx0}&gy1=${args.gy1}` : ''}`);
 await page.waitForFunction(() => window.READY === true, null, { timeout: 240000, polling: 1000 });
@@ -72,7 +91,7 @@ if (args.stromy) {                             // jen kresby stromů pro prohlí
   fs.mkdirSync(path.join(ROOT, args.stromy), { recursive: true });
   fs.writeFileSync(path.join(ROOT, args.stromy, `${args.season}.png`), Buffer.from(t.url.split(',')[1], 'base64'));
   delete t.url; fs.writeFileSync(path.join(ROOT, args.stromy, `${args.season}.json`), JSON.stringify(t));
-  await browser.close(); server.close(); process.exit(0);
+  await browser.close(); server?.close(); process.exit(0);
 }
 const MARK = path.join(outDir, 'rozpracovano');             // značka nedokončeného renderu (dzi.py podle ní odmítne směs starých a nových dlaždic)
 fs.writeFileSync(MARK, '');
@@ -88,4 +107,4 @@ for (let j = 0; j < info.rows; j++) for (let i = 0; i < info.cols; i++) {
 }
 fs.rmSync(MARK, { force: true });
 await browser.close();
-server.close();
+server?.close();

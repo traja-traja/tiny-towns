@@ -1,0 +1,5091 @@
+{
+  "type": "FeatureCollection",
+  "schema_version": 1,
+  "city": "velesin",
+  "selection_date": "2026-11-15",
+  "selection_method": "reviewed_fixed_source_ids",
+  "feature_count": 30,
+  "bbox": [
+    14.457926002337052,
+    48.827212408460824,
+    14.466233002356095,
+    48.83486970847632
+  ],
+  "bbox_epsg5514": [
+    -759180.655,
+    -1182268.729,
+    -758594.451,
+    -1181435.691
+  ],
+  "coordinate_system": {
+    "geometry": "OGC:CRS84 (longitude, latitude)",
+    "metric_bounds": "EPSG:5514"
+  },
+  "category_counts": {
+    "apartment_block_candidate": 3,
+    "barrel_roof_complex": 1,
+    "church": 1,
+    "former_church": 3,
+    "historic_square": 5,
+    "industrial_flat_candidate": 1,
+    "industrial_gabled_candidate": 1,
+    "kindergarten": 1,
+    "kindergarten_extension_candidate": 1,
+    "low_flat": 1,
+    "ordinary_gabled": 1,
+    "ordinary_half_hipped": 1,
+    "ordinary_hipped": 1,
+    "ordinary_skillion": 1,
+    "school": 1,
+    "small_garage": 1,
+    "source_ridge_orientation": 1,
+    "townhall": 2,
+    "unknown_roof_house": 1,
+    "unknown_roof_irregular": 1,
+    "water_tower": 1
+  },
+  "groups": {
+    "townhall": [
+      "VEL-ROOF-01",
+      "VEL-ROOF-02"
+    ],
+    "church-vaclav": [
+      "VEL-ROOF-03"
+    ],
+    "church-jakub": [
+      "VEL-ROOF-04",
+      "VEL-ROOF-05",
+      "VEL-ROOF-06"
+    ],
+    "building:7ec1c263-165d-428b-a9a3-ff9add05a3d9": [
+      "VEL-ROOF-07"
+    ],
+    "kindergarten-223": [
+      "VEL-ROOF-08"
+    ],
+    "kindergarten-223-candidate": [
+      "VEL-ROOF-09"
+    ],
+    "building:988326aa-55e0-4e44-8479-b666954da3d2": [
+      "VEL-ROOF-10"
+    ],
+    "sportcentrum": [
+      "VEL-ROOF-11"
+    ],
+    "building:7bf51833-2377-4271-8ddc-b5f8611e44a8": [
+      "VEL-ROOF-12"
+    ],
+    "building:198527b2-b7a6-406f-9b2d-ebfc29d7f723": [
+      "VEL-ROOF-13"
+    ],
+    "building:97d883e9-0f10-4399-b162-78c494a93d4e": [
+      "VEL-ROOF-14"
+    ],
+    "building:2df261d0-83c4-4c17-beac-5cdbfa06b944": [
+      "VEL-ROOF-15"
+    ],
+    "building:22d5f84d-bc4b-46ae-ae1d-e9d2034672f2": [
+      "VEL-ROOF-16"
+    ],
+    "building:43896dfe-74a3-4d28-a66b-62534438d9f7": [
+      "VEL-ROOF-17"
+    ],
+    "building:30491e38-7ddc-488b-b26d-c6cc44b7feaa": [
+      "VEL-ROOF-18"
+    ],
+    "building:d0cbb8d8-2ce8-41f5-9dec-b00337bdd525": [
+      "VEL-ROOF-19"
+    ],
+    "building:0de630cc-d74f-4e84-8a9e-3bb1b3525403": [
+      "VEL-ROOF-20"
+    ],
+    "building:2dd5e4d3-1624-4569-bde8-a79bc9723db2": [
+      "VEL-ROOF-21"
+    ],
+    "building:84441cdd-e38a-4c2c-9391-9162681d24e7": [
+      "VEL-ROOF-22"
+    ],
+    "building:b4692023-1a6f-4162-aa56-5b8df9c74fe4": [
+      "VEL-ROOF-23"
+    ],
+    "building:2aa0f596-18d7-422f-a6ff-518d463ee5b0": [
+      "VEL-ROOF-24"
+    ],
+    "building:d73001a7-a401-4dcf-b0e6-3dcaffa5989a": [
+      "VEL-ROOF-25"
+    ],
+    "building:4d5488dc-708f-46b1-b237-46eb2cc1080d": [
+      "VEL-ROOF-26"
+    ],
+    "building:1398a139-65ca-4699-a6c5-bee7e12e0124": [
+      "VEL-ROOF-27"
+    ],
+    "building:17100fb2-8669-4cd9-b825-2869359e41e5": [
+      "VEL-ROOF-28"
+    ],
+    "building:89e6de12-a5b9-4a64-9853-743608e8e3d6": [
+      "VEL-ROOF-29"
+    ],
+    "building:2ad2977f-8e93-4ad1-a3d7-2c1228c064cd": [
+      "VEL-ROOF-30"
+    ]
+  },
+  "limitations": [
+    "30 půdorysů není 30 samostatných architektonických celků: radnice má 2 a kostel Jakub 3 zdrojové budovy.",
+    "Půdorysy jsou beze změny převzaty z lokální Overture cache; nejde o výsledek rekonstrukce ani zeměměřické ověření.",
+    "Identita MŠ je ověřena adresou. Západní členitý objekt je pouze kandidát části areálu; nová přístavba není doložena.",
+    "Zdrojové typy střech a počty podlaží slouží ke stratifikaci; při vyhodnocení metody se nesmějí vydávat za ground truth.",
+    "Výběr je účelový pilot pro různé geometrie, nikoli statisticky reprezentativní vzorek celého města.",
+    "Podloubí a průchody z těchto půdorysů nejsou odvozeny; Sportcentrum slouží jako známý samostatný příklad průchodu."
+  ],
+  "source_inputs": [
+    {
+      "path": ".work/.preview/velesin/data/building.parquet",
+      "bytes": 293486,
+      "sha256": "8ab5e47f303ab54c18bf5ffcd81f8999438c038a0538745cce66a9450a00d1a2"
+    },
+    {
+      "path": ".work/.preview/velesin/data/address.parquet",
+      "bytes": 68195,
+      "sha256": "760af4646fba202f52e73ebed65583acd1fedfd3287a9ef0d4788bf8a2520a4a"
+    },
+    {
+      "path": ".work/.preview/velesin/data/places.parquet",
+      "bytes": 36897,
+      "sha256": "45d93007cf29fe7ffffa66fd3de412525b7630c35d8d62c59f25c41bb445f301"
+    },
+    {
+      "path": ".work/.preview/velesin/data/infrastructure.parquet",
+      "bytes": 91856,
+      "sha256": "d3ecc111aa73cbed6bf917a47e412b5e5711e9544af7c4ad3dc1ef5a86ea69fa"
+    },
+    {
+      "path": "cities/velesin/models/sportcentrum-velesin.source.json",
+      "bytes": 4223,
+      "sha256": "66ad6164945d1dbeb588aa1579330ffa93db71bddde05f62fa1503a415873eed"
+    }
+  ],
+  "identity_references": {
+    "municipality_contact": {
+      "provider": "Město Velešín",
+      "url": "https://www2.velesin.cz/mestsky-urad-10/organizacni-struktura/",
+      "supports": "Adresa městského úřadu náměstí J. V. Kamarýta 76.",
+      "checked_on": "2026-11-15"
+    },
+    "townhall_history": {
+      "provider": "Společnost přátel města Velešína",
+      "url": "https://www.velesinpratele.cz/domains/velesinpratele.cz/index.php?Itemid=78&id=49&option=com_content&view=category",
+      "supports": "Historická radnice čp. 77 a připojená část čp. 76.",
+      "checked_on": "2026-11-15"
+    },
+    "jakub_three_numbers": {
+      "provider": "Město Velešín",
+      "url": "https://www.velesin.cz/document-open-00075-010/vzzm-10.pdf",
+      "document_date": "2011-10-31",
+      "page": 1,
+      "supports": "Zápis zastupitelstva výslovně přiřazuje kostelu Jakub čp. 87, 88 a 89.",
+      "checked_on": "2026-11-15"
+    },
+    "jakub_operator": {
+      "provider": "Kulturní a informační centrum města Velešín",
+      "url": "https://www.kicvelesin.cz/cenik-kratkodobeho-pronajmu-prostor/",
+      "supports": "Budova bývalého kostela sv. Filipa a Jakuba na náměstí J. V. Kamarýta 89.",
+      "checked_on": "2026-11-15"
+    },
+    "jakub_history": {
+      "provider": "Město Velešín",
+      "url": "https://www.velesin.cz/fotogalerie-historie/byvaly-kostel-sv-filipa-a-jakuba/",
+      "supports": "Historický kostel, dodatečná věž a pozdější rozdělení lodi na obytné části.",
+      "checked_on": "2026-11-15"
+    },
+    "vaclav_municipal": {
+      "provider": "Město Velešín",
+      "url": "https://www.velesin.cz/fotogalerie-historie/namesti-j-v-kamaryta/",
+      "supports": "Kostel sv. Václava v dolní části náměstí; přesné přiřazení z názvu v lokálních datech.",
+      "checked_on": "2026-11-15"
+    },
+    "school_addresses": {
+      "provider": "Město Velešín",
+      "url": "https://www.velesin.cz/mesto-34/soucasnost/skolstvi/",
+      "supports": "Mateřská škola Školní 223; pro přiřazení polygonu použit adresní bod ČÚZK.",
+      "checked_on": "2026-11-15"
+    },
+    "school_own": {
+      "provider": "Mateřská škola ve Velešíně",
+      "url": "https://www.msvelesin.cz/wp-content/uploads/2025/10/SVP-revidovany.pdf",
+      "supports": "Potvrzuje adresu Školní 223, nikoliv rozsah či aktuální geometrii přístaveb.",
+      "checked_on": "2026-11-15"
+    },
+    "water_tower_context": {
+      "provider": "City Upgrade / studie regenerace pro Velešín",
+      "url": "https://velesin.cityupgrade.cz/hlavni-strana/regenerace-uzemi-druzstevni/",
+      "supports": "Vodárenská věž u hřiště v lokalitě Družstevní; přesný polygon propojen přes OSM way.",
+      "checked_on": "2026-11-15"
+    },
+    "sportcentrum_reference": {
+      "provider": "Tiny Towns / dřívější kontrola s uživatelem",
+      "path": "cities/velesin/models/sportcentrum-velesin.source.json",
+      "supports": "Identita Strahovská 661, tenisová válcová střecha, odlišné objemy a průchod; model není zaměření.",
+      "checked_on": "2026-11-15"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "4f1c85c2-69eb-4e6d-8094-3eb1bd5f1208",
+      "bbox": [
+        14.46269,
+        48.829218,
+        14.462828,
+        48.82932
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.4627145,
+              48.829218
+            ],
+            [
+              14.462828,
+              48.829226
+            ],
+            [
+              14.462804,
+              48.82932
+            ],
+            [
+              14.46269,
+              48.829313
+            ],
+            [
+              14.4627145,
+              48.829218
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-01",
+        "building_id": "4f1c85c2-69eb-4e6d-8094-3eb1bd5f1208",
+        "name": "Radnice – čp. 77",
+        "category": "townhall",
+        "group_id": "townhall",
+        "selection_reason": "Historická veřejná budova, návaznost odlišných střešních objemů.",
+        "centroid_wgs84": {
+          "lon": 14.462759021,
+          "lat": 48.829269268
+        },
+        "bbox_wgs84": [
+          14.46269,
+          48.829218,
+          14.462828,
+          48.82932
+        ],
+        "bbox_epsg5514": [
+          -758867.919,
+          -1182053.69,
+          -758859.193,
+          -1182042.729
+        ],
+        "footprint_area_m2": 89.26,
+        "exterior_vertex_count": 4,
+        "source_attributes": {
+          "class": null,
+          "subtype": null,
+          "height": null,
+          "min_height": null,
+          "num_floors": 2,
+          "has_parts": false,
+          "roof_shape": "hipped",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104235666@3",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104235666"
+        ],
+        "addresses": [
+          {
+            "id": "b4909037-28b7-486a-ad89-377556844979",
+            "street": "náměstí J. V. Kamarýta",
+            "number": "77",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8741387",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [
+          {
+            "id": "98212027-1904-4854-97b0-abafaae0d1de",
+            "name": "Velešíně CITY",
+            "websites": [
+              "http://www.velesin.cz/"
+            ],
+            "confidence": 0.9870024734735489,
+            "note": "POI poloha je pomocná indicie, nikoli samostatné ověření identity."
+          }
+        ],
+        "identity": {
+          "status": "supported",
+          "note": null,
+          "reference_keys": [
+            "townhall_history"
+          ],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "0278d20e-f2c2-4aa4-859b-368587e9c1a0",
+      "bbox": [
+        14.4627145,
+        48.829124,
+        14.462898,
+        48.82923
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.462875,
+              48.829225
+            ],
+            [
+              14.462873,
+              48.82923
+            ],
+            [
+              14.462828,
+              48.829226
+            ],
+            [
+              14.4627145,
+              48.829218
+            ],
+            [
+              14.462739,
+              48.829124
+            ],
+            [
+              14.462898,
+              48.829136
+            ],
+            [
+              14.462875,
+              48.829225
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-02",
+        "building_id": "0278d20e-f2c2-4aa4-859b-368587e9c1a0",
+        "name": "Radnice – čp. 76",
+        "category": "townhall",
+        "group_id": "townhall",
+        "selection_reason": "Druhá evidovaná část radnice; hodnotit společně s čp. 77.",
+        "centroid_wgs84": {
+          "lon": 14.462806299,
+          "lat": 48.829176879
+        },
+        "bbox_wgs84": [
+          14.4627145,
+          48.829124,
+          14.462898,
+          48.82923
+        ],
+        "bbox_epsg5514": [
+          -758867.57,
+          -1182064.304,
+          -758855.459,
+          -1182053.441
+        ],
+        "footprint_area_m2": 124.15,
+        "exterior_vertex_count": 6,
+        "source_attributes": {
+          "class": null,
+          "subtype": null,
+          "height": null,
+          "min_height": null,
+          "num_floors": 2,
+          "has_parts": false,
+          "roof_shape": "gabled",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104235542@3",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104235542"
+        ],
+        "addresses": [
+          {
+            "id": "d2f59553-5986-48c5-a699-1025cfc1a2f2",
+            "street": "náměstí J. V. Kamarýta",
+            "number": "76",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8741379",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [],
+        "identity": {
+          "status": "supported",
+          "note": null,
+          "reference_keys": [
+            "municipality_contact",
+            "townhall_history"
+          ],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "16e9927f-2022-4075-a27f-03bed8e750a5",
+      "bbox": [
+        14.4656928,
+        48.830231,
+        14.466233,
+        48.8304086
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.4661297,
+              48.8303638
+            ],
+            [
+              14.4661282,
+              48.8304074
+            ],
+            [
+              14.4659921,
+              48.8304086
+            ],
+            [
+              14.4659924,
+              48.8303888
+            ],
+            [
+              14.4659501,
+              48.8303886
+            ],
+            [
+              14.4659502,
+              48.8303768
+            ],
+            [
+              14.4658995,
+              48.8303766
+            ],
+            [
+              14.4658993,
+              48.8303929
+            ],
+            [
+              14.4658359,
+              48.8303917
+            ],
+            [
+              14.4658364,
+              48.8303753
+            ],
+            [
+              14.4657788,
+              48.8303745
+            ],
+            [
+              14.4657798,
+              48.8303565
+            ],
+            [
+              14.4656928,
+              48.8303545
+            ],
+            [
+              14.4656945,
+              48.8302888
+            ],
+            [
+              14.4657091,
+              48.8302892
+            ],
+            [
+              14.46571,
+              48.8302716
+            ],
+            [
+              14.4657881,
+              48.8302721
+            ],
+            [
+              14.4657884,
+              48.8302556
+            ],
+            [
+              14.465819,
+              48.8302569
+            ],
+            [
+              14.4659034,
+              48.8302605
+            ],
+            [
+              14.4659047,
+              48.8302741
+            ],
+            [
+              14.4659294,
+              48.8302745
+            ],
+            [
+              14.4659525,
+              48.8302748
+            ],
+            [
+              14.4659527,
+              48.8302667
+            ],
+            [
+              14.4660105,
+              48.8302668
+            ],
+            [
+              14.4660121,
+              48.830231
+            ],
+            [
+              14.466085,
+              48.8302321
+            ],
+            [
+              14.4660829,
+              48.830291
+            ],
+            [
+              14.466233,
+              48.8302931
+            ],
+            [
+              14.466231,
+              48.8303653
+            ],
+            [
+              14.4661297,
+              48.8303638
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-03",
+        "building_id": "16e9927f-2022-4075-a27f-03bed8e750a5",
+        "name": "Kostel sv. Václava",
+        "category": "church",
+        "group_id": "church-vaclav",
+        "selection_reason": "Složitá střecha a věž, riziko přílišného zjednodušení významné dominanty.",
+        "centroid_wgs84": {
+          "lon": 14.465963388,
+          "lat": 48.830325296
+        },
+        "bbox_wgs84": [
+          14.4656928,
+          48.830231,
+          14.466233,
+          48.8304086
+        ],
+        "bbox_epsg5514": [
+          -758634.632,
+          -1181975.285,
+          -758594.451,
+          -1181954.912
+        ],
+        "footprint_area_m2": 493.859,
+        "exterior_vertex_count": 30,
+        "source_attributes": {
+          "class": "church",
+          "subtype": "religious",
+          "height": null,
+          "min_height": null,
+          "num_floors": null,
+          "has_parts": false,
+          "roof_shape": "hipped",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": {
+          "primary": "Kostel Svatého Václava",
+          "common": null,
+          "rules": null
+        },
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104236154@9",
+            "update_time": "2024-07-31T14:37:50.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104236154"
+        ],
+        "addresses": [],
+        "contained_places": [],
+        "identity": {
+          "status": "supported",
+          "note": null,
+          "reference_keys": [
+            "vaclav_municipal"
+          ],
+          "address_containment_checked": false,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "4a9c59ba-655c-4e3c-a8a7-a28e050fd375",
+      "bbox": [
+        14.462916,
+        48.829026,
+        14.463111,
+        48.829176
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.46301,
+              48.829026
+            ],
+            [
+              14.463111,
+              48.829043
+            ],
+            [
+              14.46308,
+              48.829129
+            ],
+            [
+              14.463071,
+              48.829176
+            ],
+            [
+              14.4629982,
+              48.8291654
+            ],
+            [
+              14.4629756,
+              48.8291393
+            ],
+            [
+              14.46299,
+              48.829095
+            ],
+            [
+              14.462916,
+              48.829085
+            ],
+            [
+              14.462935,
+              48.829038
+            ],
+            [
+              14.463003,
+              48.829046
+            ],
+            [
+              14.46301,
+              48.829026
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-04",
+        "building_id": "4a9c59ba-655c-4e3c-a8a7-a28e050fd375",
+        "name": "Bývalý kostel sv. Filipa a Jakuba – čp. 87",
+        "category": "former_church",
+        "group_id": "church-jakub",
+        "selection_reason": "Jeden ze tří zdrojových půdorysů kostela; nesmí se vynechat při hodnocení celku.",
+        "centroid_wgs84": {
+          "lon": 14.463023956,
+          "lat": 48.829092866
+        },
+        "bbox_wgs84": [
+          14.462916,
+          48.829026,
+          14.463111,
+          48.829176
+        ],
+        "bbox_epsg5514": [
+          -758854.919,
+          -1182077.54,
+          -758841.368,
+          -1182061.621
+        ],
+        "footprint_area_m2": 139.801,
+        "exterior_vertex_count": 10,
+        "source_attributes": {
+          "class": null,
+          "subtype": null,
+          "height": null,
+          "min_height": null,
+          "num_floors": 3,
+          "has_parts": false,
+          "roof_shape": "gabled",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104235826@4",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104235826"
+        ],
+        "addresses": [
+          {
+            "id": "12fad129-5762-4c24-9b25-93bb80d4272f",
+            "street": "náměstí J. V. Kamarýta",
+            "number": "87",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8741476",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [],
+        "identity": {
+          "status": "supported",
+          "note": null,
+          "reference_keys": [
+            "jakub_three_numbers",
+            "jakub_history"
+          ],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "d6bd197e-ef4a-46f6-96ba-69741579f136",
+      "bbox": [
+        14.463071,
+        48.829043,
+        14.463209,
+        48.8291865
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.4631773,
+              48.829169
+            ],
+            [
+              14.4631717,
+              48.8291865
+            ],
+            [
+              14.463071,
+              48.829176
+            ],
+            [
+              14.463085,
+              48.829133
+            ],
+            [
+              14.46308,
+              48.829129
+            ],
+            [
+              14.463111,
+              48.829043
+            ],
+            [
+              14.4631279,
+              48.8290456
+            ],
+            [
+              14.4631443,
+              48.8290481
+            ],
+            [
+              14.463209,
+              48.829058
+            ],
+            [
+              14.463206,
+              48.829063
+            ],
+            [
+              14.4631773,
+              48.829169
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-05",
+        "building_id": "d6bd197e-ef4a-46f6-96ba-69741579f136",
+        "name": "Bývalý kostel sv. Filipa a Jakuba – čp. 88",
+        "category": "former_church",
+        "group_id": "church-jakub",
+        "selection_reason": "Prostřední část komplexu; návaznost střešních rovin přes hranice evidovaných budov.",
+        "centroid_wgs84": {
+          "lon": 14.463139371,
+          "lat": 48.829115871
+        },
+        "bbox_wgs84": [
+          14.463071,
+          48.829043,
+          14.463209,
+          48.8291865
+        ],
+        "bbox_epsg5514": [
+          -758842.325,
+          -1182076.673,
+          -758834.012,
+          -1182061.467
+        ],
+        "footprint_area_m2": 111.335,
+        "exterior_vertex_count": 10,
+        "source_attributes": {
+          "class": null,
+          "subtype": null,
+          "height": null,
+          "min_height": null,
+          "num_floors": 3,
+          "has_parts": false,
+          "roof_shape": "gabled",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104235421@5",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104235421"
+        ],
+        "addresses": [
+          {
+            "id": "c83910c6-6657-41c1-aa9c-aa5157646cca",
+            "street": "náměstí J. V. Kamarýta",
+            "number": "88",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8741484",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [],
+        "identity": {
+          "status": "supported",
+          "note": null,
+          "reference_keys": [
+            "jakub_three_numbers"
+          ],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "dbcb145c-dfe2-4355-805e-fbe46b23b38f",
+      "bbox": [
+        14.4631773,
+        48.829063,
+        14.463465,
+        48.8291777
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.463435,
+              48.829109
+            ],
+            [
+              14.463465,
+              48.829163
+            ],
+            [
+              14.4632648,
+              48.8291777
+            ],
+            [
+              14.4631773,
+              48.829169
+            ],
+            [
+              14.463206,
+              48.829063
+            ],
+            [
+              14.46329,
+              48.829074
+            ],
+            [
+              14.463295,
+              48.829069
+            ],
+            [
+              14.4633208,
+              48.8290836
+            ],
+            [
+              14.4633367,
+              48.8290932
+            ],
+            [
+              14.463413,
+              48.829086
+            ],
+            [
+              14.463435,
+              48.829109
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-06",
+        "building_id": "dbcb145c-dfe2-4355-805e-fbe46b23b38f",
+        "name": "Bývalý kostel sv. Filipa a Jakuba – čp. 89",
+        "category": "former_church",
+        "group_id": "church-jakub",
+        "selection_reason": "Galerie a infocentrum, v datech odlišný typ střechy od sousedních částí.",
+        "centroid_wgs84": {
+          "lon": 14.463308019,
+          "lat": 48.829127154
+        },
+        "bbox_wgs84": [
+          14.4631773,
+          48.829063,
+          14.463465,
+          48.8291777
+        ],
+        "bbox_epsg5514": [
+          -758834.643,
+          -1182075.642,
+          -758813.805,
+          -1182063.364
+        ],
+        "footprint_area_m2": 191.042,
+        "exterior_vertex_count": 10,
+        "source_attributes": {
+          "class": null,
+          "subtype": null,
+          "height": null,
+          "min_height": null,
+          "num_floors": 2,
+          "has_parts": false,
+          "roof_shape": "hipped",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104235703@4",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104235703"
+        ],
+        "addresses": [
+          {
+            "id": "57f8d1ac-b184-43e5-80d6-32809cb36895",
+            "street": "náměstí J. V. Kamarýta",
+            "number": "89",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8741492",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [],
+        "identity": {
+          "status": "supported",
+          "note": null,
+          "reference_keys": [
+            "jakub_three_numbers",
+            "jakub_operator"
+          ],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "7ec1c263-165d-428b-a9a3-ff9add05a3d9",
+      "bbox": [
+        14.4604822,
+        48.8287451,
+        14.4605686,
+        48.8288019
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.4605583,
+              48.8288019
+            ],
+            [
+              14.4604822,
+              48.8287951
+            ],
+            [
+              14.4604925,
+              48.8287451
+            ],
+            [
+              14.4605686,
+              48.828752
+            ],
+            [
+              14.4605583,
+              48.8288019
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-07",
+        "building_id": "7ec1c263-165d-428b-a9a3-ff9add05a3d9",
+        "name": "Vodárenská věž v Družstevní",
+        "category": "water_tower",
+        "group_id": "building:7ec1c263-165d-428b-a9a3-ff9add05a3d9",
+        "selection_reason": "Malý půdorys vysokého objektu, jehlanová střecha dle zdrojového atributu.",
+        "centroid_wgs84": {
+          "lon": 14.46052539,
+          "lat": 48.828773531
+        },
+        "bbox_wgs84": [
+          14.4604822,
+          48.8287451,
+          14.4605686,
+          48.8288019
+        ],
+        "bbox_epsg5514": [
+          -759036.349,
+          -1182083.401,
+          -759030.705,
+          -1182077.79
+        ],
+        "footprint_area_m2": 31.615,
+        "exterior_vertex_count": 4,
+        "source_attributes": {
+          "class": "industrial",
+          "subtype": "industrial",
+          "height": null,
+          "min_height": null,
+          "num_floors": 3,
+          "has_parts": false,
+          "roof_shape": "pyramidal",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104236088@4",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104236088"
+        ],
+        "addresses": [],
+        "contained_places": [],
+        "identity": {
+          "status": "supported",
+          "note": null,
+          "reference_keys": [
+            "water_tower_context"
+          ],
+          "address_containment_checked": false,
+          "infrastructure_evidence": [
+            {
+              "id": "c7a7f379-6bf6-35e8-936b-502a7852f4ef",
+              "class": "water_tower",
+              "sources": [
+                {
+                  "property": "",
+                  "dataset": "OpenStreetMap",
+                  "license": "ODbL-1.0",
+                  "record_id": "w104236088@4",
+                  "update_time": "2024-07-28T10:51:16.000Z",
+                  "confidence": null,
+                  "between": null,
+                  "provider": "osm",
+                  "resource": "planet",
+                  "version": "2026-10-04T00:00:00.000Z"
+                }
+              ],
+              "source_tags": {
+                "building": "industrial",
+                "building:levels": "3",
+                "building:ruian:type": "16",
+                "man_made": "water_tower",
+                "ref:ruian:building": "44188030",
+                "roof:shape": "pyramidal",
+                "source": "cuzk:ruian"
+              }
+            }
+          ]
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "c5bb605f-5e1b-4d00-b773-323365e9e4f9",
+      "bbox": [
+        14.4603437,
+        48.8293483,
+        14.460555,
+        48.8296325
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.460555,
+              48.8296205
+            ],
+            [
+              14.4603889,
+              48.8296325
+            ],
+            [
+              14.460373,
+              48.829539
+            ],
+            [
+              14.460369,
+              48.829516
+            ],
+            [
+              14.4603437,
+              48.8293603
+            ],
+            [
+              14.4605098,
+              48.8293483
+            ],
+            [
+              14.460555,
+              48.8296205
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-08",
+        "building_id": "c5bb605f-5e1b-4d00-b773-323365e9e4f9",
+        "name": "Mateřská škola – Školní 223",
+        "category": "kindergarten",
+        "group_id": "kindergarten-223",
+        "selection_reason": "Veřejná budova v měnícím se areálu; kontrola stáří podkladů a přístaveb.",
+        "centroid_wgs84": {
+          "lon": 14.460449224,
+          "lat": 48.829490422
+        },
+        "bbox_wgs84": [
+          14.4603437,
+          48.8293483,
+          14.460555,
+          48.8296325
+        ],
+        "bbox_epsg5514": [
+          -759037.886,
+          -1182017.112,
+          -759018.587,
+          -1181984.594
+        ],
+        "footprint_area_m2": 374.197,
+        "exterior_vertex_count": 6,
+        "source_attributes": {
+          "class": "civic",
+          "subtype": "civic",
+          "height": null,
+          "min_height": null,
+          "num_floors": 1,
+          "has_parts": false,
+          "roof_shape": "gabled",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104235584@4",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104235584"
+        ],
+        "addresses": [
+          {
+            "id": "6af1ad50-d1c7-48bd-b702-c291251511d4",
+            "street": "Školní",
+            "number": "223",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8742642",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [],
+        "identity": {
+          "status": "supported",
+          "note": null,
+          "reference_keys": [
+            "school_addresses",
+            "school_own"
+          ],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "12030eea-2246-4a6e-bcd1-80fa329153d8",
+      "bbox": [
+        14.4595917,
+        48.829304,
+        14.460373,
+        48.829691
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.460115,
+              48.829513
+            ],
+            [
+              14.460056,
+              48.829688
+            ],
+            [
+              14.460021,
+              48.829691
+            ],
+            [
+              14.460019,
+              48.829681
+            ],
+            [
+              14.460078,
+              48.829505
+            ],
+            [
+              14.459755,
+              48.829468
+            ],
+            [
+              14.459753,
+              48.829449
+            ],
+            [
+              14.4597313,
+              48.8294504
+            ],
+            [
+              14.459689,
+              48.829453
+            ],
+            [
+              14.459684,
+              48.829429
+            ],
+            [
+              14.4596145,
+              48.8294336
+            ],
+            [
+              14.459594,
+              48.829435
+            ],
+            [
+              14.4595917,
+              48.8294143
+            ],
+            [
+              14.459631,
+              48.829411
+            ],
+            [
+              14.459615,
+              48.829309
+            ],
+            [
+              14.459669,
+              48.829304
+            ],
+            [
+              14.459673,
+              48.829328
+            ],
+            [
+              14.459856,
+              48.829315
+            ],
+            [
+              14.459858,
+              48.829329
+            ],
+            [
+              14.459908,
+              48.829326
+            ],
+            [
+              14.459924,
+              48.829436
+            ],
+            [
+              14.459811,
+              48.829443
+            ],
+            [
+              14.459813,
+              48.829451
+            ],
+            [
+              14.460086,
+              48.82948
+            ],
+            [
+              14.460091,
+              48.829459
+            ],
+            [
+              14.460111,
+              48.8294619
+            ],
+            [
+              14.460133,
+              48.829465
+            ],
+            [
+              14.46013,
+              48.829489
+            ],
+            [
+              14.460369,
+              48.829516
+            ],
+            [
+              14.460373,
+              48.829539
+            ],
+            [
+              14.460115,
+              48.829513
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-09",
+        "building_id": "12030eea-2246-4a6e-bcd1-80fa329153d8",
+        "name": "Členitý objekt západně od MŠ – kandidát části areálu",
+        "category": "kindergarten_extension_candidate",
+        "group_id": "kindergarten-223-candidate",
+        "selection_reason": "Třicet vrcholů obrysu: rozklad členitého půdorysu a různé výšky částí.",
+        "centroid_wgs84": {
+          "lon": 14.45988204,
+          "lat": 48.829437257
+        },
+        "bbox_wgs84": [
+          14.4595917,
+          48.829304,
+          14.460373,
+          48.829691
+        ],
+        "bbox_epsg5514": [
+          -759091.775,
+          -1182014.265,
+          -759033.057,
+          -1181974.481
+        ],
+        "footprint_area_m2": 486.461,
+        "exterior_vertex_count": 30,
+        "source_attributes": {
+          "class": null,
+          "subtype": null,
+          "height": null,
+          "min_height": null,
+          "num_floors": 2,
+          "has_parts": false,
+          "roof_shape": "gabled",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104236033@6",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104236033"
+        ],
+        "addresses": [],
+        "contained_places": [],
+        "identity": {
+          "status": "candidate",
+          "note": "Poloha sousedí s MŠ. Příslušnost objektu k MŠ ani identita nové přístavby nejsou potvrzeny; nejde o tvrzení, že jde o novou přístavbu 2026.",
+          "reference_keys": [],
+          "address_containment_checked": false,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "988326aa-55e0-4e44-8479-b666954da3d2",
+      "bbox": [
+        14.4586,
+        48.828496,
+        14.459315,
+        48.829105
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.4592264,
+              48.8290708
+            ],
+            [
+              14.459221,
+              48.829105
+            ],
+            [
+              14.459099,
+              48.829096
+            ],
+            [
+              14.459135,
+              48.828854
+            ],
+            [
+              14.458971,
+              48.828844
+            ],
+            [
+              14.45897,
+              48.828858
+            ],
+            [
+              14.458884,
+              48.828851
+            ],
+            [
+              14.458886,
+              48.828836
+            ],
+            [
+              14.458681,
+              48.828824
+            ],
+            [
+              14.4586485,
+              48.829033
+            ],
+            [
+              14.4586,
+              48.82903
+            ],
+            [
+              14.458644,
+              48.828765
+            ],
+            [
+              14.458691,
+              48.8287675
+            ],
+            [
+              14.458695,
+              48.82874
+            ],
+            [
+              14.459149,
+              48.82877
+            ],
+            [
+              14.459189,
+              48.828496
+            ],
+            [
+              14.4592069,
+              48.8284973
+            ],
+            [
+              14.459315,
+              48.828505
+            ],
+            [
+              14.4592975,
+              48.8286167
+            ],
+            [
+              14.4592749,
+              48.8287608
+            ],
+            [
+              14.4592264,
+              48.8290708
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-10",
+        "building_id": "988326aa-55e0-4e44-8479-b666954da3d2",
+        "name": "Základní škola – Družstevní 340",
+        "category": "school",
+        "group_id": "building:988326aa-55e0-4e44-8479-b666954da3d2",
+        "selection_reason": "Velká školní budova, více střešních částí a výškové přechody.",
+        "centroid_wgs84": {
+          "lon": 14.459060262,
+          "lat": 48.828809017
+        },
+        "bbox_wgs84": [
+          14.4586,
+          48.828496,
+          14.459315,
+          48.829105
+        ],
+        "bbox_epsg5514": [
+          -759170.518,
+          -1182098.119,
+          -759123.411,
+          -1182030.849
+        ],
+        "footprint_area_m2": 1040.311,
+        "exterior_vertex_count": 20,
+        "source_attributes": {
+          "class": "school",
+          "subtype": "education",
+          "height": null,
+          "min_height": null,
+          "num_floors": 4,
+          "has_parts": false,
+          "roof_shape": "gabled",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104235713@7",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104235713"
+        ],
+        "addresses": [
+          {
+            "id": "a7c289dc-9968-4ac1-88cb-6c2be71a9241",
+            "street": "Družstevní",
+            "number": "340",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8743797",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [],
+        "identity": {
+          "status": "local_address_and_place",
+          "note": null,
+          "reference_keys": [],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "78e32d1e-ecfa-4e1b-a00f-db417ea5af1b",
+      "bbox": [
+        14.4629343,
+        48.8343497,
+        14.4635405,
+        48.8348697
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.4633383,
+              48.8346974
+            ],
+            [
+              14.4629343,
+              48.834487
+            ],
+            [
+              14.463098,
+              48.8343497
+            ],
+            [
+              14.4635025,
+              48.8345598
+            ],
+            [
+              14.4634941,
+              48.8345664
+            ],
+            [
+              14.4635405,
+              48.8345904
+            ],
+            [
+              14.4632989,
+              48.834793
+            ],
+            [
+              14.4633021,
+              48.8347947
+            ],
+            [
+              14.4632129,
+              48.8348697
+            ],
+            [
+              14.4631336,
+              48.8348289
+            ],
+            [
+              14.4631368,
+              48.8348263
+            ],
+            [
+              14.4630205,
+              48.8347665
+            ],
+            [
+              14.4631243,
+              48.8346792
+            ],
+            [
+              14.4633122,
+              48.834719
+            ],
+            [
+              14.4633383,
+              48.8346974
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-11",
+        "building_id": "78e32d1e-ecfa-4e1b-a00f-db417ea5af1b",
+        "name": "Sportcentrum – tenisová a squashová hala",
+        "category": "barrel_roof_complex",
+        "group_id": "sportcentrum",
+        "selection_reason": "Známá válcová střecha + ploché části různé výšky + otevřený průchod.",
+        "centroid_wgs84": {
+          "lon": 14.463228251,
+          "lat": 48.834595949
+        },
+        "bbox_wgs84": [
+          14.4629343,
+          48.8343497,
+          14.4635405,
+          48.8348697
+        ],
+        "bbox_epsg5514": [
+          -758772.058,
+          -1181491.841,
+          -758726.404,
+          -1181435.691
+        ],
+        "footprint_area_m2": 1110.102,
+        "exterior_vertex_count": 14,
+        "source_attributes": {
+          "class": "civic",
+          "subtype": "civic",
+          "height": null,
+          "min_height": null,
+          "num_floors": 1,
+          "has_parts": false,
+          "roof_shape": null,
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104235783@2",
+            "update_time": "2016-01-19T16:43:36.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104235783"
+        ],
+        "addresses": [
+          {
+            "id": "07d262dc-c8b8-4fcc-a655-85644a8b695f",
+            "street": "Strahovská",
+            "number": "661",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "27875997",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [],
+        "identity": {
+          "status": "user_reviewed",
+          "note": null,
+          "reference_keys": [
+            "sportcentrum_reference"
+          ],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "user_reviewed_simplified_reference",
+          "note": "Tenisová hala má válcovou střechu, celek více výšek a průchod; dřívější model není nezávislé zaměření."
+        },
+        "reference_model": "cities/velesin/models/sportcentrum-velesin.source.json"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "7bf51833-2377-4271-8ddc-b5f8611e44a8",
+      "bbox": [
+        14.464015,
+        48.829568,
+        14.464203,
+        48.829803
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.464134,
+              48.829666
+            ],
+            [
+              14.464134,
+              48.829705
+            ],
+            [
+              14.464111,
+              48.829803
+            ],
+            [
+              14.464015,
+              48.829794
+            ],
+            [
+              14.464018,
+              48.82971
+            ],
+            [
+              14.4640385,
+              48.8297105
+            ],
+            [
+              14.464078,
+              48.829568
+            ],
+            [
+              14.464203,
+              48.829588
+            ],
+            [
+              14.464181,
+              48.829669
+            ],
+            [
+              14.464134,
+              48.829666
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-12",
+        "building_id": "7bf51833-2377-4271-8ddc-b5f8611e44a8",
+        "name": "Náměstí J. V. Kamarýta 131",
+        "category": "historic_square",
+        "group_id": "building:7bf51833-2377-4271-8ddc-b5f8611e44a8",
+        "selection_reason": "Řadový dům u náměstí; oddělení společných střech a dvorních částí.",
+        "centroid_wgs84": {
+          "lon": 14.464099338,
+          "lat": 48.829681971
+        },
+        "bbox_wgs84": [
+          14.464015,
+          48.829568,
+          14.464203,
+          48.829803
+        ],
+        "bbox_epsg5514": [
+          -758765.322,
+          -1182028.463,
+          -758753.705,
+          -1182002.899
+        ],
+        "footprint_area_m2": 203.167,
+        "exterior_vertex_count": 9,
+        "source_attributes": {
+          "class": null,
+          "subtype": null,
+          "height": null,
+          "min_height": null,
+          "num_floors": 3,
+          "has_parts": false,
+          "roof_shape": "gabled",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104235818@3",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104235818"
+        ],
+        "addresses": [
+          {
+            "id": "342621a4-d33d-46f9-8584-d5c585d35a0c",
+            "street": "náměstí J. V. Kamarýta",
+            "number": "131",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8741841",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [
+          {
+            "id": "e54f64ec-a221-42ac-a116-fecfa93817b2",
+            "name": "Jazykové kurzy Velešín",
+            "websites": null,
+            "confidence": 0.8754368424415588,
+            "note": "POI poloha je pomocná indicie, nikoli samostatné ověření identity."
+          }
+        ],
+        "identity": {
+          "status": "address_match",
+          "note": null,
+          "reference_keys": [],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "198527b2-b7a6-406f-9b2d-ebfc29d7f723",
+      "bbox": [
+        14.4616902,
+        48.828622,
+        14.46263,
+        48.8288288
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.4617138,
+              48.828622
+            ],
+            [
+              14.4623029,
+              48.8287327
+            ],
+            [
+              14.4622968,
+              48.8287469
+            ],
+            [
+              14.462427,
+              48.8287609
+            ],
+            [
+              14.4624603,
+              48.8286426
+            ],
+            [
+              14.46263,
+              48.8286687
+            ],
+            [
+              14.4625931,
+              48.8288288
+            ],
+            [
+              14.4624397,
+              48.8288175
+            ],
+            [
+              14.4623534,
+              48.8288036
+            ],
+            [
+              14.4622537,
+              48.8287875
+            ],
+            [
+              14.4616902,
+              48.8286741
+            ],
+            [
+              14.4617138,
+              48.828622
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-13",
+        "building_id": "198527b2-b7a6-406f-9b2d-ebfc29d7f723",
+        "name": "Náměstí J. V. Kamarýta 69",
+        "category": "historic_square",
+        "group_id": "building:198527b2-b7a6-406f-9b2d-ebfc29d7f723",
+        "selection_reason": "Protáhlý členitý dům s dvorní částí, nevhodný pro jednu univerzální sedlovou střechu.",
+        "centroid_wgs84": {
+          "lon": 14.462250862,
+          "lat": 48.828726784
+        },
+        "bbox_wgs84": [
+          14.4616902,
+          48.828622,
+          14.46263,
+          48.8288288
+        ],
+        "bbox_epsg5514": [
+          -758950.293,
+          -1182114.306,
+          -758882.008,
+          -1182094.83
+        ],
+        "footprint_area_m2": 590.99,
+        "exterior_vertex_count": 11,
+        "source_attributes": {
+          "class": "house",
+          "subtype": "residential",
+          "height": null,
+          "min_height": null,
+          "num_floors": 3,
+          "has_parts": false,
+          "roof_shape": "gabled",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104235833@4",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104235833"
+        ],
+        "addresses": [
+          {
+            "id": "3fb584e3-d647-4680-86d2-e4df61283a95",
+            "street": "náměstí J. V. Kamarýta",
+            "number": "69",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8741344",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [
+          {
+            "id": "7ff7f47b-240a-4f33-ba7e-47a8f65527a6",
+            "name": "Pekařství Pod Věží",
+            "websites": null,
+            "confidence": 0.18257834017276764,
+            "note": "POI poloha je pomocná indicie, nikoli samostatné ověření identity."
+          }
+        ],
+        "identity": {
+          "status": "address_match",
+          "note": null,
+          "reference_keys": [],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "97d883e9-0f10-4399-b162-78c494a93d4e",
+      "bbox": [
+        14.4617465,
+        48.8287917,
+        14.4625717,
+        48.8289933
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.4620764,
+              48.8289573
+            ],
+            [
+              14.4618714,
+              48.8289341
+            ],
+            [
+              14.4617465,
+              48.8289221
+            ],
+            [
+              14.4617589,
+              48.8288688
+            ],
+            [
+              14.4617797,
+              48.8287917
+            ],
+            [
+              14.4619061,
+              48.8288148
+            ],
+            [
+              14.4618876,
+              48.828882
+            ],
+            [
+              14.4624127,
+              48.8289324
+            ],
+            [
+              14.4624193,
+              48.8289046
+            ],
+            [
+              14.4625717,
+              48.8289199
+            ],
+            [
+              14.4625546,
+              48.8289933
+            ],
+            [
+              14.4624024,
+              48.8289779
+            ],
+            [
+              14.4621216,
+              48.8289602
+            ],
+            [
+              14.4620764,
+              48.8289573
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-14",
+        "building_id": "97d883e9-0f10-4399-b162-78c494a93d4e",
+        "name": "Náměstí J. V. Kamarýta 70",
+        "category": "historic_square",
+        "group_id": "building:97d883e9-0f10-4399-b162-78c494a93d4e",
+        "selection_reason": "Členitý půdorys vedle čp. 69; rozklad hmot a návaznost střech.",
+        "centroid_wgs84": {
+          "lon": 14.462116517,
+          "lat": 48.828916155
+        },
+        "bbox_wgs84": [
+          14.4617465,
+          48.8287917,
+          14.4625717,
+          48.8289933
+        ],
+        "bbox_epsg5514": [
+          -758942.454,
+          -1182091.096,
+          -758882.457,
+          -1182075.806
+        ],
+        "footprint_area_m2": 456.715,
+        "exterior_vertex_count": 13,
+        "source_attributes": {
+          "class": "house",
+          "subtype": "residential",
+          "height": null,
+          "min_height": null,
+          "num_floors": 2,
+          "has_parts": false,
+          "roof_shape": "gabled",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104236204@5",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104236204"
+        ],
+        "addresses": [
+          {
+            "id": "bef8f733-829e-4dd9-8a2e-84fbe6c30c37",
+            "street": "náměstí J. V. Kamarýta",
+            "number": "70",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8741352",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [],
+        "identity": {
+          "status": "address_match",
+          "note": null,
+          "reference_keys": [],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "2df261d0-83c4-4c17-beac-5cdbfa06b944",
+      "bbox": [
+        14.463803,
+        48.828549,
+        14.464385,
+        48.829137
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.463938,
+              48.829048
+            ],
+            [
+              14.463979,
+              48.829064
+            ],
+            [
+              14.463911,
+              48.829137
+            ],
+            [
+              14.463803,
+              48.8290955
+            ],
+            [
+              14.463889,
+              48.829004
+            ],
+            [
+              14.4639755,
+              48.8289113
+            ],
+            [
+              14.4640536,
+              48.8288341
+            ],
+            [
+              14.4640566,
+              48.8288346
+            ],
+            [
+              14.4641424,
+              48.8287449
+            ],
+            [
+              14.4642164,
+              48.8286637
+            ],
+            [
+              14.4642262,
+              48.8286532
+            ],
+            [
+              14.464314,
+              48.828549
+            ],
+            [
+              14.464385,
+              48.828576
+            ],
+            [
+              14.464288,
+              48.828693
+            ],
+            [
+              14.4643195,
+              48.828708
+            ],
+            [
+              14.464246,
+              48.828786
+            ],
+            [
+              14.464204,
+              48.828768
+            ],
+            [
+              14.4641136,
+              48.8288619
+            ],
+            [
+              14.4641081,
+              48.8288601
+            ],
+            [
+              14.463938,
+              48.829048
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-15",
+        "building_id": "2df261d0-83c4-4c17-beac-5cdbfa06b944",
+        "name": "Náměstí J. V. Kamarýta 57",
+        "category": "historic_square",
+        "group_id": "building:2df261d0-83c4-4c17-beac-5cdbfa06b944",
+        "selection_reason": "Nepravidelný historický půdorys, test zjednodušení bez ztráty významných ramen.",
+        "centroid_wgs84": {
+          "lon": 14.464098314,
+          "lat": 48.828844159
+        },
+        "bbox_wgs84": [
+          14.463803,
+          48.828549,
+          14.464385,
+          48.829137
+        ],
+        "bbox_epsg5514": [
+          -758790.236,
+          -1182143.09,
+          -758755.737,
+          -1182074.287
+        ],
+        "footprint_area_m2": 465.291,
+        "exterior_vertex_count": 19,
+        "source_attributes": {
+          "class": null,
+          "subtype": null,
+          "height": null,
+          "min_height": null,
+          "num_floors": 2,
+          "has_parts": false,
+          "roof_shape": "gabled",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104236047@4",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104236047"
+        ],
+        "addresses": [
+          {
+            "id": "c5a318cb-063f-41e8-bf08-d0fe7c27ad72",
+            "street": "náměstí J. V. Kamarýta",
+            "number": "57",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8741221",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [
+          {
+            "id": "60277f8d-019d-46c2-8b5e-fce73274d366",
+            "name": "Krámek Pod Věží",
+            "websites": null,
+            "confidence": 0.8963910937309265,
+            "note": "POI poloha je pomocná indicie, nikoli samostatné ověření identity."
+          }
+        ],
+        "identity": {
+          "status": "address_match",
+          "note": null,
+          "reference_keys": [],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "22d5f84d-bc4b-46ae-ae1d-e9d2034672f2",
+      "bbox": [
+        14.4649845,
+        48.829728,
+        14.4651652,
+        48.8298635
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.46503,
+              48.829728
+            ],
+            [
+              14.4651652,
+              48.8297652
+            ],
+            [
+              14.4651134,
+              48.8298635
+            ],
+            [
+              14.464994,
+              48.829831
+            ],
+            [
+              14.4649845,
+              48.829827
+            ],
+            [
+              14.46503,
+              48.829728
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-16",
+        "building_id": "22d5f84d-bc4b-46ae-ae1d-e9d2034672f2",
+        "name": "Náměstí J. V. Kamarýta 14",
+        "category": "historic_square",
+        "group_id": "building:22d5f84d-bc4b-46ae-ae1d-e9d2034672f2",
+        "selection_reason": "Menší řadový dům jako jednoduchý protějšek členitých sousedů.",
+        "centroid_wgs84": {
+          "lon": 14.465073317,
+          "lat": 48.829795853
+        },
+        "bbox_wgs84": [
+          14.4649845,
+          48.829728,
+          14.4651652,
+          48.8298635
+        ],
+        "bbox_epsg5514": [
+          -758693.249,
+          -1182020.318,
+          -758681.036,
+          -1182006.219
+        ],
+        "footprint_area_m2": 121.698,
+        "exterior_vertex_count": 5,
+        "source_attributes": {
+          "class": null,
+          "subtype": null,
+          "height": null,
+          "min_height": null,
+          "num_floors": 2,
+          "has_parts": false,
+          "roof_shape": "gabled",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104236231@3",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104236231"
+        ],
+        "addresses": [
+          {
+            "id": "63031ded-748b-4d8d-932f-26711dd40145",
+            "street": "náměstí J. V. Kamarýta",
+            "number": "14",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8740798",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [
+          {
+            "id": "a4cb745d-22d0-4555-8e7c-433614880c8e",
+            "name": "Kosmetika Kateřina Trojáková",
+            "websites": null,
+            "confidence": 0.6304292678833008,
+            "note": "POI poloha je pomocná indicie, nikoli samostatné ověření identity."
+          }
+        ],
+        "identity": {
+          "status": "address_match",
+          "note": null,
+          "reference_keys": [],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "43896dfe-74a3-4d28-a66b-62534438d9f7",
+      "bbox": [
+        14.458455,
+        48.831964,
+        14.458689,
+        48.832219
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.458611,
+              48.832189
+            ],
+            [
+              14.4586005,
+              48.832219
+            ],
+            [
+              14.458465,
+              48.832198
+            ],
+            [
+              14.458488,
+              48.832136
+            ],
+            [
+              14.458455,
+              48.832131
+            ],
+            [
+              14.4584681,
+              48.8320943
+            ],
+            [
+              14.4584732,
+              48.8320801
+            ],
+            [
+              14.458479,
+              48.832064
+            ],
+            [
+              14.458495,
+              48.832066
+            ],
+            [
+              14.458521,
+              48.831994
+            ],
+            [
+              14.458538,
+              48.831995
+            ],
+            [
+              14.458548,
+              48.831964
+            ],
+            [
+              14.458684,
+              48.831985
+            ],
+            [
+              14.458671,
+              48.832018
+            ],
+            [
+              14.458689,
+              48.832019
+            ],
+            [
+              14.458626,
+              48.832191
+            ],
+            [
+              14.458611,
+              48.832189
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-17",
+        "building_id": "43896dfe-74a3-4d28-a66b-62534438d9f7",
+        "name": "Bytový blok Sídliště 506",
+        "category": "apartment_block_candidate",
+        "group_id": "building:43896dfe-74a3-4d28-a66b-62534438d9f7",
+        "selection_reason": "Vysoký blok: zdroj uvádí 9 podlaží a plochou střechu.",
+        "centroid_wgs84": {
+          "lon": 14.458572783,
+          "lat": 48.832090913
+        },
+        "bbox_wgs84": [
+          14.458455,
+          48.831964,
+          14.458689,
+          48.832219
+        ],
+        "bbox_epsg5514": [
+          -759133.444,
+          -1181709.357,
+          -759118.113,
+          -1181681.784
+        ],
+        "footprint_area_m2": 324.302,
+        "exterior_vertex_count": 16,
+        "source_attributes": {
+          "class": null,
+          "subtype": null,
+          "height": null,
+          "min_height": null,
+          "num_floors": 9,
+          "has_parts": false,
+          "roof_shape": "flat",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104235455@5",
+            "update_time": "2024-07-20T15:40:11.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104235455"
+        ],
+        "addresses": [
+          {
+            "id": "bfa278aa-119e-4e95-bedd-e0ef9d012c45",
+            "street": "Sídliště",
+            "number": "506",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8745439",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [],
+        "identity": {
+          "status": "address_match",
+          "note": "Adresní identita potvrzena; panelová konstrukce ani počet skutečných podlaží nebyly zaměřeny.",
+          "reference_keys": [],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "30491e38-7ddc-488b-b26d-c6cc44b7feaa",
+      "bbox": [
+        14.457926,
+        48.831435,
+        14.458116,
+        48.831669
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.458079,
+              48.831639
+            ],
+            [
+              14.458076,
+              48.831669
+            ],
+            [
+              14.4579395,
+              48.831663
+            ],
+            [
+              14.457941,
+              48.831633
+            ],
+            [
+              14.457926,
+              48.831634
+            ],
+            [
+              14.4579301,
+              48.8315951
+            ],
+            [
+              14.4579321,
+              48.8315767
+            ],
+            [
+              14.4579332,
+              48.8315667
+            ],
+            [
+              14.457944,
+              48.831466
+            ],
+            [
+              14.45796,
+              48.831468
+            ],
+            [
+              14.457964,
+              48.831435
+            ],
+            [
+              14.4581,
+              48.831441
+            ],
+            [
+              14.458096,
+              48.831469
+            ],
+            [
+              14.458113,
+              48.831469
+            ],
+            [
+              14.4581058,
+              48.8315407
+            ],
+            [
+              14.4581038,
+              48.8315607
+            ],
+            [
+              14.4581,
+              48.831599
+            ],
+            [
+              14.458116,
+              48.831599
+            ],
+            [
+              14.458111,
+              48.831641
+            ],
+            [
+              14.458079,
+              48.831639
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-18",
+        "building_id": "30491e38-7ddc-488b-b26d-c6cc44b7feaa",
+        "name": "Bytový blok Sídliště 463",
+        "category": "apartment_block_candidate",
+        "group_id": "building:30491e38-7ddc-488b-b26d-c6cc44b7feaa",
+        "selection_reason": "Nižší blok: zdroj uvádí 5 podlaží, plochou střechu a členitější obrys.",
+        "centroid_wgs84": {
+          "lon": 14.458021278,
+          "lat": 48.831553407
+        },
+        "bbox_wgs84": [
+          14.457926,
+          48.831435,
+          14.458116,
+          48.831669
+        ],
+        "bbox_epsg5514": [
+          -759180.655,
+          -1181762.515,
+          -759165.865,
+          -1181736.455
+        ],
+        "footprint_area_m2": 305.717,
+        "exterior_vertex_count": 19,
+        "source_attributes": {
+          "class": null,
+          "subtype": null,
+          "height": null,
+          "min_height": null,
+          "num_floors": 5,
+          "has_parts": false,
+          "roof_shape": "flat",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104235924@5",
+            "update_time": "2024-07-20T15:40:11.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104235924"
+        ],
+        "addresses": [
+          {
+            "id": "85add29a-84bc-4590-b843-5f561490dfe2",
+            "street": "Sídliště",
+            "number": "463",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8745013",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [],
+        "identity": {
+          "status": "address_match",
+          "note": "Adresní identita potvrzena; panelová konstrukce je pouze kandidátní kategorie.",
+          "reference_keys": [],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "d0cbb8d8-2ce8-41f5-9dec-b00337bdd525",
+      "bbox": [
+        14.459855,
+        48.828283,
+        14.4602645,
+        48.8283985
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.4602645,
+              48.8283105
+            ],
+            [
+              14.46025,
+              48.8283985
+            ],
+            [
+              14.459855,
+              48.828371
+            ],
+            [
+              14.459869,
+              48.828283
+            ],
+            [
+              14.4599712,
+              48.8282901
+            ],
+            [
+              14.4599964,
+              48.8282918
+            ],
+            [
+              14.4600207,
+              48.8282935
+            ],
+            [
+              14.460169,
+              48.8283039
+            ],
+            [
+              14.4601918,
+              48.8283054
+            ],
+            [
+              14.4602149,
+              48.8283071
+            ],
+            [
+              14.4602645,
+              48.8283105
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-19",
+        "building_id": "d0cbb8d8-2ce8-41f5-9dec-b00337bdd525",
+        "name": "Bytový dům Družstevní 336–337",
+        "category": "apartment_block_candidate",
+        "group_id": "building:d0cbb8d8-2ce8-41f5-9dec-b00337bdd525",
+        "selection_reason": "Dva adresní body v jednom půdorysu a plochá střecha dle zdroje.",
+        "centroid_wgs84": {
+          "lon": 14.460059627,
+          "lat": 48.828340747
+        },
+        "bbox_wgs84": [
+          14.459855,
+          48.828283,
+          14.4602645,
+          48.8283985
+        ],
+        "bbox_epsg5514": [
+          -759088.682,
+          -1182129.014,
+          -759059.222,
+          -1182118.266
+        ],
+        "footprint_area_m2": 287.236,
+        "exterior_vertex_count": 10,
+        "source_attributes": {
+          "class": null,
+          "subtype": null,
+          "height": null,
+          "min_height": null,
+          "num_floors": 5,
+          "has_parts": false,
+          "roof_shape": "flat",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104235738@5",
+            "update_time": "2024-07-24T11:39:55.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104235738"
+        ],
+        "addresses": [
+          {
+            "id": "fb9efa90-fffe-4892-9427-5d34e0aa20d3",
+            "street": "Družstevní",
+            "number": "337",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8743762",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          },
+          {
+            "id": "87d26cb0-eae8-4d99-a989-6686b4328082",
+            "street": "Družstevní",
+            "number": "336",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8743754",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [],
+        "identity": {
+          "status": "address_match",
+          "note": "Adresy 336 a 337 leží ve stejném zdrojovém polygonu; konstrukční systém neověřen.",
+          "reference_keys": [],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "0de630cc-d74f-4e84-8a9e-3bb1b3525403",
+      "bbox": [
+        14.4602423,
+        48.8305539,
+        14.4603724,
+        48.8306652
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.4602423,
+              48.8306608
+            ],
+            [
+              14.4602511,
+              48.8305539
+            ],
+            [
+              14.4603724,
+              48.8305583
+            ],
+            [
+              14.4603639,
+              48.8306652
+            ],
+            [
+              14.4602423,
+              48.8306608
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-20",
+        "building_id": "0de630cc-d74f-4e84-8a9e-3bb1b3525403",
+        "name": "Rodinný dům Školní 522",
+        "category": "ordinary_gabled",
+        "group_id": "building:0de630cc-d74f-4e84-8a9e-3bb1b3525403",
+        "selection_reason": "Jednoduchý čtyřhranný půdorys se sedlovou střechou dle atributu; základní kontrolní případ.",
+        "centroid_wgs84": {
+          "lon": 14.460307425,
+          "lat": 48.83060958
+        },
+        "bbox_wgs84": [
+          14.4602423,
+          48.8305539,
+          14.4603724,
+          48.8306652
+        ],
+        "bbox_epsg5514": [
+          -759026.603,
+          -1181882.423,
+          -759016.717,
+          -1181869.833
+        ],
+        "footprint_area_m2": 106.322,
+        "exterior_vertex_count": 4,
+        "source_attributes": {
+          "class": "house",
+          "subtype": "residential",
+          "height": null,
+          "min_height": null,
+          "num_floors": 2,
+          "has_parts": false,
+          "roof_shape": "gabled",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104235811@4",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104235811"
+        ],
+        "addresses": [
+          {
+            "id": "6ca24e07-bfc6-4ca0-b369-bdfa750fe503",
+            "street": "Školní",
+            "number": "522",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8745595",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [],
+        "identity": {
+          "status": "address_match",
+          "note": null,
+          "reference_keys": [],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "2dd5e4d3-1624-4569-bde8-a79bc9723db2",
+      "bbox": [
+        14.4609076,
+        48.8306981,
+        14.4611136,
+        48.8308515
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.4609422,
+              48.8308225
+            ],
+            [
+              14.460951,
+              48.8308098
+            ],
+            [
+              14.4609076,
+              48.8307956
+            ],
+            [
+              14.4609226,
+              48.8307759
+            ],
+            [
+              14.4609082,
+              48.8307711
+            ],
+            [
+              14.4609397,
+              48.8307293
+            ],
+            [
+              14.4609549,
+              48.8307343
+            ],
+            [
+              14.4609822,
+              48.8306981
+            ],
+            [
+              14.4610138,
+              48.8307105
+            ],
+            [
+              14.4611136,
+              48.8307412
+            ],
+            [
+              14.4610791,
+              48.8307902
+            ],
+            [
+              14.4610306,
+              48.8308515
+            ],
+            [
+              14.4609422,
+              48.8308225
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-21",
+        "building_id": "2dd5e4d3-1624-4569-bde8-a79bc9723db2",
+        "name": "Dům Budějovická 215",
+        "category": "ordinary_hipped",
+        "group_id": "building:2dd5e4d3-1624-4569-bde8-a79bc9723db2",
+        "selection_reason": "Valbová střecha dle atributu na členitějším půdorysu.",
+        "centroid_wgs84": {
+          "lon": 14.461006244,
+          "lat": 48.830773167
+        },
+        "bbox_wgs84": [
+          14.4609076,
+          48.8306981,
+          14.4611136,
+          48.8308515
+        ],
+        "bbox_epsg5514": [
+          -758975.525,
+          -1181873.097,
+          -758961.035,
+          -1181856.678
+        ],
+        "footprint_area_m2": 148.799,
+        "exterior_vertex_count": 12,
+        "source_attributes": {
+          "class": "house",
+          "subtype": "residential",
+          "height": null,
+          "min_height": null,
+          "num_floors": 2,
+          "has_parts": false,
+          "roof_shape": "hipped",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104235915@4",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104235915"
+        ],
+        "addresses": [
+          {
+            "id": "7f624bc0-35e9-4191-8ce0-656652b597ad",
+            "street": "Budějovická",
+            "number": "215",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8742570",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [],
+        "identity": {
+          "status": "address_match",
+          "note": null,
+          "reference_keys": [],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "84441cdd-e38a-4c2c-9391-9162681d24e7",
+      "bbox": [
+        14.4607542,
+        48.829496,
+        14.461005,
+        48.8296237
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.461005,
+              48.8296051
+            ],
+            [
+              14.4607703,
+              48.8296237
+            ],
+            [
+              14.4607542,
+              48.8295158
+            ],
+            [
+              14.4609839,
+              48.829496
+            ],
+            [
+              14.461005,
+              48.8296051
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-22",
+        "building_id": "84441cdd-e38a-4c2c-9391-9162681d24e7",
+        "name": "Dům Družstevní 613",
+        "category": "ordinary_half_hipped",
+        "group_id": "building:84441cdd-e38a-4c2c-9391-9162681d24e7",
+        "selection_reason": "Polovalbová střecha dle zdroje; rozlišení od sedlové a valbové.",
+        "centroid_wgs84": {
+          "lon": 14.460878668,
+          "lat": 48.829560319
+        },
+        "bbox_wgs84": [
+          14.4607542,
+          48.829496,
+          14.461005,
+          48.8296237
+        ],
+        "bbox_epsg5514": [
+          -759005.677,
+          -1182005.564,
+          -758986.085,
+          -1181989.365
+        ],
+        "footprint_area_m2": 208.637,
+        "exterior_vertex_count": 4,
+        "source_attributes": {
+          "class": "house",
+          "subtype": "residential",
+          "height": null,
+          "min_height": null,
+          "num_floors": 2,
+          "has_parts": false,
+          "roof_shape": "half_hipped",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104235607@4",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104235607"
+        ],
+        "addresses": [
+          {
+            "id": "29f2feed-4436-4036-9646-cbcbcd5a39eb",
+            "street": "Družstevní",
+            "number": "613",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8746508",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [],
+        "identity": {
+          "status": "address_match",
+          "note": null,
+          "reference_keys": [],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "b4692023-1a6f-4162-aa56-5b8df9c74fe4",
+      "bbox": [
+        14.4612431,
+        48.8280109,
+        14.461402,
+        48.8281985
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.4613534,
+              48.8280362
+            ],
+            [
+              14.4613708,
+              48.8280493
+            ],
+            [
+              14.4613966,
+              48.8280809
+            ],
+            [
+              14.461402,
+              48.8280986
+            ],
+            [
+              14.4613994,
+              48.8281342
+            ],
+            [
+              14.4613628,
+              48.8281985
+            ],
+            [
+              14.461262,
+              48.8281724
+            ],
+            [
+              14.4612909,
+              48.828123
+            ],
+            [
+              14.4612793,
+              48.8280991
+            ],
+            [
+              14.4612431,
+              48.8280753
+            ],
+            [
+              14.4612812,
+              48.8280109
+            ],
+            [
+              14.4613073,
+              48.828017
+            ],
+            [
+              14.4613534,
+              48.8280362
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-23",
+        "building_id": "b4692023-1a6f-4162-aa56-5b8df9c74fe4",
+        "name": "Dům Družstevní 648",
+        "category": "ordinary_skillion",
+        "group_id": "building:b4692023-1a6f-4162-aa56-5b8df9c74fe4",
+        "selection_reason": "Pultová střecha dle zdroje; kontrola jednostranného sklonu.",
+        "centroid_wgs84": {
+          "lon": 14.46132773,
+          "lat": 48.8281048
+        },
+        "bbox_wgs84": [
+          14.4612431,
+          48.8280109,
+          14.461402,
+          48.8281985
+        ],
+        "bbox_epsg5514": [
+          -758991.856,
+          -1182172.157,
+          -758979.597,
+          -1182152.301
+        ],
+        "footprint_area_m2": 156.131,
+        "exterior_vertex_count": 12,
+        "source_attributes": {
+          "class": "house",
+          "subtype": "residential",
+          "height": null,
+          "min_height": null,
+          "num_floors": 2,
+          "has_parts": false,
+          "roof_shape": "skillion",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104236143@4",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104236143"
+        ],
+        "addresses": [
+          {
+            "id": "9dad1ca3-04fd-4538-a5b4-6abc027484eb",
+            "street": "Družstevní",
+            "number": "648",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "26266571",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [],
+        "identity": {
+          "status": "address_match",
+          "note": null,
+          "reference_keys": [],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "2aa0f596-18d7-422f-a6ff-518d463ee5b0",
+      "bbox": [
+        14.4606209,
+        48.8306464,
+        14.4607838,
+        48.8308106
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.4606767,
+              48.8307023
+            ],
+            [
+              14.4606815,
+              48.8306464
+            ],
+            [
+              14.4607838,
+              48.8306497
+            ],
+            [
+              14.4607791,
+              48.830712
+            ],
+            [
+              14.4607369,
+              48.8307106
+            ],
+            [
+              14.4607293,
+              48.8308106
+            ],
+            [
+              14.4606673,
+              48.8308089
+            ],
+            [
+              14.4606688,
+              48.8307868
+            ],
+            [
+              14.4606209,
+              48.8307855
+            ],
+            [
+              14.4606248,
+              48.8307462
+            ],
+            [
+              14.4606571,
+              48.8307472
+            ],
+            [
+              14.4606599,
+              48.8307017
+            ],
+            [
+              14.4606767,
+              48.8307023
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-24",
+        "building_id": "2aa0f596-18d7-422f-a6ff-518d463ee5b0",
+        "name": "Nízký objekt u Školní – plochá střecha dle zdroje",
+        "category": "low_flat",
+        "group_id": "building:2aa0f596-18d7-422f-a6ff-518d463ee5b0",
+        "selection_reason": "Malý nízký objekt jako protějšek plochých střech výškových domů.",
+        "centroid_wgs84": {
+          "lon": 14.460705427,
+          "lat": 48.830725009
+        },
+        "bbox_wgs84": [
+          14.4606209,
+          48.8306464,
+          14.4607838,
+          48.8308106
+        ],
+        "bbox_epsg5514": [
+          -758996.516,
+          -1181876.453,
+          -758985.808,
+          -1181857.751
+        ],
+        "footprint_area_m2": 124.13,
+        "exterior_vertex_count": 12,
+        "source_attributes": {
+          "class": null,
+          "subtype": null,
+          "height": null,
+          "min_height": null,
+          "num_floors": 1,
+          "has_parts": false,
+          "roof_shape": "flat",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104235615@4",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104235615"
+        ],
+        "addresses": [
+          {
+            "id": "7bb6e2eb-388f-43ff-9f86-55aadf192b9b",
+            "street": null,
+            "number": "21",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "80801986",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [],
+        "identity": {
+          "status": "source_geometry",
+          "note": "Funkce objektu neověřena; název je popis polohy a zdrojového atributu.",
+          "reference_keys": [],
+          "address_containment_checked": false,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "d73001a7-a401-4dcf-b0e6-3dcaffa5989a",
+      "bbox": [
+        14.461813,
+        48.8332596,
+        14.462019,
+        48.8333681
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.4619579,
+              48.8332637
+            ],
+            [
+              14.462019,
+              48.8332946
+            ],
+            [
+              14.4619422,
+              48.8333605
+            ],
+            [
+              14.4619328,
+              48.8333681
+            ],
+            [
+              14.4618758,
+              48.8333395
+            ],
+            [
+              14.4618698,
+              48.8333446
+            ],
+            [
+              14.461813,
+              48.833316
+            ],
+            [
+              14.461878,
+              48.8332596
+            ],
+            [
+              14.461917,
+              48.8332797
+            ],
+            [
+              14.4619016,
+              48.8332929
+            ],
+            [
+              14.4619156,
+              48.8333001
+            ],
+            [
+              14.4619579,
+              48.8332637
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-25",
+        "building_id": "d73001a7-a401-4dcf-b0e6-3dcaffa5989a",
+        "name": "Dům Strahovská 272 – typ střechy chybí",
+        "category": "unknown_roof_house",
+        "group_id": "building:d73001a7-a401-4dcf-b0e6-3dcaffa5989a",
+        "selection_reason": "Skutečně chybějící roof_shape, běžný dům s adresním bodem.",
+        "centroid_wgs84": {
+          "lon": 14.461916145,
+          "lat": 48.833310741
+        },
+        "bbox_wgs84": [
+          14.461813,
+          48.8332596,
+          14.462019,
+          48.8333681
+        ],
+        "bbox_epsg5514": [
+          -758871.294,
+          -1181600.138,
+          -758856.633,
+          -1181588.385
+        ],
+        "footprint_area_m2": 94.831,
+        "exterior_vertex_count": 11,
+        "source_attributes": {
+          "class": "house",
+          "subtype": "residential",
+          "height": null,
+          "min_height": null,
+          "num_floors": 1,
+          "has_parts": false,
+          "roof_shape": null,
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104236263@3",
+            "update_time": "2024-07-24T18:33:54.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104236263"
+        ],
+        "addresses": [
+          {
+            "id": "fbe05468-2014-4996-a248-bfd7d5ade0f8",
+            "street": "Strahovská",
+            "number": "272",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8743126",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [],
+        "identity": {
+          "status": "address_match",
+          "note": null,
+          "reference_keys": [],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "4d5488dc-708f-46b1-b237-46eb2cc1080d",
+      "bbox": [
+        14.4653148,
+        48.8319581,
+        14.4654585,
+        48.8320573
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.4653728,
+              48.8319592
+            ],
+            [
+              14.4653986,
+              48.8319581
+            ],
+            [
+              14.4654234,
+              48.8319627
+            ],
+            [
+              14.4654445,
+              48.8319726
+            ],
+            [
+              14.4654585,
+              48.8319854
+            ],
+            [
+              14.4654544,
+              48.8320369
+            ],
+            [
+              14.465443,
+              48.8320438
+            ],
+            [
+              14.4654232,
+              48.8320528
+            ],
+            [
+              14.4654002,
+              48.8320573
+            ],
+            [
+              14.4653762,
+              48.8320567
+            ],
+            [
+              14.4653536,
+              48.8320513
+            ],
+            [
+              14.4653335,
+              48.8320406
+            ],
+            [
+              14.4653201,
+              48.8320261
+            ],
+            [
+              14.4653148,
+              48.8320095
+            ],
+            [
+              14.4653183,
+              48.8319926
+            ],
+            [
+              14.4653302,
+              48.8319775
+            ],
+            [
+              14.4653491,
+              48.8319659
+            ],
+            [
+              14.4653728,
+              48.8319592
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-26",
+        "building_id": "4d5488dc-708f-46b1-b237-46eb2cc1080d",
+        "name": "Členitý objekt severně od Jihostroje – kandidát",
+        "category": "unknown_roof_irregular",
+        "group_id": "building:4d5488dc-708f-46b1-b237-46eb2cc1080d",
+        "selection_reason": "Chybí typ i podlaží, malý složitý obrys: zkouška opatrného fallbacku.",
+        "centroid_wgs84": {
+          "lon": 14.465388947,
+          "lat": 48.832007737
+        },
+        "bbox_wgs84": [
+          14.4653148,
+          48.8319581,
+          14.4654585,
+          48.8320573
+        ],
+        "bbox_epsg5514": [
+          -758636.29,
+          -1181778.272,
+          -758625.721,
+          -1181767.185
+        ],
+        "footprint_area_m2": 93.112,
+        "exterior_vertex_count": 17,
+        "source_attributes": {
+          "class": null,
+          "subtype": null,
+          "height": null,
+          "min_height": null,
+          "num_floors": null,
+          "has_parts": false,
+          "roof_shape": null,
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w1303007148@1",
+            "update_time": "2024-07-22T06:56:23.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/1303007148"
+        ],
+        "addresses": [],
+        "contained_places": [],
+        "identity": {
+          "status": "candidate",
+          "note": "Funkce a skutečné členění hmot nejsou ověřeny. Výběr pouze podle obrysu a chybějících atributů.",
+          "reference_keys": [],
+          "address_containment_checked": false,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "1398a139-65ca-4699-a6c5-bee7e12e0124",
+      "bbox": [
+        14.4620323,
+        48.8272124,
+        14.4621887,
+        48.8273469
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.4621887,
+              48.8273262
+            ],
+            [
+              14.4620886,
+              48.8273469
+            ],
+            [
+              14.4620634,
+              48.8272963
+            ],
+            [
+              14.4620567,
+              48.8272829
+            ],
+            [
+              14.4620323,
+              48.8272339
+            ],
+            [
+              14.4621433,
+              48.8272124
+            ],
+            [
+              14.4621887,
+              48.8273262
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-27",
+        "building_id": "1398a139-65ca-4699-a6c5-bee7e12e0124",
+        "name": "Dům V Domkách 106",
+        "category": "source_ridge_orientation",
+        "group_id": "building:1398a139-65ca-4699-a6c5-bee7e12e0124",
+        "selection_reason": "Jeden z mála objektů se zdrojovým roof_orientation=along; neověřený srovnávací údaj.",
+        "centroid_wgs84": {
+          "lon": 14.462112713,
+          "lat": 48.827278952
+        },
+        "bbox_wgs84": [
+          14.4620323,
+          48.8272124,
+          14.4621887,
+          48.8273469
+        ],
+        "bbox_epsg5514": [
+          -758947.145,
+          -1182268.729,
+          -758934.374,
+          -1182253.365
+        ],
+        "footprint_area_m2": 106.503,
+        "exterior_vertex_count": 6,
+        "source_attributes": {
+          "class": "house",
+          "subtype": "residential",
+          "height": null,
+          "min_height": null,
+          "num_floors": 1,
+          "has_parts": false,
+          "roof_shape": "gabled",
+          "roof_direction": null,
+          "roof_orientation": "along",
+          "roof_height": null,
+          "roof_material": null,
+          "version": 2
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104236105@8",
+            "update_time": "2026-04-26T13:03:29.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104236105"
+        ],
+        "addresses": [
+          {
+            "id": "97fa7762-b1c8-4d13-a872-1aaee4a85d30",
+            "street": "V Domkách",
+            "number": "106",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8741638",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [],
+        "identity": {
+          "status": "address_match",
+          "note": null,
+          "reference_keys": [],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "17100fb2-8669-4cd9-b825-2869359e41e5",
+      "bbox": [
+        14.4649824,
+        48.8311623,
+        14.465709,
+        48.8318517
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.46545,
+              48.8311803
+            ],
+            [
+              14.4654499,
+              48.8311823
+            ],
+            [
+              14.465709,
+              48.8311952
+            ],
+            [
+              14.4657071,
+              48.8312118
+            ],
+            [
+              14.4656983,
+              48.8312869
+            ],
+            [
+              14.4656947,
+              48.8312867
+            ],
+            [
+              14.4656302,
+              48.8318517
+            ],
+            [
+              14.4653755,
+              48.8318387
+            ],
+            [
+              14.4653752,
+              48.8318408
+            ],
+            [
+              14.4652372,
+              48.8318338
+            ],
+            [
+              14.4652374,
+              48.8318316
+            ],
+            [
+              14.4649824,
+              48.8318184
+            ],
+            [
+              14.4650212,
+              48.8314711
+            ],
+            [
+              14.4650557,
+              48.8311623
+            ],
+            [
+              14.4652199,
+              48.8311707
+            ],
+            [
+              14.4653114,
+              48.8311754
+            ],
+            [
+              14.4653117,
+              48.8311734
+            ],
+            [
+              14.4653269,
+              48.8311742
+            ],
+            [
+              14.4653878,
+              48.8311772
+            ],
+            [
+              14.46545,
+              48.8311803
+            ]
+          ],
+          [
+            [
+              14.4653004,
+              48.8313087
+            ],
+            [
+              14.4652535,
+              48.8317148
+            ],
+            [
+              14.4653849,
+              48.8317219
+            ],
+            [
+              14.4654305,
+              48.8313131
+            ],
+            [
+              14.4653004,
+              48.8313087
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-28",
+        "building_id": "17100fb2-8669-4cd9-b825-2869359e41e5",
+        "name": "Velký průmyslový objekt – východ areálu Jihostroje",
+        "category": "industrial_flat_candidate",
+        "group_id": "building:17100fb2-8669-4cd9-b825-2869359e41e5",
+        "selection_reason": "Rozsáhlá střecha se zdrojovým flat, potenciální nástavby a lokální nerovnosti.",
+        "centroid_wgs84": {
+          "lon": 14.465343914,
+          "lat": 48.831505412
+        },
+        "bbox_wgs84": [
+          14.4649824,
+          48.8311623,
+          14.465709,
+          48.8318517
+        ],
+        "bbox_epsg5514": [
+          -758667.92,
+          -1181865.423,
+          -758615.727,
+          -1181789.519
+        ],
+        "footprint_area_m2": 3066.466,
+        "exterior_vertex_count": 19,
+        "source_attributes": {
+          "class": "industrial",
+          "subtype": "industrial",
+          "height": null,
+          "min_height": null,
+          "num_floors": 3,
+          "has_parts": false,
+          "roof_shape": "flat",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 2
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "r17872166@1",
+            "update_time": "2024-07-24T23:05:41.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [],
+        "addresses": [],
+        "contained_places": [],
+        "identity": {
+          "status": "source_geometry",
+          "note": "Průmyslová třída ze zdroje; identita konkrétní výrobní haly neověřena.",
+          "reference_keys": [],
+          "address_containment_checked": false,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "89e6de12-a5b9-4a64-9853-743608e8e3d6",
+      "bbox": [
+        14.4629102,
+        48.83105,
+        14.4635169,
+        48.8317639
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.4630275,
+              48.83105
+            ],
+            [
+              14.4635169,
+              48.8310732
+            ],
+            [
+              14.4635061,
+              48.8311722
+            ],
+            [
+              14.4634416,
+              48.8317639
+            ],
+            [
+              14.4633429,
+              48.8317592
+            ],
+            [
+              14.4629524,
+              48.8317406
+            ],
+            [
+              14.4629618,
+              48.8316543
+            ],
+            [
+              14.4629646,
+              48.8316284
+            ],
+            [
+              14.4629312,
+              48.8316268
+            ],
+            [
+              14.462938,
+              48.8315655
+            ],
+            [
+              14.4629712,
+              48.831567
+            ],
+            [
+              14.4629732,
+              48.8315135
+            ],
+            [
+              14.4629901,
+              48.8313937
+            ],
+            [
+              14.4629102,
+              48.8313899
+            ],
+            [
+              14.4629125,
+              48.8313693
+            ],
+            [
+              14.4629147,
+              48.8313502
+            ],
+            [
+              14.4629945,
+              48.8313541
+            ],
+            [
+              14.4630275,
+              48.83105
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-29",
+        "building_id": "89e6de12-a5b9-4a64-9853-743608e8e3d6",
+        "name": "Průmyslový objekt – střed areálu Jihostroje",
+        "category": "industrial_gabled_candidate",
+        "group_id": "building:89e6de12-a5b9-4a64-9853-743608e8e3d6",
+        "selection_reason": "Velká střecha se zdrojovým gabled: ověřit, zda je jednoduchá nebo složená.",
+        "centroid_wgs84": {
+          "lon": 14.463230074,
+          "lat": 48.831407809
+        },
+        "bbox_wgs84": [
+          14.4629102,
+          48.83105,
+          14.4635169,
+          48.8317639
+        ],
+        "bbox_epsg5514": [
+          -758820.826,
+          -1181857.026,
+          -758776.255,
+          -1181777.866
+        ],
+        "footprint_area_m2": 2819.049,
+        "exterior_vertex_count": 17,
+        "source_attributes": {
+          "class": "industrial",
+          "subtype": "industrial",
+          "height": null,
+          "min_height": null,
+          "num_floors": 1,
+          "has_parts": false,
+          "roof_shape": "gabled",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w104235933@7",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/104235933"
+        ],
+        "addresses": [],
+        "contained_places": [],
+        "identity": {
+          "status": "source_geometry",
+          "note": "Průmyslová třída ze zdroje; atribut gabled není ověřená pravda o jednotlivých střešních sekcích.",
+          "reference_keys": [],
+          "address_containment_checked": false,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "2ad2977f-8e93-4ad1-a3d7-2c1228c064cd",
+      "bbox": [
+        14.4607902,
+        48.8334252,
+        14.4608754,
+        48.8334772
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.4608155,
+              48.8334252
+            ],
+            [
+              14.4608754,
+              48.8334552
+            ],
+            [
+              14.46085,
+              48.8334772
+            ],
+            [
+              14.4607902,
+              48.8334472
+            ],
+            [
+              14.4608155,
+              48.8334252
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "pilot_id": "VEL-ROOF-30",
+        "building_id": "2ad2977f-8e93-4ad1-a3d7-2c1228c064cd",
+        "name": "Garáž ve Strahovské – adresní číslo 14",
+        "category": "small_garage",
+        "group_id": "building:2ad2977f-8e93-4ad1-a3d7-2c1228c064cd",
+        "selection_reason": "Drobný objekt kolem 17 m² v řadě; test minimálního počtu bodů a neslučování sousedů.",
+        "centroid_wgs84": {
+          "lon": 14.460832787,
+          "lat": 48.83345121
+        },
+        "bbox_wgs84": [
+          14.4607902,
+          48.8334252,
+          14.4608754,
+          48.8334772
+        ],
+        "bbox_epsg5514": [
+          -758943.711,
+          -1181570.96,
+          -758937.393,
+          -1181565.574
+        ],
+        "footprint_area_m2": 16.96,
+        "exterior_vertex_count": 4,
+        "source_attributes": {
+          "class": "garage",
+          "subtype": "residential",
+          "height": null,
+          "min_height": null,
+          "num_floors": 1,
+          "has_parts": false,
+          "roof_shape": "flat",
+          "roof_direction": null,
+          "roof_orientation": null,
+          "roof_height": null,
+          "roof_material": null,
+          "version": 1
+        },
+        "source_names": null,
+        "footprint_sources": [
+          {
+            "property": "",
+            "dataset": "OpenStreetMap",
+            "license": "ODbL-1.0",
+            "record_id": "w392309249@3",
+            "update_time": "2024-07-28T10:51:16.000Z",
+            "confidence": null,
+            "between": null,
+            "provider": "osm",
+            "resource": "planet",
+            "version": "2026-09-06T00:00:00.000Z"
+          }
+        ],
+        "osm_urls": [
+          "https://www.openstreetmap.org/way/392309249"
+        ],
+        "addresses": [
+          {
+            "id": "65d08ae3-fd8d-4e91-8993-22374af6d78b",
+            "street": "Strahovská",
+            "number": "14",
+            "postal_city": "Velešín",
+            "sources": [
+              {
+                "property": "",
+                "dataset": "ČÚZK",
+                "license": "CC-BY-4.0",
+                "record_id": "8746630",
+                "update_time": "2026-10-15T20:12:41.705Z",
+                "confidence": null,
+                "between": null,
+                "provider": "cuzk",
+                "resource": "cuzk",
+                "version": "20261001"
+              }
+            ]
+          }
+        ],
+        "contained_places": [],
+        "identity": {
+          "status": "address_match",
+          "note": null,
+          "reference_keys": [],
+          "address_containment_checked": true,
+          "infrastructure_evidence": []
+        },
+        "roof_ground_truth": {
+          "status": "not_surveyed",
+          "note": "roof_shape/orientation jsou pouze zdrojové atributy, ne ověřená referenční pravda."
+        }
+      }
+    }
+  ]
+}

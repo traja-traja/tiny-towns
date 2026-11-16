@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "id": "sportcentrum-velesin",
+  "source_building_id": "78e32d1e-ecfa-4e1b-a00f-db417ea5af1b",
+  "units": "metres",
+  "coordinate_system": "local-east-north-up",
+  "anchor": {"lon": 14.462934347936528, "lat": 48.83448702733011},
+  "axis_bearing_degrees": 51.91,
+  "reference_ground_absolute_m": 533.5,
+  "materials": [
+    {"id": "facade-unverified-neutral", "color": [210, 214, 209], "kind": "wall"},
+    {"id": "tennis-green-metal", "color": [134, 170, 148], "kind": "roof"},
+    {"id": "connector-light-metal", "color": [217, 220, 219], "kind": "roof"},
+    {"id": "squash-lower-grey-metal", "color": [173, 184, 190], "kind": "roof"},
+    {"id": "squash-upper-light-metal", "color": [195, 203, 205], "kind": "roof"}
+  ],
+  "sources": [
+    {"provider": "OpenStreetMap contributors / Overture Maps", "feature": "w104235783@2", "license": "ODbL-1.0", "role": "outer footprint and georeferencing", "url": "https://www.openstreetmap.org/way/104235783"},
+    {"provider": "ČÚZK", "dataset": "Ortofoto ČR", "license": "CC-BY-4.0", "retrieved": "2026-11-15", "capture_date": null, "role": "roof colours and internal roof divisions", "url": "https://ags.cuzk.gov.cz/arcgis1/services/ORTOFOTO/MapServer/WMSServer", "bbox_epsg5514": [-758830, -1181550, -758670, -1181390]},
+    {"provider": "ČÚZK", "dataset": "DMP 1G / CKRU30", "license": "CC-BY-4.0", "role": "tennis roof profile", "las_file_creation_date": "2019-01-17", "capture_date": null, "url": "https://openzu.cuzk.cz/opendata/DMP1G/epsg-5514/CKRU30.zip"},
+    {"provider": "ČÚZK", "dataset": "DMP 3D, 0.5 m raster", "license": "CC-BY-4.0", "retrieved": "2026-11-15", "capture_date": null, "role": "height levels of squash hall and connecting wing", "url": "https://ags.cuzk.gov.cz/arcgis/rest/services/3D/dmp/ImageServer"},
+    {"provider": "Pavel", "date": "2026-11-15", "role": "identification of tennis and squash halls, barrel shape and open passage"}
+  ],
+  "uncertainties": [
+    "This is a simplified visual model, not a survey or construction drawing.",
+    "Facade colours, doors and windows cannot be verified from the supplied aerial sources. A neutral facade is provisional; no invented windows are added.",
+    "The older classified laser cloud reliably captures the tennis roof but not the squash extension; the 0.5 m surface raster supplies those later roof levels.",
+    "Roof colour values are sampled from aerial imagery and include lighting. They are not measured paint colours.",
+    "Internal roof boundaries and roof edges are approximate at sub-metre to metre scale. Image capture dates are unknown; LAS creation date is not acquisition date.",
+    "The map terrain is lower than the DMP survey datum here. Relative measured heights are placed on a common map ground datum to avoid floating buildings. The bottom two metres are a hidden visual foundation."
+  ],
+  "components": [
+    {"id": "tennis", "name": "Sportcentrum Velešín – tenisová hala", "footprint_uv": [[0, -19.35], [37.65, -19.35], [37.65, 0], [0, 0]], "wall_material": 0, "roof_material": 1, "roof": {"type": "circular_segment", "centre_v": -9.675, "radius_m": 9.675, "ridge_m": 10.0}},
+    {"id": "connector-lower", "name": "Sportcentrum – nižší spojovací část", "footprint_uv": [[37.65, -18.4], [42.01, -18.4], [41.95, -1.6], [37.65, -1.6]], "wall_material": 0, "roof_material": 2, "roof": {"type": "flat", "height_m": 3.7}},
+    {"id": "connector-upper", "name": "Sportcentrum – spojovací část", "footprint_uv": [[37.65, -1.6], [41.95, -1.6], [41.9, 9.5], [37.65, 9.5]], "wall_material": 0, "roof_material": 2, "roof": {"type": "flat", "height_m": 5.5}},
+    {"id": "squash-lower", "name": "Sportcentrum – nižší část squashové haly", "footprint_uv": [[24.03, 20.43], [24.06, 8.14], [37.62, 3.11], [37.62, 9.5], [33.4, 9.5], [33.4, 20.4]], "wall_material": 0, "roof_material": 3, "roof": {"type": "flat", "height_m": 4.1}},
+    {"id": "squash-upper", "name": "Sportcentrum – vyšší část squashové haly", "footprint_uv": [[33.4, 9.5], [41.9, 9.5], [42.2, 10.15], [42.17, 20.71], [34.81, 20.74], [34.82, 20.37], [33.4, 20.4]], "wall_material": 0, "roof_material": 4, "roof": {"type": "flat", "height_m": 7.0}}
+  ]
+}

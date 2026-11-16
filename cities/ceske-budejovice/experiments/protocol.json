@@ -1,0 +1,408 @@
+{
+  "schema": "cb-experiment-protocol/1",
+  "created_at": "2026-11-16T02:30:12.115515+00:00",
+  "city": "ceske-budejovice",
+  "scope": "isolated_experiments_not_deployed_to_city_renderer",
+  "separate_height_audit_footprints": 12,
+  "separate_map_policy_rebuild_status": "complete",
+  "pilot_footprints": 30,
+  "detailed_footprints": 18,
+  "maximum_detailed_footprints": 20,
+  "building_ids": [
+    "283392cf-95ca-4063-8b85-989e92f083a6",
+    "2ea0e62e-9a14-4d65-bfef-7036d91bffa0",
+    "3afe9e11-0b96-481f-abcf-4c7fb28829eb",
+    "427eb7c5-9db7-4919-9d98-7cf5bdef8e98",
+    "48f63de9-e9ea-4307-81c5-8c1553976441",
+    "53b0b641-97d6-4a61-9fe2-88e0d318285d",
+    "5962baef-4d3a-4d16-80c1-fb9f46dd7e93",
+    "726f7d38-a45f-4b37-b2c6-59c70cca59ca",
+    "7291bb13-d369-4b44-b700-301debf6dfac",
+    "766e2987-0af0-4165-b25a-216597858fa9",
+    "8b11dd1d-1fd4-40f2-bae9-56da48a0a78a",
+    "9659768d-7c0c-48f6-a646-2c1296afccd2",
+    "98192926-2e4d-4667-b3e9-9998dd4ea22a",
+    "ac588980-e044-46ce-aa17-efc306da42be",
+    "acf04bcb-18f5-41ec-b7e7-14232e12fc1f",
+    "bd271e8d-30b9-4806-98cd-93c625992ee3",
+    "d232deba-7d0b-4c01-a01f-d78024f24e8d",
+    "e45c2485-616a-4003-92e4-428ce930f490"
+  ],
+  "inputs": [
+    {
+      "path": "cities/ceske-budejovice/experiments/roofs/results.json",
+      "bytes": 3576414,
+      "sha256": "843e5c314fa1b72a85e1b8c78ddf7dd0145ac30f1324c65f8b05a49dbff5e4e1"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/results.json",
+      "bytes": 67770,
+      "sha256": "3fef0bd179aa56ef941e67a595aec18da30ec0015ca9a05404ee210222b1f07b"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/facades/results.json",
+      "bytes": 74507,
+      "sha256": "7b6fe7fa640c829525167c7a43dc2fad6f22073320095b9b9ede0d440a0040fa"
+    },
+    {
+      "path": "cities/ceske-budejovice/roof-pilot/results.json",
+      "bytes": 4910805,
+      "sha256": "f4d3cc8cc3867e66109f8b14b5fe70c2f579848d5b2264865eab31e56e8d1320"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/roofs/method-review.json",
+      "bytes": 47965,
+      "sha256": "72dae193ac1a69809193b1b164a87486f62ffca38111767d01f3db4ee7324460"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/roofs/README.md",
+      "bytes": 17066,
+      "sha256": "8f28bcf42b44f74b866cca93476c3d372e336c3c866cca7ee02fd1dece9e8580"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/source-review.json",
+      "bytes": 56403,
+      "sha256": "33c0656bb3e513ec3388d644a777f72623815602f5c9886e64f2482f14660c43"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/README.md",
+      "bytes": 6226,
+      "sha256": "4d6fe037c45b60fc319d9dca248a2db30ccf1e50b82b519a7144e94db56b2515"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/facades/source-review.json",
+      "bytes": 20891,
+      "sha256": "fd6762b3953322c1d8bbaf0ec75a331da9d66a20492b7c96e7f014887c53616d"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/facades/README.md",
+      "bytes": 14844,
+      "sha256": "55be0f8ad3f8c963094dee5f2539c09dac54e1a8278880252e8cd1b477ddb691"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/round-2-candidates.json",
+      "bytes": 84171,
+      "sha256": "bbad6580ee3cc48470d04b7987bb9c1e2aa83c797211471cbe144a3eda7ebcfd"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/roof-heights/results.json",
+      "bytes": 1988503,
+      "sha256": "dbc962fb0e12a4f0d5e9452207a877ef2d8cda921ccbb10b97fecb76fa40739a"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/roof-heights/README.md",
+      "bytes": 21162,
+      "sha256": "9ad9b3dc52802cce52d149b56ea2cbbe98b7cbb602a60861addabf01e0190622"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/roof-heights/fit-results.json",
+      "bytes": 1655240,
+      "sha256": "8647e0fa5ab0bfbc0e4cf6a673ad8f8249251b5b0cc6e14b559b147d5b70f23d"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/roof-heights/map-rebuild.json",
+      "bytes": 29665,
+      "sha256": "fd7c21d9daacc37fd7455773217350ca5ba09aca2075532667dc50603491b5da"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/roofs/parser-audit.json",
+      "bytes": 4434,
+      "sha256": "d4eb829bce3fc9522c6c8eb967204f645294a554df5388bc54072877a93f83b6"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/roofs/provenance-audit.json",
+      "bytes": 13479,
+      "sha256": "3dd9c57034c3226a62f37e13146026b7148397a5d93bd76971dbcfa00d51a634"
+    },
+    {
+      "path": ".work/.preview/ceske-budejovice/revisions/baseline/qa-comparison/preview-ui.json",
+      "bytes": 3153,
+      "sha256": "a765ea5334c9777bc65bac4e06a2e4831a90caa66a88cebe08a087f8b7db4031"
+    },
+    {
+      "path": ".work/.preview/ceske-budejovice/qa/preview-ui.json",
+      "bytes": 3142,
+      "sha256": "cb75d46bf820efe795a42b7948f9ec92ab145da82dc4fe384969798b6478115f"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/roofs/pool-hypar-part.geojson",
+      "bytes": 6003,
+      "sha256": "4d9e7a718137b0f7bf56f20b4e8a097ec0d5db0c76e7ccf6d2263bdd12b53fe8"
+    },
+    {
+      "path": "cities/ceske-budejovice/roof-pilot/sample.json",
+      "bytes": 216792,
+      "sha256": "aa3ca9cd50f0f639421545c9f1fee11391757c00ecafe7c5137adbf1b4082d21"
+    }
+  ],
+  "embedded_images": [
+    {
+      "path": "cities/ceske-budejovice/experiments/facades/radnice-single_sample.svg",
+      "bytes": 3308,
+      "sha256": "c75ca9ca31bfcadec158275d563959225f476f470860de85943274aae962c589"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/facades/radnice-lab_median.svg",
+      "bytes": 3306,
+      "sha256": "d8ea8d9141a4ed79f190d70287dda76c38bdcefd5c662c2d0724696104c9a7ca"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/facades/radnice-lab_trimmed_median.svg",
+      "bytes": 3326,
+      "sha256": "02af4fd978bfc035d3659cbdcfb0b793c7c59a016965b20ff1394479ee8aa2f5"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/facades/radnice-roi.png",
+      "bytes": 992201,
+      "sha256": "ccb4be2afbe6ad68a2a1b48ee267f3d946d1df70efd17553897063eb5d874259"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/facades/puklicuv-single_sample.svg",
+      "bytes": 3364,
+      "sha256": "8613f55fbc52cfa2fc4b57d94180fbc438185cc6f88f292dfbaf004f724c4083"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/facades/puklicuv-lab_median.svg",
+      "bytes": 3362,
+      "sha256": "45b874b6a4b762ac5949481c343c02b30d583d4697cef26603eb0dbfc379ef5e"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/facades/puklicuv-lab_trimmed_median.svg",
+      "bytes": 3382,
+      "sha256": "23843430cd97b3970db6e3bfb4b89da4592bbf32d4998cfa1fd8eb06e1e423ff"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/facades/puklicuv-roi.png",
+      "bytes": 555378,
+      "sha256": "1ef525f9c9c89b30b83595e5ae77c6d81c881f702e293d6b69b6e0573d8e4988"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/facades/krajinska10-single_sample.svg",
+      "bytes": 3304,
+      "sha256": "8511b3adf4ca715a171b6e991bd96b2b156520acf03e19ee7ccd3f3d8df0b48f"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/facades/krajinska10-lab_median.svg",
+      "bytes": 3302,
+      "sha256": "89aab771269295afe4a091c85ce12f5eee7011e718713629886f365e62d4ed8f"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/facades/krajinska10-lab_trimmed_median.svg",
+      "bytes": 3322,
+      "sha256": "795177eb18840f0a14cd81816e1057546a3bf951c21d3ed56c6fa0eb163c0244"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/facades/krajinska10-roi.png",
+      "bytes": 581690,
+      "sha256": "30040293dd824cbafb54ccc03eaf67b2db04237e9b8f83dd1fcf36fd0cc87cfb"
+    },
+    {
+      "path": ".work/roof-detail-photo-review/pool-czeva-2017.jpg",
+      "bytes": 2337861,
+      "sha256": "c6e7836fc64dc88d882ce949fbcc0e10894f5f1cbb8bbd55f28555d0e2f332c9"
+    },
+    {
+      "path": ".work/roof-detail-photo-review/arena-czeva-2020.jpg",
+      "bytes": 1402623,
+      "sha256": "1f13fa4d7a2c8b6a58628da22a429e09ee0d16a22943fd9440414cf53b04703a"
+    },
+    {
+      "path": ".work/roof-detail-photo-review/blacktower-cathedral-rychtecky-2008.jpg",
+      "bytes": 5431151,
+      "sha256": "078a83f1197992c7d9e9aed1bff7f706658cfba5b80af0168bab3c7a595679b7"
+    },
+    {
+      "path": ".work/roof-detail-photo-review/townhall-linvitra-2012.jpg",
+      "bytes": 1133622,
+      "sha256": "400d78faec19086620441dc21990b72430753410591c1e2f9ea49f6f7f34b372"
+    },
+    {
+      "path": ".work/roof-detail-photo-review/blacktower-cathedral-rychtecky-2008.jpg",
+      "bytes": 5431151,
+      "sha256": "078a83f1197992c7d9e9aed1bff7f706658cfba5b80af0168bab3c7a595679b7"
+    },
+    {
+      "path": ".work/.preview/ceske-budejovice/revisions/baseline/qa-comparison/na-mlynske-367.png",
+      "bytes": 236348,
+      "sha256": "64943f954e45579b74530268fbc4e44583c97e2d73f224aa0ab1c0370b892ea2"
+    },
+    {
+      "path": ".work/.preview/ceske-budejovice/qa/na-mlynske-367.png",
+      "bytes": 237468,
+      "sha256": "d5ad83b73d5ea8266f4c0f69aca76b459295a1f8cb942aa45bf96184d82734cc"
+    },
+    {
+      "path": ".work/.preview/ceske-budejovice/revisions/baseline/qa-comparison/marianske-baara-1810.png",
+      "bytes": 213045,
+      "sha256": "c2aa37e23cc400abd8412b79ccc2b38bafbce9528d9519d2121b3a4d569166ed"
+    },
+    {
+      "path": ".work/.preview/ceske-budejovice/qa/marianske-baara-1810.png",
+      "bytes": 213051,
+      "sha256": "295834ccf2f161bbbbaa1b1e4e67fbb7590bc267a8d6c04a8410d4d880eea84e"
+    },
+    {
+      "path": ".work/.preview/ceske-budejovice/revisions/baseline/qa-comparison/namesti-67.png",
+      "bytes": 166674,
+      "sha256": "85a527ec2112d02481788f339427123f60530a75bc662affbe53a8e2073c4163"
+    },
+    {
+      "path": ".work/.preview/ceske-budejovice/qa/namesti-67.png",
+      "bytes": 166676,
+      "sha256": "b60251c72d7617c6121d419d9c960c11d2501facd625e26f96aba9b3274eaad0"
+    }
+  ],
+  "embedded_meshes": [
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_43_baseline.json",
+      "bytes": 4627,
+      "sha256": "c8068ff16a8b101ea7f785e575d99267f4198d8294a332c9dfb91c845b107474"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_43_pillars_lintel_d20.json",
+      "bytes": 7086,
+      "sha256": "69fc2b8173001296776dfd7c182dca8c05dbfe726ddb7a646d124e8634e52f7f"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_43_arch8_d20.json",
+      "bytes": 12680,
+      "sha256": "b6c81e6dd7e34f00cc0c7b9776971c1cf5e9565493f7bae1c1a18dd6492fa76c"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_43_arch16_d20.json",
+      "bytes": 19157,
+      "sha256": "63f1f853e87889219b762e0c9c35e0b7aa5c9f107760fad0956da2b76e1a518c"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_43_pillars_lintel_d35.json",
+      "bytes": 7089,
+      "sha256": "945c567b117a6ac212caee6d3ed8cc6955b464454098350a0212bb14b9792b31"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_43_arch8_d35.json",
+      "bytes": 12683,
+      "sha256": "de540c10fab8ba97374f383a0fdd812b718294e4190b8e77c3343cc261f1e672"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_43_arch16_d35.json",
+      "bytes": 19160,
+      "sha256": "b13ce76eeb990f3638edc0c26d9ea6e848aeff7d4781b96bff0b1e99362a989e"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_44_baseline.json",
+      "bytes": 2506,
+      "sha256": "2877817b09df98bcf0855100785942011c678766f022c50fab69eddfbe85dafb"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_44_pillars_lintel_d20.json",
+      "bytes": 5171,
+      "sha256": "a66d1456f9050b72ebd8909884619ee44f67edec0a61cdde1b72399555f723b8"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_44_arch8_d20.json",
+      "bytes": 10421,
+      "sha256": "16a06c91970430738fb969c1c29d3c98497bd14deb292193dee5ade5e9f15f1b"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_44_arch16_d20.json",
+      "bytes": 16805,
+      "sha256": "bc65b51565ecdc98765fbebfcec7b3a571999e9a05f232befcfd6aa0c051dff9"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_44_pillars_lintel_d35.json",
+      "bytes": 5172,
+      "sha256": "14e05504f54169e274ea04a7ef7104a077f519f0e9753272bbef889100b719d7"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_44_arch8_d35.json",
+      "bytes": 10422,
+      "sha256": "a75f80d598171b3bd7918ee94f92ac2c67842311c6bfadd9eb954c9d769a29d0"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_44_arch16_d35.json",
+      "bytes": 16806,
+      "sha256": "0ae7cd1bd28852e6cebb35710c12639df70c69402e431f7da558a8019645e9ef"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_45_baseline.json",
+      "bytes": 2493,
+      "sha256": "e0caca27912b5774eba7b421cb6b0e888209c94800a5ea04f1dba4160976420d"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_45_pillars_lintel_d20.json",
+      "bytes": 5714,
+      "sha256": "54faff680f121ef39f282e0bdf2737de9d9f70f9b5398061395b3f0d5165ef54"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_45_arch8_d20.json",
+      "bytes": 13851,
+      "sha256": "a00add856ba5f57c5a44a39f932f130f0408e6a87f93acf3d9199d52017bc867"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_45_arch16_d20.json",
+      "bytes": 23450,
+      "sha256": "65237ec614d19a460a423a4cefa2ac16695f8202c8bbb08793f4f4654211ba3f"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_45_pillars_lintel_d35.json",
+      "bytes": 5708,
+      "sha256": "2d92be03e1fbb3ab77654dbc19ad61d8229d25b49413e69bf75102d61244b5df"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_45_arch8_d35.json",
+      "bytes": 13845,
+      "sha256": "a9dfd80cf487d3ecee05640ca51e1bb314b32e32f2c0d4a700be179f5dc7b3ff"
+    },
+    {
+      "path": "cities/ceske-budejovice/experiments/arcades/meshes/krajinska_45_arch16_d35.json",
+      "bytes": 23444,
+      "sha256": "fcb132918ee5a3ba1fbdf538c9fab3a7d0cd229e29eacc6a5dc9896fac6419b2"
+    }
+  ],
+  "comparison_rules": [
+    "Stejné souřadnice, měřítko a pohled při porovnání variant jedné budovy.",
+    "Párované CB30 mediány používají průnik ID s platnou RMSE u všech tří metod zvlášť pro každý zdroj; původní nepárované mediány a jejich počty zůstávají uvedeny.",
+    "Střešní RMSE je shoda se zadrženými body stejného zdroje; není nezávislé zaměření ani ověření typu střechy.",
+    "Časy stahování, přípravy, vlastního modelování, exportu a celého procesu se nezaměňují.",
+    "CPU čas je součet práce procesorů; elapsed/wall čas zahrnuje i čekání. Chybějící CPU měření se nedopočítává z wall času.",
+    "Peak committed memory a peak working set jsou různé veličiny; ponecháváme přesné názvy ze záznamů.",
+    "Doložený počet arkád je oddělen od odhadnuté hloubky, výšky, profilů a přesných rozměrů.",
+    "Průchodnost je ověřena na vygenerované geometrii; neprokazuje dnešní fyzickou či veřejnou přístupnost místa.",
+    "Barevné testy rekonstruují odstíny fotografie, ne kalibrovanou barvu skutečné omítky.",
+    "Dvě barevné vektorové vrstvy a generická ostění jsou schéma pro test; nejsou dokumentace skutečných oken.",
+    "Výběr je záměrně obtížný, nereprezentuje náhodný vzorek všech domů.",
+    "O nasazení na další budovy se rozhodne až podle kompromisu tvaru, jednoduchosti, rychlosti a kontroly zdrojů."
+  ],
+  "resource_limits": {
+    "project_max_bytes": 20000000000,
+    "min_free_C_bytes": 25000000000,
+    "bulk_ai_processing": false,
+    "parallel_city_renders": false
+  },
+  "hardware_and_execution": {
+    "processor_identifier": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+    "logical_processors_reported_by_environment": 16,
+    "physical_memory_bytes_GlobalMemoryStatusEx": 16863059968,
+    "guard_job_affinity_max_logical_processors": 2,
+    "normal_benchmark_OMP_BLAS_threads": 1,
+    "basic_preview_threads": 2,
+    "priority": "below_normal",
+    "commercial_CPU_model": null,
+    "not_an_isolated_lab_machine": true,
+    "wall_time_context": "Běžný počítač uživatele; souběh uživatelských procesů a některých lehkých agentových úloh."
+  },
+  "method_families": {
+    "roofs": "Roofer LoD2.2 default / regularizace / LoD1.3 výškové objemy; stejné trénovací body a holdout.",
+    "arcades": "Plný objem / pilíře s překladem / oblouky 8 a 16 segmentů; hloubky 2 a 3,5 m jako scénáře.",
+    "facades": "Jednotlivý vzorek / Lab medián / ořezaný Lab medián; ručně vymezené oblasti hlavní omítky a dekoru.",
+    "pool_hypar": "Šestiparametrová kvadratická sedlová plocha pouze na explicitně vymezené části hlavní haly; jiná hodnoticí oblast než celý areál.",
+    "tower_diagnostic": "Samostatný diagnostický Roofer běh po vypnutí vyřazování nedostatečných dat. Původní selhání se nepřepisuje; vznik meshe není ověřená oprava a výstup není určen k nasazení."
+  },
+  "result_counts": {
+    "roof_runs": 56,
+    "arcade_models": 21,
+    "roof_primary_runs": 54,
+    "roof_extra_runs": 2,
+    "facade_buildings": 3
+  }
+}

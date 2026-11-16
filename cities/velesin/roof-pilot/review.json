@@ -1,0 +1,33 @@
+{
+  "schema": "roof-pilot-review/1",
+  "basis": [
+    {
+      "path": ".work/roof-pilot/dmpok/roofer/run-20261115T231811-70015a0f/output/-759180_-1182268.city.jsonl",
+      "sha256": "a672cf2209489090e5de1a5dd0dbb755f5ba67e443cec05d65043a61f25895d7"
+    }
+  ],
+  "scope": "Read-only audit of the exported DMPOK Roofer CityJSON",
+  "surface_counts": {
+    "roof": 336,
+    "wall": 1826,
+    "ground": 29
+  },
+  "skipped": [
+    {
+      "pilot_id": "VEL-ROOF-11",
+      "surface": "wall",
+      "count": 1,
+      "cause": "zero-area triangle with duplicate coordinate vertices"
+    },
+    {
+      "pilot_id": "VEL-ROOF-12",
+      "surface": "wall",
+      "count": 1,
+      "cause": "zero-area triangle with duplicate coordinate vertices"
+    }
+  ],
+  "notes": [
+    "Audit skutečného CityJSON DMPOK: při převodu byly vynechány pouze dvě nulové stěnové plochy s duplicitními souřadnicemi vrcholů (Sportcentrum a čp. 131). Všech 336 střešních ploch a všech 29 spodků se převedlo. Tyto dvě degenerace neovlivňují hodnocení výšek střech a samy nedokládají chybnou rekonstrukci budovy.",
+    "Export používá kvantizaci 1 mm. Nulové plochy mohou vzniknout splynutím blízkých vrcholů, ale jejich stav před exportem z uložených dat určit nelze."
+  ]
+}

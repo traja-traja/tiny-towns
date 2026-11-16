@@ -1,0 +1,2000 @@
+{
+  "schema": "city-experiment-round2-candidates/1",
+  "city": "ceske-budejovice",
+  "created_at_utc": "2026-11-16T01:19:55.944Z",
+  "status": "backlog_not_tested",
+  "excluded_from_round1": true,
+  "round1": {
+    "sample_path": "cities/ceske-budejovice/roof-pilot/sample.json",
+    "sample_sha256": "aa3ca9cd50f0f639421545c9f1fee11391757c00ecafe7c5137adbf1b4082d21",
+    "footprint_count": 30,
+    "detailed_candidate_count": 18,
+    "detailed_limit": 20,
+    "modified": false,
+    "sha256_rechecked": "aa3ca9cd50f0f639421545c9f1fee11391757c00ecafe7c5137adbf1b4082d21"
+  },
+  "scope": {
+    "point_cloud_downloads": 0,
+    "reconstructions": 0,
+    "renders": 0,
+    "ai_geometry_or_vision_processing_calls": 0,
+    "notes": "Pouze rešerše, čtení lokálního vektorového snapshotu a manifest. Nejde o doplnění benchmarku ani potvrzení oprav."
+  },
+  "candidates": [
+    {
+      "id": "theatre-main",
+      "name": "Jihočeské divadlo – historická budova",
+      "category": "building",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "address": "Dr. Stejskala 424/19",
+        "description": "Historická budova Jihočeského divadla.",
+        "coordinates_wgs84": [
+          14.47500733171524,
+          48.97242258407144
+        ],
+        "bbox_wgs84": [
+          14.474636,
+          48.972244,
+          14.4753974,
+          48.9725879
+        ],
+        "geometry_role": "source_geometry_anchor",
+        "geometry_type": "Polygon",
+        "geometry_caveat": "Rozsah tohoto zdrojového půdorysu, ne automaticky celý současný areál ani potvrzená geometrie zadané epochy."
+      },
+      "source_ids": [
+        {
+          "layer": "address",
+          "id": "710820d0-4f9b-45e5-9ac6-5934a05ee5d1",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "ČÚZK",
+              "license": "CC-BY-4.0",
+              "record_id": "23343532",
+              "update_time": "2026-10-15T20:12:41.705Z",
+              "confidence": null,
+              "between": null,
+              "provider": "cuzk",
+              "resource": "cuzk",
+              "version": "20261001"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        },
+        {
+          "layer": "building",
+          "id": "c2eb3116-d9c9-4a3c-8c50-c82e6898bdb5",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "OpenStreetMap",
+              "license": "ODbL-1.0",
+              "record_id": "r1122581@4",
+              "update_time": "2022-01-06T17:50:45.000Z",
+              "confidence": null,
+              "between": null,
+              "provider": "osm",
+              "resource": "planet",
+              "version": "2026-09-06T00:00:00.000Z"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        }
+      ],
+      "identity": {
+        "confidence": "high",
+        "note": "Identita instituce/objektu doložena uvedenými zdroji; přesné části komplexu je nutné ověřit před rekonstrukcí."
+      },
+      "coverage": {
+        "status": "inside_preview_reference_geometry",
+        "method": "Exact local GeoParquet geometry versus preview geographic extent, using renderer lon/lat-to-local conversion.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Členěný kulturní objekt, oddělení hlavního objemu, jeviště a menších částí.",
+      "source_refs": [
+        {
+          "id": "theatre",
+          "title": "Kontakty Jihočeského divadla",
+          "url": "https://www.jihoceskedivadlo.cz/kontakty",
+          "publisher": "Jihočeské divadlo",
+          "supports": "Historická budova: Dr. Stejskala 424/19; nejde o Malé divadlo nebo jiné scény.",
+          "accessed_at": "2026-11-16"
+        }
+      ],
+      "temporal_notes": "Datum vydání Overture není datum zaměření geometrie. Před porovnáním ověřit datum bodového mračna a fotografií.",
+      "source_epoch_requirements": [
+        "Zaznamenat datum pořízení každého mračna a datový stav půdorysu.",
+        "Porovnávat geometrii se snímky ze stejného nebo doloženě nezměněného období."
+      ],
+      "method_candidates": [
+        "Segmentace výškových částí + jednoduché objemy; poté regulované střešní roviny jen tam, kde je podporují body."
+      ],
+      "missing_inputs": [
+        "Ověření rozsahu objektu a jednotlivých stavebních částí.",
+        "Body a referenční fotografie s datem a použitelnou licencí."
+      ],
+      "address_evidence": {
+        "street": "Dr. Stejskala",
+        "number": "424",
+        "unit": "19",
+        "address_id": "710820d0-4f9b-45e5-9ac6-5934a05ee5d1",
+        "containing_building_ids": [
+          "c2eb3116-d9c9-4a3c-8c50-c82e6898bdb5"
+        ]
+      },
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    },
+    {
+      "id": "slavie-cloud-epoch",
+      "name": "KD Slavie – stav odpovídající starému mračnu",
+      "category": "building",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "address": "Jirsíkova 243/2",
+        "description": "Původní objekt a rozsah, který skutečně zachycuje dostupné mračno.",
+        "coordinates_wgs84": [
+          14.475961463494741,
+          48.97195640389078
+        ],
+        "bbox_wgs84": [
+          14.4756123,
+          48.9717372,
+          14.4763109,
+          48.9721767
+        ],
+        "geometry_role": "source_geometry_anchor",
+        "geometry_type": "Polygon",
+        "geometry_caveat": "Rozsah tohoto zdrojového půdorysu, ne automaticky celý současný areál ani potvrzená geometrie zadané epochy."
+      },
+      "source_ids": [
+        {
+          "layer": "address",
+          "id": "cd6b80a9-c31f-49ce-b4dc-2407e90ba38d",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "ČÚZK",
+              "license": "CC-BY-4.0",
+              "record_id": "26813777",
+              "update_time": "2026-10-15T20:12:41.705Z",
+              "confidence": null,
+              "between": null,
+              "provider": "cuzk",
+              "resource": "cuzk",
+              "version": "20261001"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        },
+        {
+          "layer": "building",
+          "id": "06c0807b-90ee-42bd-a912-fa408709a9ce",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "OpenStreetMap",
+              "license": "ODbL-1.0",
+              "record_id": "w49532574@12",
+              "update_time": "2025-12-29T16:33:05.000Z",
+              "confidence": null,
+              "between": null,
+              "provider": "osm",
+              "resource": "planet",
+              "version": "2026-09-06T00:00:00.000Z"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        }
+      ],
+      "identity": {
+        "confidence": "high",
+        "note": "Identita instituce/objektu doložena uvedenými zdroji; přesné části komplexu je nutné ověřit před rekonstrukcí."
+      },
+      "coverage": {
+        "status": "inside_preview_reference_geometry",
+        "method": "Exact local GeoParquet geometry versus preview geographic extent, using renderer lon/lat-to-local conversion.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Kontrolní historická varianta; stáří dat se nesmí zaměnit za chybu rekonstrukce.",
+      "source_refs": [
+        {
+          "id": "slavie_address",
+          "title": "Kulturní infrastruktura ČB",
+          "url": "https://www.c-budejovice.cz/sites/default/files/obsah/Magistrat/Informace/Archiv-poskytnutych-informaci/2025/kulturni_infrastruktura_analyza_cb_30_6_2025_popripominkach.pdf",
+          "publisher": "Statutární město České Budějovice",
+          "supports": "KD Slavie: Jirsíkova 243/2; stav v rekonstrukci v analýze z června 2025.",
+          "accessed_at": "2026-11-16",
+          "document_date": "2025-06-30",
+          "access_note": "Adresa ověřena vyhledávacím indexem, historický stav dokumentu."
+        },
+        {
+          "id": "slavie_open",
+          "title": "Kulturní dům Slavie se slavnostně otevřel",
+          "url": "https://www.c-budejovice.cz/kulturni-dum-slavie-se-slavnostne-otevrel-programem-pro-budejcaky",
+          "publisher": "Statutární město České Budějovice",
+          "supports": "Slavnostní otevření po rekonstrukci 29. 12. 2025, zahájení prací v červnu 2023 a přístavba směrem k Jihočeskému muzeu.",
+          "accessed_at": "2026-11-16",
+          "document_date": "2025-12-30",
+          "caveat": "Článek zaměňuje den v týdnu; zde přebíráme kalendářní datum. Slavnostní otevření není důkaz přesného data dokončení všech stavebních prací."
+        },
+        {
+          "id": "slavie_project",
+          "title": "Rekonstrukce KD Slavie",
+          "url": "https://www.c-budejovice.cz/rekonstrukce-kd-slavie",
+          "publisher": "Statutární město České Budějovice",
+          "supports": "Rozšíření objektu přístavbou na severovýchodní straně.",
+          "accessed_at": "2026-11-16",
+          "access_note": "Text ověřen vyhledávacím indexem."
+        }
+      ],
+      "temporal_notes": "Přesné datum lokálního mračna pro tuto budovu zatím není ověřeno. Označení staré mračno je pracovní; před zařazením určit, zda zachycuje stav před červnem 2023, staveniště, nebo pozdější etapu.",
+      "source_epoch_requirements": [
+        "Nejprve zjistit datum pořízení mračna a jeho pokrytí.",
+        "Historický půdorys i fotografie musí odpovídat této zjištěné epoše.",
+        "Nepřebírat nové severovýchodní křídlo do historické varianty bez bodové opory."
+      ],
+      "method_candidates": [
+        "Segmentace výškových částí + jednoduché objemy; poté regulované střešní roviny jen tam, kde je podporují body."
+      ],
+      "missing_inputs": [
+        "Ověřená epocha starého mračna.",
+        "Půdorys a snímky téže epochy."
+      ],
+      "group_id": "kd-slavie-temporal",
+      "address_evidence": {
+        "street": "Jirsíkova",
+        "number": "243",
+        "unit": "2",
+        "address_id": "cd6b80a9-c31f-49ce-b4dc-2407e90ba38d",
+        "containing_building_ids": [
+          "06c0807b-90ee-42bd-a912-fa408709a9ce"
+        ]
+      },
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    },
+    {
+      "id": "slavie-post-reconstruction",
+      "name": "KD Slavie – stav po rekonstrukci a přístavbě",
+      "category": "building",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "address": "Jirsíkova 243/2",
+        "description": "Objekt po přestavbě; stávající bod/půdorys je pouze lokalizační kotva.",
+        "coordinates_wgs84": [
+          14.475961463494741,
+          48.97195640389078
+        ],
+        "bbox_wgs84": [
+          14.4756123,
+          48.9717372,
+          14.4763109,
+          48.9721767
+        ],
+        "geometry_role": "source_geometry_anchor",
+        "geometry_type": "Polygon",
+        "geometry_caveat": "Rozsah tohoto zdrojového půdorysu, ne automaticky celý současný areál ani potvrzená geometrie zadané epochy."
+      },
+      "source_ids": [
+        {
+          "layer": "address",
+          "id": "cd6b80a9-c31f-49ce-b4dc-2407e90ba38d",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "ČÚZK",
+              "license": "CC-BY-4.0",
+              "record_id": "26813777",
+              "update_time": "2026-10-15T20:12:41.705Z",
+              "confidence": null,
+              "between": null,
+              "provider": "cuzk",
+              "resource": "cuzk",
+              "version": "20261001"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        },
+        {
+          "layer": "building",
+          "id": "06c0807b-90ee-42bd-a912-fa408709a9ce",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "OpenStreetMap",
+              "license": "ODbL-1.0",
+              "record_id": "w49532574@12",
+              "update_time": "2025-12-29T16:33:05.000Z",
+              "confidence": null,
+              "between": null,
+              "provider": "osm",
+              "resource": "planet",
+              "version": "2026-09-06T00:00:00.000Z"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        }
+      ],
+      "identity": {
+        "confidence": "high",
+        "note": "Identita instituce/objektu doložena uvedenými zdroji; přesné části komplexu je nutné ověřit před rekonstrukcí."
+      },
+      "coverage": {
+        "status": "inside_preview_reference_geometry",
+        "method": "Exact local GeoParquet geometry versus preview geographic extent, using renderer lon/lat-to-local conversion.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Samostatný aktuální objem, zejména přístavba směrem k muzeu.",
+      "source_refs": [
+        {
+          "id": "slavie_open",
+          "title": "Kulturní dům Slavie se slavnostně otevřel",
+          "url": "https://www.c-budejovice.cz/kulturni-dum-slavie-se-slavnostne-otevrel-programem-pro-budejcaky",
+          "publisher": "Statutární město České Budějovice",
+          "supports": "Slavnostní otevření po rekonstrukci 29. 12. 2025, zahájení prací v červnu 2023 a přístavba směrem k Jihočeskému muzeu.",
+          "accessed_at": "2026-11-16",
+          "document_date": "2025-12-30",
+          "caveat": "Článek zaměňuje den v týdnu; zde přebíráme kalendářní datum. Slavnostní otevření není důkaz přesného data dokončení všech stavebních prací."
+        },
+        {
+          "id": "slavie_project",
+          "title": "Rekonstrukce KD Slavie",
+          "url": "https://www.c-budejovice.cz/rekonstrukce-kd-slavie",
+          "publisher": "Statutární město České Budějovice",
+          "supports": "Rozšíření objektu přístavbou na severovýchodní straně.",
+          "accessed_at": "2026-11-16",
+          "access_note": "Text ověřen vyhledávacím indexem."
+        },
+        {
+          "id": "slavie_gastro",
+          "title": "Gastro ve Slavii",
+          "url": "https://www.kdslavie.cz/gastro/",
+          "publisher": "Kulturní dům Slavie",
+          "supports": "Provozovatel oznamuje otevření restaurace 2. 11. 2026; pozdější provozní etapa se nesmí zaměnit za datum přestavby.",
+          "accessed_at": "2026-11-16",
+          "access_note": "Vyhledávací index dostupný; přímé otevření vrací 403. Slouží jako podpůrná časová poznámka, nikoli geometrická reference."
+        },
+        {
+          "id": "slavie_address",
+          "title": "Kulturní infrastruktura ČB",
+          "url": "https://www.c-budejovice.cz/sites/default/files/obsah/Magistrat/Informace/Archiv-poskytnutych-informaci/2025/kulturni_infrastruktura_analyza_cb_30_6_2025_popripominkach.pdf",
+          "publisher": "Statutární město České Budějovice",
+          "supports": "KD Slavie: Jirsíkova 243/2; stav v rekonstrukci v analýze z června 2025.",
+          "accessed_at": "2026-11-16",
+          "document_date": "2025-06-30",
+          "access_note": "Adresa ověřena vyhledávacím indexem, historický stav dokumentu."
+        }
+      ],
+      "temporal_notes": "Městská zpráva ze 30. 12. 2025 potvrzuje slavnostní otevření 29. 12. 2025 a rozšíření budovy. Datum úplného stavebního dokončení tím není stanoveno. Gastro zdroj navíc uvádí provozní změnu 2. 11. 2026.",
+      "source_epoch_requirements": [
+        "Vyžadovat geometrii zaměřenou po dokončení příslušných částí a doložené datum.",
+        "Nové křídlo ověřit aktuálním ortofotem / geodetickým podkladem; starší mračno použít jen na nezměněné části s explicitní validací.",
+        "Srovnání se starou variantou vést jako změnu v čase, nikoli jednu sloučenou pravdu."
+      ],
+      "method_candidates": [
+        "Segmentace výškových částí + jednoduché objemy; poté regulované střešní roviny jen tam, kde je podporují body."
+      ],
+      "missing_inputs": [
+        "Aktuální metrický půdorys přístavby.",
+        "Body nebo geodetický/as-built podklad po přestavbě.",
+        "Datované fotografie nového pláště."
+      ],
+      "group_id": "kd-slavie-temporal",
+      "address_evidence": {
+        "street": "Jirsíkova",
+        "number": "243",
+        "unit": "2",
+        "address_id": "cd6b80a9-c31f-49ce-b4dc-2407e90ba38d",
+        "containing_building_ids": [
+          "06c0807b-90ee-42bd-a912-fa408709a9ce"
+        ]
+      },
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    },
+    {
+      "id": "court-main",
+      "name": "Okresní soud – hlavní budova",
+      "category": "building",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "address": "Lidická třída 98/20",
+        "coordinates_wgs84": [
+          14.47466111659616,
+          48.966873795699286
+        ],
+        "bbox_wgs84": [
+          14.4745316,
+          48.9666635,
+          14.4747872,
+          48.96709
+        ],
+        "geometry_role": "source_geometry_anchor",
+        "geometry_type": "Polygon",
+        "geometry_caveat": "Rozsah tohoto zdrojového půdorysu, ne automaticky celý současný areál ani potvrzená geometrie zadané epochy."
+      },
+      "source_ids": [
+        {
+          "layer": "address",
+          "id": "db59cf6a-f7a1-459f-aa25-22d93495601f",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "ČÚZK",
+              "license": "CC-BY-4.0",
+              "record_id": "25299336",
+              "update_time": "2026-10-15T20:12:41.705Z",
+              "confidence": null,
+              "between": null,
+              "provider": "cuzk",
+              "resource": "cuzk",
+              "version": "20261001"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        },
+        {
+          "layer": "building",
+          "id": "691e45ff-9f87-4731-95f2-5309777f0ad9",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "OpenStreetMap",
+              "license": "ODbL-1.0",
+              "record_id": "w61230873@6",
+              "update_time": "2023-07-08T17:50:25.000Z",
+              "confidence": null,
+              "between": null,
+              "provider": "osm",
+              "resource": "planet",
+              "version": "2026-09-06T00:00:00.000Z"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        }
+      ],
+      "identity": {
+        "confidence": "high",
+        "note": "Identita instituce/objektu doložena uvedenými zdroji; přesné části komplexu je nutné ověřit před rekonstrukcí."
+      },
+      "coverage": {
+        "status": "inside_preview_reference_geometry",
+        "method": "Exact local GeoParquet geometry versus preview geographic extent, using renderer lon/lat-to-local conversion.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Oddělit od pobočky na nábřeží a porovnat základní objemy vícekřídlého objektu.",
+      "source_refs": [
+        {
+          "id": "court",
+          "title": "Kontakty Okresního soudu",
+          "url": "https://msp.gov.cz/web/okresni-soud-v-ceskych-budejovicich/kontakty",
+          "publisher": "Ministerstvo spravedlnosti ČR",
+          "supports": "Hlavní budova Lidická třída 98/20; pobočka Zátkovo nábřeží 10/2.",
+          "accessed_at": "2026-11-16"
+        }
+      ],
+      "temporal_notes": "Datum vydání Overture není datum zaměření geometrie. Před porovnáním ověřit datum bodového mračna a fotografií.",
+      "source_epoch_requirements": [
+        "Zaznamenat datum pořízení každého mračna a datový stav půdorysu.",
+        "Porovnávat geometrii se snímky ze stejného nebo doloženě nezměněného období."
+      ],
+      "method_candidates": [
+        "Segmentace výškových částí + jednoduché objemy; poté regulované střešní roviny jen tam, kde je podporují body."
+      ],
+      "missing_inputs": [
+        "Ověření rozsahu objektu a jednotlivých stavebních částí.",
+        "Body a referenční fotografie s datem a použitelnou licencí."
+      ],
+      "address_evidence": {
+        "street": "Lidická tř.",
+        "number": "98",
+        "unit": "20",
+        "address_id": "db59cf6a-f7a1-459f-aa25-22d93495601f",
+        "containing_building_ids": [
+          "691e45ff-9f87-4731-95f2-5309777f0ad9"
+        ]
+      },
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    },
+    {
+      "id": "court-quay",
+      "name": "Okresní soud – pobočka Zátkovo nábřeží",
+      "category": "building",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "address": "Zátkovo nábřeží 10/2",
+        "coordinates_wgs84": [
+          14.47393507568789,
+          48.97147492535508
+        ],
+        "bbox_wgs84": [
+          14.4732267,
+          48.9710621,
+          14.4743506,
+          48.971867
+        ],
+        "geometry_role": "source_geometry_anchor",
+        "geometry_type": "Polygon",
+        "geometry_caveat": "Rozsah tohoto zdrojového půdorysu, ne automaticky celý současný areál ani potvrzená geometrie zadané epochy."
+      },
+      "source_ids": [
+        {
+          "layer": "address",
+          "id": "7fe4c571-52b8-438a-905a-4a091a2d63d0",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "ČÚZK",
+              "license": "CC-BY-4.0",
+              "record_id": "25300016",
+              "update_time": "2026-10-15T20:12:41.705Z",
+              "confidence": null,
+              "between": null,
+              "provider": "cuzk",
+              "resource": "cuzk",
+              "version": "20261001"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        },
+        {
+          "layer": "building",
+          "id": "8a097e51-9a45-4136-827b-e4881c9b9379",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "OpenStreetMap",
+              "license": "ODbL-1.0",
+              "record_id": "w1532240828@2",
+              "update_time": "2026-06-25T10:20:33.000Z",
+              "confidence": null,
+              "between": null,
+              "provider": "osm",
+              "resource": "planet",
+              "version": "2026-09-06T00:00:00.000Z"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        }
+      ],
+      "identity": {
+        "confidence": "high",
+        "note": "Identita instituce/objektu doložena uvedenými zdroji; přesné části komplexu je nutné ověřit před rekonstrukcí."
+      },
+      "coverage": {
+        "status": "inside_preview_reference_geometry",
+        "method": "Exact local GeoParquet geometry versus preview geographic extent, using renderer lon/lat-to-local conversion.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Objem v kontextu soudu, věznice a nábřeží; vymezit přesné části.",
+      "source_refs": [
+        {
+          "id": "court",
+          "title": "Kontakty Okresního soudu",
+          "url": "https://msp.gov.cz/web/okresni-soud-v-ceskych-budejovicich/kontakty",
+          "publisher": "Ministerstvo spravedlnosti ČR",
+          "supports": "Hlavní budova Lidická třída 98/20; pobočka Zátkovo nábřeží 10/2.",
+          "accessed_at": "2026-11-16"
+        }
+      ],
+      "temporal_notes": "Datum vydání Overture není datum zaměření geometrie. Před porovnáním ověřit datum bodového mračna a fotografií.",
+      "source_epoch_requirements": [
+        "Zaznamenat datum pořízení každého mračna a datový stav půdorysu.",
+        "Porovnávat geometrii se snímky ze stejného nebo doloženě nezměněného období."
+      ],
+      "method_candidates": [
+        "Segmentace výškových částí + jednoduché objemy; poté regulované střešní roviny jen tam, kde je podporují body."
+      ],
+      "missing_inputs": [
+        "Ověření rozsahu objektu a jednotlivých stavebních částí.",
+        "Body a referenční fotografie s datem a použitelnou licencí."
+      ],
+      "address_evidence": {
+        "street": "Zátkovo nábř.",
+        "number": "10",
+        "unit": "2",
+        "address_id": "7fe4c571-52b8-438a-905a-4a091a2d63d0",
+        "containing_building_ids": [
+          "8a097e51-9a45-4136-827b-e4881c9b9379"
+        ]
+      },
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    },
+    {
+      "id": "remand-prison",
+      "name": "Vazební věznice České Budějovice",
+      "category": "building",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "address": "Goethova 1929/1 (primární kontaktní stránka uvádí Goethova 1)",
+        "description": "Areál věznice; adresní bod ani jeden polygon nemusí vymezovat celý areál.",
+        "coordinates_wgs84": [
+          14.473224492364437,
+          48.97140228584828
+        ],
+        "bbox_wgs84": [
+          14.4726553,
+          48.9710571,
+          14.4738582,
+          48.9718413
+        ],
+        "geometry_role": "source_geometry_anchor",
+        "geometry_type": "Polygon",
+        "geometry_caveat": "Rozsah tohoto zdrojového půdorysu, ne automaticky celý současný areál ani potvrzená geometrie zadané epochy."
+      },
+      "source_ids": [
+        {
+          "layer": "address",
+          "id": "abb5f58a-48c2-4429-b974-9b64a73fe5a3",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "ČÚZK",
+              "license": "CC-BY-4.0",
+              "record_id": "26814170",
+              "update_time": "2026-10-15T20:12:41.705Z",
+              "confidence": null,
+              "between": null,
+              "provider": "cuzk",
+              "resource": "cuzk",
+              "version": "20261001"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        },
+        {
+          "layer": "building",
+          "id": "9f305b07-f7e5-44ef-abdf-1b6836db0b26",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "OpenStreetMap",
+              "license": "ODbL-1.0",
+              "record_id": "w1532240829@2",
+              "update_time": "2026-06-25T10:20:33.000Z",
+              "confidence": null,
+              "between": null,
+              "provider": "osm",
+              "resource": "planet",
+              "version": "2026-09-06T00:00:00.000Z"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        }
+      ],
+      "identity": {
+        "confidence": "high_address_unresolved_complex",
+        "note": "Místní adresní bod potvrzuje č.p. 1929 a orientační číslo 1; jedno odpovídající křídlo nevymezuje celý areál."
+      },
+      "coverage": {
+        "status": "inside_preview_reference_geometry",
+        "method": "Exact local GeoParquet geometry versus preview geographic extent, using renderer lon/lat-to-local conversion.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Vícekřídlý areál: jednoduché vnější objemy a zachování otevřených dvorů.",
+      "source_refs": [
+        {
+          "id": "prison",
+          "title": "Vazební věznice České Budějovice",
+          "url": "https://www.vs.gov.cz/organizacni-jednotky/vazebni-veznice-ceske-budejovice",
+          "publisher": "Vězeňská služba ČR",
+          "supports": "Adresa úřadovny a návštěv Goethova 1.",
+          "accessed_at": "2026-11-16"
+        }
+      ],
+      "temporal_notes": "Datum vydání Overture není datum zaměření geometrie. Před porovnáním ověřit datum bodového mračna a fotografií.",
+      "source_epoch_requirements": [
+        "Zaznamenat datum pořízení každého mračna a datový stav půdorysu.",
+        "Porovnávat geometrii se snímky ze stejného nebo doloženě nezměněného období."
+      ],
+      "method_candidates": [
+        "Segmentace výškových částí + jednoduché objemy; poté regulované střešní roviny jen tam, kde je podporují body."
+      ],
+      "missing_inputs": [
+        "Ověření č.p./orientačního čísla a rozsahu jednotlivých vnějších objektů areálu.",
+        "Datované veřejné podklady pro základní vnější geometrii."
+      ],
+      "address_evidence": {
+        "street": "Goethova",
+        "number": "1929",
+        "unit": "1",
+        "address_id": "abb5f58a-48c2-4429-b974-9b64a73fe5a3",
+        "containing_building_ids": [
+          "9f305b07-f7e5-44ef-abdf-1b6836db0b26"
+        ]
+      },
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    },
+    {
+      "id": "zatkovo-existing-corridor",
+      "name": "Zátkovo nábřeží – koridor u historického jádra",
+      "category": "corridor",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "description": "Úsek mezi Zlatým mostem a mostem v Biskupské ulici; přesný pás a břeh musí být zakreslen.",
+        "coordinates_wgs84": null,
+        "bbox_wgs84": null
+      },
+      "source_ids": [],
+      "identity": {
+        "confidence": "high_locality_unresolved_boundary",
+        "note": "Městská zpráva vymezuje úsek, ne polygon testovacího koridoru."
+      },
+      "coverage": {
+        "status": "locality_in_centre_boundary_not_checked",
+        "method": "Primary text identifies named endpoints; no polygon digitized.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Plošný test navazujících zdí, komunikací, schodů a mostů; ne jeden stavební polygon.",
+      "source_refs": [
+        {
+          "id": "quay_existing",
+          "title": "Zátkovo nábřeží prošlo obnovou",
+          "url": "https://www.c-budejovice.cz/zatkovo-nabrezi-proslo-obnovou",
+          "publisher": "Statutární město České Budějovice",
+          "supports": "Vymezuje úsek mezi Zlatým mostem a mostem v Biskupské ulici.",
+          "accessed_at": "2026-11-16"
+        }
+      ],
+      "temporal_notes": "Datum vydání Overture není datum zaměření geometrie. Před porovnáním ověřit datum bodového mračna a fotografií.",
+      "source_epoch_requirements": [
+        "Zaznamenat datum pořízení každého mračna a datový stav půdorysu.",
+        "Porovnávat geometrii se snímky ze stejného nebo doloženě nezměněného období."
+      ],
+      "method_candidates": [
+        "Příčné výškové profily terénu + liniové zdi a samostatné schody; topologické propojení průchozích úrovní."
+      ],
+      "missing_inputs": [
+        "Přesný polygon pásu a rozlišení břehu.",
+        "Výšky hrany nábřeží, hladiny a pochozích úrovní.",
+        "Datované snímky/profily pro průchody pod mosty."
+      ],
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    },
+    {
+      "id": "zatkovo-new-riverfront",
+      "name": "Zátkovo nábřeží – nová náplavka a stavební etapa",
+      "category": "corridor",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "description": "Levý břeh Malše mezi Železným mostem v Biskupské a Krumlovským mostem v Lidické.",
+        "coordinates_wgs84": null,
+        "bbox_wgs84": null
+      },
+      "source_ids": [],
+      "identity": {
+        "confidence": "high_project_unresolved_built_state",
+        "note": "Potvrzený projektový rozsah; aktuální provedení jednotlivých částí není v tomto manifestu zaměřené."
+      },
+      "coverage": {
+        "status": "locality_in_centre_boundary_not_checked",
+        "method": "Primary text identifies named endpoints; no polygon digitized.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Oddělený časový test nižšího korza, opěrné zdi, schodů a podzemního prostoru.",
+      "source_refs": [
+        {
+          "id": "quay_project",
+          "title": "Zátkovo nábřeží – úprava náplavky",
+          "url": "https://www.c-budejovice.cz/zatkovo-nabrezi-uprava-naplavky",
+          "publisher": "Statutární město České Budějovice",
+          "supports": "Levý břeh mezi Železným a Krumlovským mostem; projekt zahrnuje dolní náplavku, zeď, schody a podzemní prostor.",
+          "accessed_at": "2026-11-16",
+          "document_date": "2026-10-12",
+          "caveat": "Stránka uvádí předání staveniště 29. 7. 2026 a realizaci do 01/2028; současně odkazuje na zprávu z 28. 4. 2026. Časové údaje nejsou dostatečné pro metrickou epochu jednotlivých konstrukcí."
+        }
+      ],
+      "temporal_notes": "Městská stránka aktualizovaná 12. 10. 2026 popisuje probíhající investici s realizací do 01/2028. Vizualizace projektu není doklad skutečně provedené geometrie.",
+      "source_epoch_requirements": [
+        "Vést samostatně starý stav, staveniště a skutečně dokončenou část.",
+        "Projektové výkresy označit jako návrh, dokud nejsou potvrzené dokumentací skutečného provedení.",
+        "Neslučovat stavební etapy do jedné sady výškových profilů."
+      ],
+      "method_candidates": [
+        "Parametrické výškové profily + explicitní opěrná zeď, schody a otvory pod korzem."
+      ],
+      "missing_inputs": [
+        "Dokumentace skutečného provedení nebo aktuální měření.",
+        "Rozsah dokončených etap a jejich data.",
+        "Průřezy pro podzemní prostor a schody."
+      ],
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    },
+    {
+      "id": "blue-bridge",
+      "name": "Modrý most",
+      "category": "bridge",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "description": "Přes Malši mezi ulicemi Marie Vydrové a Matice školské.",
+        "coordinates_wgs84": [
+          14.477811492461361,
+          48.9660985500783
+        ],
+        "bbox_wgs84": [
+          14.4774891,
+          48.9660308,
+          14.4781341,
+          48.9661663
+        ],
+        "geometry_role": "source_geometry_anchor",
+        "geometry_type": "Polygon"
+      },
+      "source_ids": [
+        {
+          "layer": "infrastructure",
+          "id": "f0fbdf56-a5de-3f73-9a4b-69c5701f98c3",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "OpenStreetMap",
+              "license": "ODbL-1.0",
+              "record_id": "w781571510@7",
+              "update_time": "2025-12-03T19:41:41.000Z",
+              "confidence": null,
+              "between": null,
+              "provider": "osm",
+              "resource": "planet",
+              "version": "2026-10-04T00:00:00.000Z"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        }
+      ],
+      "identity": {
+        "confidence": "high",
+        "note": "Identita instituce/objektu doložena uvedenými zdroji; přesné části komplexu je nutné ověřit před rekonstrukcí."
+      },
+      "coverage": {
+        "status": "inside_preview_reference_geometry",
+        "method": "Exact local GeoParquet geometry versus preview geographic extent, using renderer lon/lat-to-local conversion.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Otevřený prostor pod mostovkou, oblouky a návaznost komunikací.",
+      "source_refs": [
+        {
+          "id": "blue_bridge",
+          "title": "Usnesení rady města 22. 10. 2003",
+          "url": "https://www.c-budejovice.cz/sites/default/files/meeting_resolutions/rm2303.pdf",
+          "publisher": "Statutární město České Budějovice",
+          "supports": "Schválen název Modrý most pro most přes Malši mezi M. Vydrové a Matice školské.",
+          "accessed_at": "2026-11-16",
+          "document_date": "2003-10-22"
+        }
+      ],
+      "temporal_notes": "Datum vydání Overture není datum zaměření geometrie. Před porovnáním ověřit datum bodového mračna a fotografií.",
+      "source_epoch_requirements": [
+        "Zaznamenat datum pořízení každého mračna a datový stav půdorysu.",
+        "Porovnávat geometrii se snímky ze stejného nebo doloženě nezměněného období."
+      ],
+      "method_candidates": [
+        "Samostatná mostovka jako tenký objem; podpory a oblouky z explicitních křivek, ne plná extruze k terénu."
+      ],
+      "missing_inputs": [
+        "Výška spodní a horní hrany mostovky.",
+        "Profily oblouků a podpěr z měření nebo datovaných metrických podkladů."
+      ],
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    },
+    {
+      "id": "gold-bridge",
+      "name": "Zlatý most",
+      "category": "bridge",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "description": "Malše, konec ulice Dr. Stejskala.",
+        "coordinates_wgs84": [
+          14.474474810383871,
+          48.972040429749896
+        ],
+        "bbox_wgs84": [
+          14.4743566,
+          48.9718519,
+          14.4745902,
+          48.972233
+        ],
+        "geometry_role": "source_geometry_anchor",
+        "geometry_type": "Polygon"
+      },
+      "source_ids": [
+        {
+          "layer": "infrastructure",
+          "id": "ab95868b-fb9f-33c4-91b1-b389c6f23501",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "OpenStreetMap",
+              "license": "ODbL-1.0",
+              "record_id": "w777497461@10",
+              "update_time": "2025-06-13T09:09:44.000Z",
+              "confidence": null,
+              "between": null,
+              "provider": "osm",
+              "resource": "planet",
+              "version": "2026-10-04T00:00:00.000Z"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        }
+      ],
+      "identity": {
+        "confidence": "high",
+        "note": "Identita instituce/objektu doložena uvedenými zdroji; přesné části komplexu je nutné ověřit před rekonstrukcí."
+      },
+      "coverage": {
+        "status": "inside_preview_reference_geometry",
+        "method": "Exact local GeoParquet geometry versus preview geographic extent, using renderer lon/lat-to-local conversion.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Dvojice oblouků a volný průhled pod mostem.",
+      "source_refs": [
+        {
+          "id": "gold_bridge",
+          "title": "Zlatý most",
+          "url": "https://www.encyklopedie.c-budejovice.cz/clanek/zlaty-most",
+          "publisher": "Městská encyklopedie Českých Budějovic / Daniel Kovář",
+          "supports": "Most přes Malši na konci Dr. Stejskala, spojuje obě části Zátkova nábřeží.",
+          "accessed_at": "2026-11-16",
+          "source_type": "municipal_reference"
+        }
+      ],
+      "temporal_notes": "Datum vydání Overture není datum zaměření geometrie. Před porovnáním ověřit datum bodového mračna a fotografií.",
+      "source_epoch_requirements": [
+        "Zaznamenat datum pořízení každého mračna a datový stav půdorysu.",
+        "Porovnávat geometrii se snímky ze stejného nebo doloženě nezměněného období."
+      ],
+      "method_candidates": [
+        "Mostovka + parametrické oblouky/podpory, ověřit světlý profil."
+      ],
+      "missing_inputs": [
+        "Metrické boční pohledy a výšky mostovky/podpěr.",
+        "Oddělit polygon mostu od dopravního segmentu ve zdroji."
+      ],
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    },
+    {
+      "id": "long-bridge",
+      "name": "Dlouhý most",
+      "category": "bridge",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "description": "Most přes Vltavu v ose Husovy třídy.",
+        "coordinates_wgs84": [
+          14.466366657180686,
+          48.977746678405474
+        ],
+        "bbox_wgs84": [
+          14.4656258,
+          48.9776244,
+          14.4671117,
+          48.9778674
+        ],
+        "geometry_role": "source_geometry_anchor",
+        "geometry_type": "Polygon"
+      },
+      "source_ids": [
+        {
+          "layer": "infrastructure",
+          "id": "9d8e9720-76fd-303f-927e-d2105598ebad",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "OpenStreetMap",
+              "license": "ODbL-1.0",
+              "record_id": "w779190294@10",
+              "update_time": "2026-08-31T20:57:46.000Z",
+              "confidence": null,
+              "between": null,
+              "provider": "osm",
+              "resource": "planet",
+              "version": "2026-10-04T00:00:00.000Z"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        }
+      ],
+      "identity": {
+        "confidence": "high",
+        "note": "Identita instituce/objektu doložena uvedenými zdroji; přesné části komplexu je nutné ověřit před rekonstrukcí."
+      },
+      "coverage": {
+        "status": "inside_preview_reference_geometry",
+        "method": "Exact local GeoParquet geometry versus preview geographic extent, using renderer lon/lat-to-local conversion.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Zachovat konstrukční siluetu a otevřený prostor nad Vltavou.",
+      "source_refs": [
+        {
+          "id": "long_bridge",
+          "title": "Dlouhý most",
+          "url": "https://www.encyklopedie.c-budejovice.cz/clanek/dlouhy-most",
+          "publisher": "Městská encyklopedie Českých Budějovic / Daniel Kovář",
+          "supports": "Identita mostu přes Vltavu a konstrukční kontext.",
+          "accessed_at": "2026-11-16",
+          "source_type": "municipal_reference"
+        },
+        {
+          "id": "city_guide",
+          "title": "Oficiální průvodce Českými Budějovicemi 2026",
+          "url": "https://www.visitceskebudejovice.cz/guide/cz/CBudejovice_2026.pdf",
+          "publisher": "Oficiální turistický portál města",
+          "supports": "Z Dlouhého mostu je proti proudu vidět Jiráskův jez; průvodce lokalizuje Lannovu třídu a její budovu ČSOB.",
+          "accessed_at": "2026-11-16",
+          "document_date": "2026"
+        }
+      ],
+      "temporal_notes": "Datum vydání Overture není datum zaměření geometrie. Před porovnáním ověřit datum bodového mračna a fotografií.",
+      "source_epoch_requirements": [
+        "Zaznamenat datum pořízení každého mračna a datový stav půdorysu.",
+        "Porovnávat geometrii se snímky ze stejného nebo doloženě nezměněného období."
+      ],
+      "method_candidates": [
+        "Mostovka a hlavní nosníky zvlášť; zjednodušené výztuhy pouze z doložených profilů."
+      ],
+      "missing_inputs": [
+        "Výšky mostovky a kotev/podpěr.",
+        "Boční geometrie; letecký povrch sám nepopisuje spodní část."
+      ],
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    },
+    {
+      "id": "weir-upstream-long-bridge",
+      "name": "Jez nad Dlouhým mostem – pravděpodobně Jiráskův jez",
+      "category": "hydraulic",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "description": "Vltava, ř. km 239,605, u Sokolského ostrova proti proudu od Dlouhého mostu.",
+        "coordinates_wgs84": [
+          14.467013096066562,
+          48.976094118939
+        ],
+        "bbox_wgs84": [
+          14.4665359,
+          48.975995,
+          14.4674903,
+          48.9761932
+        ],
+        "geometry_role": "source_geometry_anchor",
+        "geometry_type": "LineString"
+      },
+      "source_ids": [
+        {
+          "layer": "infrastructure",
+          "id": "a5cdfc32-cbd6-36a7-bf97-92fd90002179",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "OpenStreetMap",
+              "license": "ODbL-1.0",
+              "record_id": "w52087685@6",
+              "update_time": "2020-04-13T06:54:51.000Z",
+              "confidence": null,
+              "between": null,
+              "provider": "osm",
+              "resource": "planet",
+              "version": "2026-10-04T00:00:00.000Z"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        }
+      ],
+      "identity": {
+        "confidence": "high_named_object_medium_user_intent",
+        "note": "Oficiální průvodce výslovně uvádí Jiráskův jez proti proudu při pohledu z Dlouhého mostu; toto je dobře podložená interpretace uživatelova popisu, ne potvrzení uživatelem."
+      },
+      "coverage": {
+        "status": "inside_preview_reference_geometry",
+        "method": "Exact local GeoParquet geometry versus preview geographic extent, using renderer lon/lat-to-local conversion.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Přechod vodních hladin a nízkých konstrukcí, které nejsou vhodné pro model budovy.",
+      "source_refs": [
+        {
+          "id": "city_guide",
+          "title": "Oficiální průvodce Českými Budějovicemi 2026",
+          "url": "https://www.visitceskebudejovice.cz/guide/cz/CBudejovice_2026.pdf",
+          "publisher": "Oficiální turistický portál města",
+          "supports": "Z Dlouhého mostu je proti proudu vidět Jiráskův jez; průvodce lokalizuje Lannovu třídu a její budovu ČSOB.",
+          "accessed_at": "2026-11-16",
+          "document_date": "2026"
+        },
+        {
+          "id": "weir",
+          "title": "Opatření O-2026/47/0",
+          "url": "https://sps.gov.cz/predpisy/predpis.php?id=1695&typ=oop&zdroj=uredni_deska",
+          "publisher": "Státní plavební správa",
+          "supports": "Identita Jiráskova jezu na Vltavě, ř. km 239,605.",
+          "accessed_at": "2026-11-16",
+          "document_date": "2026-09-09"
+        }
+      ],
+      "temporal_notes": "Datum vydání Overture není datum zaměření geometrie. Před porovnáním ověřit datum bodového mračna a fotografií.",
+      "source_epoch_requirements": [
+        "Zaznamenat datum pořízení každého mračna a datový stav půdorysu.",
+        "Porovnávat geometrii se snímky ze stejného nebo doloženě nezměněného období."
+      ],
+      "method_candidates": [
+        "Liniový práh, pilíře a samostatné vodní plochy s různou výškou; terénní profil místo střešního algoritmu."
+      ],
+      "missing_inputs": [
+        "Výška prahu, pilířů a dobově odpovídajících hladin.",
+        "Technický profil; řídké odrazy na vodě nevydávat za pevný povrch."
+      ],
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    },
+    {
+      "id": "planetarium",
+      "name": "Hvězdárna a planetárium",
+      "category": "building",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "address": "Zátkovo nábřeží 4",
+        "coordinates_wgs84": [
+          14.470266666666667,
+          48.9726
+        ],
+        "coordinate_evidence": "Oficiální kontaktní stránka; bod instituce, nikoli obrys budovy.",
+        "bbox_wgs84": null
+      },
+      "source_ids": [],
+      "identity": {
+        "confidence": "high",
+        "note": "Identita instituce/objektu doložena uvedenými zdroji; přesné části komplexu je nutné ověřit před rekonstrukcí."
+      },
+      "coverage": {
+        "status": "inside_preview_official_point",
+        "method": "Official observatory contact coordinates; full footprint not checked.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Kopule a členěné nízké objemy vyžadují jiný model než pouze rovinnou střechu.",
+      "source_refs": [
+        {
+          "id": "planetarium",
+          "title": "Kontakty hvězdárny",
+          "url": "https://www.hvezdarnacb.cz/cz/kontakt",
+          "publisher": "Hvězdárna a planetárium České Budějovice",
+          "supports": "Zátkovo nábřeží 4, souřadnice N48°58.356′ E014°28.216′.",
+          "accessed_at": "2026-11-16"
+        },
+        {
+          "id": "planetarium_epoch",
+          "title": "Provoz a plán rekonstrukce hvězdárny",
+          "url": "https://hvezdarnacb.cz/",
+          "publisher": "Hvězdárna a planetárium České Budějovice",
+          "supports": "Ke dni rešerše oznamuje rekonstrukci pláště, oken a dveří od února 2027; dokončení je plán, nikoli doložený stav.",
+          "accessed_at": "2026-11-16"
+        }
+      ],
+      "temporal_notes": "K 16. 11. 2026 provozovatel teprve plánuje rekonstrukci pláště od února 2027. Současný a budoucí plášť neztotožňovat.",
+      "source_epoch_requirements": [
+        "Zaznamenat datum pořízení každého mračna a datový stav půdorysu.",
+        "Porovnávat geometrii se snímky ze stejného nebo doloženě nezměněného období."
+      ],
+      "method_candidates": [
+        "Výškové objemy + samostatná parametrická kopule, pokud ji potvrzuje mračno/profil; ploché části řešit rovinně."
+      ],
+      "missing_inputs": [
+        "Přesný rozsah jednotlivých částí.",
+        "Body a referenční profil kopule.",
+        "Fotografie odpovídající době před/po budoucí rekonstrukci."
+      ],
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    },
+    {
+      "id": "hotel-zvon",
+      "name": "Grandhotel Zvon",
+      "category": "building",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "address": "náměstí Přemysla Otakara II. 90/28",
+        "coordinates_wgs84": [
+          14.475891320881326,
+          48.97407035274286
+        ],
+        "bbox_wgs84": [
+          14.4755121,
+          48.9739295,
+          14.4762837,
+          48.974192
+        ],
+        "geometry_role": "source_geometry_anchor",
+        "geometry_type": "Polygon",
+        "geometry_caveat": "Rozsah tohoto zdrojového půdorysu, ne automaticky celý současný areál ani potvrzená geometrie zadané epochy."
+      },
+      "source_ids": [
+        {
+          "layer": "address",
+          "id": "478f9850-12a8-4bf4-96f7-01597705bda2",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "ČÚZK",
+              "license": "CC-BY-4.0",
+              "record_id": "28226526",
+              "update_time": "2026-10-15T20:12:41.705Z",
+              "confidence": null,
+              "between": null,
+              "provider": "cuzk",
+              "resource": "cuzk",
+              "version": "20261001"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        },
+        {
+          "layer": "building",
+          "id": "ca1a6d8f-9e7e-4c67-a6b8-e308484a68b9",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "OpenStreetMap",
+              "license": "ODbL-1.0",
+              "record_id": "w49939168@6",
+              "update_time": "2023-04-14T08:22:09.000Z",
+              "confidence": null,
+              "between": null,
+              "provider": "osm",
+              "resource": "planet",
+              "version": "2026-09-06T00:00:00.000Z"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        }
+      ],
+      "identity": {
+        "confidence": "high_address_unresolved_complex",
+        "note": "Potvrzena hlavní adresa; nelze automaticky připsat celému provozu hotelu pouze jediný půdorys."
+      },
+      "coverage": {
+        "status": "inside_preview_reference_geometry",
+        "method": "Exact local GeoParquet geometry versus preview geographic extent, using renderer lon/lat-to-local conversion.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Více historických hmot a střešních částí, fasáda do náměstí.",
+      "source_refs": [
+        {
+          "id": "hotel",
+          "title": "Kontakt Grandhotelu Zvon",
+          "url": "https://www.hotel-zvon.cz/kontakt",
+          "publisher": "Grand Hotel Zvon s.r.o.",
+          "supports": "Adresa náměstí Přemysla Otakara II. 90/28.",
+          "accessed_at": "2026-11-16"
+        }
+      ],
+      "temporal_notes": "Datum vydání Overture není datum zaměření geometrie. Před porovnáním ověřit datum bodového mračna a fotografií.",
+      "source_epoch_requirements": [
+        "Zaznamenat datum pořízení každého mračna a datový stav půdorysu.",
+        "Porovnávat geometrii se snímky ze stejného nebo doloženě nezměněného období."
+      ],
+      "method_candidates": [
+        "Segmentace výškových částí + jednoduché objemy; poté regulované střešní roviny jen tam, kde je podporují body."
+      ],
+      "missing_inputs": [
+        "Ověření rozsahu objektu a jednotlivých stavebních částí.",
+        "Body a referenční fotografie s datem a použitelnou licencí."
+      ],
+      "address_evidence": {
+        "street": "nám. Přemysla Otakara II.",
+        "number": "90",
+        "unit": "28",
+        "address_id": "478f9850-12a8-4bf4-96f7-01597705bda2",
+        "containing_building_ids": [
+          "ca1a6d8f-9e7e-4c67-a6b8-e308484a68b9"
+        ]
+      },
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    },
+    {
+      "id": "csob-lannova",
+      "name": "ČSOB – Lannova tř. 11/3",
+      "category": "building",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "address": "Lannova tř. 11/3",
+        "coordinates_wgs84": [
+          14.479581975993886,
+          48.97471330147313
+        ],
+        "bbox_wgs84": [
+          14.4794348,
+          48.974555,
+          14.4797287,
+          48.974894
+        ],
+        "geometry_role": "source_geometry_anchor",
+        "geometry_type": "Polygon",
+        "geometry_caveat": "Rozsah tohoto zdrojového půdorysu, ne automaticky celý současný areál ani potvrzená geometrie zadané epochy."
+      },
+      "source_ids": [
+        {
+          "layer": "address",
+          "id": "d02365ef-4060-4fe8-9f70-ba5d8f118e6a",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "ČÚZK",
+              "license": "CC-BY-4.0",
+              "record_id": "25292285",
+              "update_time": "2026-10-15T20:12:41.705Z",
+              "confidence": null,
+              "between": null,
+              "provider": "cuzk",
+              "resource": "cuzk",
+              "version": "20261001"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        },
+        {
+          "layer": "building",
+          "id": "9474b330-359d-49cc-9b55-729a1d650677",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "OpenStreetMap",
+              "license": "ODbL-1.0",
+              "record_id": "w52087710@7",
+              "update_time": "2026-05-07T19:46:21.000Z",
+              "confidence": null,
+              "between": null,
+              "provider": "osm",
+              "resource": "planet",
+              "version": "2026-09-06T00:00:00.000Z"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        }
+      ],
+      "identity": {
+        "confidence": "high_address",
+        "note": "Potvrzena ČSOB na Lannově; místní POI může ležet mimo správný adresní polygon, proto preferovat adresu."
+      },
+      "coverage": {
+        "status": "inside_preview_reference_geometry",
+        "method": "Exact local GeoParquet geometry versus preview geographic extent, using renderer lon/lat-to-local conversion.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Moderní dostavba banky a napojení různých stavebních částí.",
+      "source_refs": [
+        {
+          "id": "csob",
+          "title": "ČSOB – pobočka Lannova",
+          "url": "https://www.csob.cz/kontakty/pobocky-a-bankomaty/pobocka?id=ceske-budejovice-lannova",
+          "publisher": "ČSOB",
+          "supports": "Adresa Lannova tř. 11/3.",
+          "accessed_at": "2026-11-16",
+          "access_note": "Adresa dostupná ve vyhledávacím indexu oficiální stránky; přímý text stránky je omezený."
+        },
+        {
+          "id": "city_guide",
+          "title": "Oficiální průvodce Českými Budějovicemi 2026",
+          "url": "https://www.visitceskebudejovice.cz/guide/cz/CBudejovice_2026.pdf",
+          "publisher": "Oficiální turistický portál města",
+          "supports": "Z Dlouhého mostu je proti proudu vidět Jiráskův jez; průvodce lokalizuje Lannovu třídu a její budovu ČSOB.",
+          "accessed_at": "2026-11-16",
+          "document_date": "2026"
+        }
+      ],
+      "temporal_notes": "Datum vydání Overture není datum zaměření geometrie. Před porovnáním ověřit datum bodového mračna a fotografií.",
+      "source_epoch_requirements": [
+        "Zaznamenat datum pořízení každého mračna a datový stav půdorysu.",
+        "Porovnávat geometrii se snímky ze stejného nebo doloženě nezměněného období."
+      ],
+      "method_candidates": [
+        "Segmentace výškových částí + jednoduché objemy; poté regulované střešní roviny jen tam, kde je podporují body."
+      ],
+      "missing_inputs": [
+        "Ověření rozsahu objektu a jednotlivých stavebních částí.",
+        "Body a referenční fotografie s datem a použitelnou licencí."
+      ],
+      "address_evidence": {
+        "street": "Lannova tř.",
+        "number": "11",
+        "unit": "3",
+        "address_id": "d02365ef-4060-4fe8-9f70-ba5d8f118e6a",
+        "containing_building_ids": [
+          "9474b330-359d-49cc-9b55-729a1d650677"
+        ]
+      },
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    },
+    {
+      "id": "cnb-lannova",
+      "name": "Česká národní banka – Lannova 1",
+      "category": "building",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "address": "Lannova třída 1",
+        "coordinates_wgs84": [
+          14.47922575598511,
+          48.974739891354986
+        ],
+        "bbox_wgs84": [
+          14.47898,
+          48.9745603,
+          14.4794905,
+          48.9749563
+        ],
+        "geometry_role": "source_geometry_anchor",
+        "geometry_type": "Polygon",
+        "geometry_caveat": "Rozsah tohoto zdrojového půdorysu, ne automaticky celý současný areál ani potvrzená geometrie zadané epochy."
+      },
+      "source_ids": [
+        {
+          "layer": "address",
+          "id": "26bfb41b-cd05-4e5a-ba2e-856bf10f85af",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "ČÚZK",
+              "license": "CC-BY-4.0",
+              "record_id": "23400188",
+              "update_time": "2026-10-15T20:12:41.705Z",
+              "confidence": null,
+              "between": null,
+              "provider": "cuzk",
+              "resource": "cuzk",
+              "version": "20261001"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        },
+        {
+          "layer": "building",
+          "id": "762a2d9a-a198-45f5-bcf0-a35f3f3a7e6d",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "OpenStreetMap",
+              "license": "ODbL-1.0",
+              "record_id": "w52087712@7",
+              "update_time": "2022-07-29T13:06:59.000Z",
+              "confidence": null,
+              "between": null,
+              "provider": "osm",
+              "resource": "planet",
+              "version": "2026-09-06T00:00:00.000Z"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        }
+      ],
+      "identity": {
+        "confidence": "high_address",
+        "note": "Primární zdroj potvrzuje pracoviště ČNB. Uzavřená pokladna nemění identitu budovy."
+      },
+      "coverage": {
+        "status": "inside_preview_reference_geometry",
+        "method": "Exact local GeoParquet geometry versus preview geographic extent, using renderer lon/lat-to-local conversion.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Oddělit od sousední ČSOB; výšky hmot, profil střechy a uličně exponovaná fasáda.",
+      "source_refs": [
+        {
+          "id": "cnb",
+          "title": "Mimopražské pracoviště České Budějovice",
+          "url": "https://www.cnb.cz/cs/o_cnb/organizacni-struktura/mimoprazska-pracoviste/mimoprazske-pracoviste-ceske-budejovice/",
+          "publisher": "Česká národní banka",
+          "supports": "Pracoviště na Lannově třídě 1. Uzavření pokladny od 1. 11. 2024 neznamená zánik budovy/pracoviště.",
+          "accessed_at": "2026-11-16"
+        }
+      ],
+      "temporal_notes": "Datum vydání Overture není datum zaměření geometrie. Před porovnáním ověřit datum bodového mračna a fotografií.",
+      "source_epoch_requirements": [
+        "Zaznamenat datum pořízení každého mračna a datový stav půdorysu.",
+        "Porovnávat geometrii se snímky ze stejného nebo doloženě nezměněného období."
+      ],
+      "method_candidates": [
+        "Segmentace výškových částí + jednoduché objemy; poté regulované střešní roviny jen tam, kde je podporují body."
+      ],
+      "missing_inputs": [
+        "Ověření rozsahu objektu a jednotlivých stavebních částí.",
+        "Body a referenční fotografie s datem a použitelnou licencí."
+      ],
+      "address_evidence": {
+        "street": "Lannova tř.",
+        "number": "1",
+        "unit": "1",
+        "address_id": "26bfb41b-cd05-4e5a-ba2e-856bf10f85af",
+        "containing_building_ids": [
+          "762a2d9a-a198-45f5-bcf0-a35f3f3a7e6d"
+        ]
+      },
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    },
+    {
+      "id": "humanoids",
+      "name": "Humanoidi – sousoší chodců na Lannově",
+      "category": "sculpture",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "description": "Pěší zóna Lannovy třídy; bod lokalizuje sousoší, nikoli pozice každé sochy.",
+        "coordinates_wgs84": [
+          14.4790539,
+          48.9744526
+        ],
+        "bbox_wgs84": [
+          14.4790539,
+          48.9744526,
+          14.4790539,
+          48.9744526
+        ],
+        "geometry_role": "source_geometry_anchor",
+        "geometry_type": "Point"
+      },
+      "source_ids": [
+        {
+          "layer": "infrastructure",
+          "id": "001dfe4d-48d6-3a2b-8870-749eb0c6f8b8",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "OpenStreetMap",
+              "license": "ODbL-1.0",
+              "record_id": "n4564175556@5",
+              "update_time": "2026-05-13T17:28:40.000Z",
+              "confidence": null,
+              "between": null,
+              "provider": "osm",
+              "resource": "planet",
+              "version": "2026-10-04T00:00:00.000Z"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        }
+      ],
+      "identity": {
+        "confidence": "high",
+        "note": "Identita instituce/objektu doložena uvedenými zdroji; přesné části komplexu je nutné ověřit před rekonstrukcí."
+      },
+      "coverage": {
+        "status": "inside_preview_reference_geometry",
+        "method": "Exact local GeoParquet geometry versus preview geographic extent, using renderer lon/lat-to-local conversion.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Rozpoznatelný pouliční prvek; s řídkým leteckým mračnem jej nelze spolehlivě rekonstruovat.",
+      "source_refs": [
+        {
+          "id": "humanoids",
+          "title": "Humanoidi",
+          "url": "https://www.michaltrpak.com/portfolio/humanoidi/",
+          "publisher": "Michal Trpák, autor díla",
+          "supports": "Sousoší z let 2006–2007, umístění na Lannově třídě od 2009; autor uvádí výšku 220 cm.",
+          "accessed_at": "2026-11-16"
+        }
+      ],
+      "temporal_notes": "Datum vydání Overture není datum zaměření geometrie. Před porovnáním ověřit datum bodového mračna a fotografií.",
+      "source_epoch_requirements": [
+        "Zaznamenat datum pořízení každého mračna a datový stav půdorysu.",
+        "Porovnávat geometrii se snímky ze stejného nebo doloženě nezměněného období."
+      ],
+      "method_candidates": [
+        "Předem připravený zjednodušený mesh z autorizovaného modelu nebo fotogrammetrie s odpovídající licencí; v mezikroku pouze polohová značka."
+      ],
+      "missing_inputs": [
+        "Jednotlivé pozice a orientace soch.",
+        "Otevřený/licencovaný 3D model nebo fotografie pro metrickou rekonstrukci.",
+        "Doložený současný počet a stav soch."
+      ],
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    },
+    {
+      "id": "samson-fountain",
+      "name": "Samsonova kašna",
+      "category": "fountain",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "description": "Střed náměstí Přemysla Otakara II.",
+        "coordinates_wgs84": [
+          14.47432481573177,
+          48.97455422532925
+        ],
+        "bbox_wgs84": [
+          14.4742078,
+          48.9744771,
+          14.4744418,
+          48.9746313
+        ],
+        "geometry_role": "source_geometry_anchor",
+        "geometry_type": "Polygon"
+      },
+      "source_ids": [
+        {
+          "layer": "infrastructure",
+          "id": "5dfca282-2d0d-33c8-9082-772d1242aa8e",
+          "sources": [
+            {
+              "property": "",
+              "dataset": "OpenStreetMap",
+              "license": "ODbL-1.0",
+              "record_id": "w241015595@17",
+              "update_time": "2026-07-28T21:10:52.000Z",
+              "confidence": null,
+              "between": null,
+              "provider": "osm",
+              "resource": "planet",
+              "version": "2026-10-04T00:00:00.000Z"
+            }
+          ],
+          "role": "localization_anchor_not_validated_epoch_geometry"
+        }
+      ],
+      "identity": {
+        "confidence": "high",
+        "note": "Identita instituce/objektu doložena uvedenými zdroji; přesné části komplexu je nutné ověřit před rekonstrukcí."
+      },
+      "coverage": {
+        "status": "inside_preview_reference_geometry",
+        "method": "Exact local GeoParquet geometry versus preview geographic extent, using renderer lon/lat-to-local conversion.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Členění nádrže, soklu a sousoší bez zkreslení na plnou stavební extruzi.",
+      "source_refs": [
+        {
+          "id": "fountain",
+          "title": "Samsonova kašna",
+          "url": "https://www.budejce.cz/aktivity/5-samsonova-kasna",
+          "publisher": "Oficiální turistický portál města",
+          "supports": "Identita kašny ve středu náměstí a členění nádrže, soklu a sousoší.",
+          "accessed_at": "2026-11-16",
+          "caveat": "Web uvádí průměr 15 m, oficiální průvodce 2026 uvádí 17 m. Rozměr není převzat jako měřený parametr."
+        },
+        {
+          "id": "city_guide",
+          "title": "Oficiální průvodce Českými Budějovicemi 2026",
+          "url": "https://www.visitceskebudejovice.cz/guide/cz/CBudejovice_2026.pdf",
+          "publisher": "Oficiální turistický portál města",
+          "supports": "Z Dlouhého mostu je proti proudu vidět Jiráskův jez; průvodce lokalizuje Lannovu třídu a její budovu ČSOB.",
+          "accessed_at": "2026-11-16",
+          "document_date": "2026"
+        }
+      ],
+      "temporal_notes": "Datum vydání Overture není datum zaměření geometrie. Před porovnáním ověřit datum bodového mračna a fotografií.",
+      "source_epoch_requirements": [
+        "Zaznamenat datum pořízení každého mračna a datový stav půdorysu.",
+        "Porovnávat geometrii se snímky ze stejného nebo doloženě nezměněného období."
+      ],
+      "method_candidates": [
+        "Jednoduchá polygonální nádrž + stupně a centrální objem; sousoší až z samostatného modelu."
+      ],
+      "missing_inputs": [
+        "Metrické rozměry a výšky; oficiální turistické zdroje se liší v uváděném průměru 15/17 m.",
+        "Otevřený model nebo datované licencované snímky detailu."
+      ],
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    },
+    {
+      "id": "courtyard-krajinska",
+      "name": "Vnitroblok za Krajinskou 43/8–45/12",
+      "category": "courtyard",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "description": "Pracovní oblast za třemi ověřenými domy Krajinská 43/8, 44/10, 45/12; konkrétní dvory dosud nejsou vymezené.",
+        "coordinates_wgs84": null,
+        "bbox_wgs84": null,
+        "anchor_buildings": [
+          {
+            "building_id": "766e2987-0af0-4165-b25a-216597858fa9",
+            "name": "Krajinská 43/8 – kandidát podloubí",
+            "bbox_wgs84": [
+              14.473709,
+              48.975594,
+              14.474204,
+              48.9757039
+            ],
+            "inside_preview": true
+          },
+          {
+            "building_id": "acf04bcb-18f5-41ec-b7e7-14232e12fc1f",
+            "name": "Krajinská 44/10 – kandidát podloubí",
+            "bbox_wgs84": [
+              14.4737213,
+              48.975672,
+              14.4740575,
+              48.9757788
+            ],
+            "inside_preview": true
+          },
+          {
+            "building_id": "9659768d-7c0c-48f6-a646-2c1296afccd2",
+            "name": "Krajinská 45/12 – kandidát podloubí",
+            "bbox_wgs84": [
+              14.473736,
+              48.9757497,
+              14.4740818,
+              48.9758873
+            ],
+            "inside_preview": true
+          }
+        ]
+      },
+      "source_ids": [
+        {
+          "layer": "building",
+          "id": "766e2987-0af0-4165-b25a-216597858fa9",
+          "role": "round1_anchor_only_not_courtyard"
+        },
+        {
+          "layer": "building",
+          "id": "acf04bcb-18f5-41ec-b7e7-14232e12fc1f",
+          "role": "round1_anchor_only_not_courtyard"
+        },
+        {
+          "layer": "building",
+          "id": "9659768d-7c0c-48f6-a646-2c1296afccd2",
+          "role": "round1_anchor_only_not_courtyard"
+        }
+      ],
+      "identity": {
+        "confidence": "candidate_search_area",
+        "note": "Jde o návrh lokality podle ukotvených uličních domů, nikoli identifikovaný samostatný dvůr."
+      },
+      "coverage": {
+        "status": "anchors_inside_preview_candidate_boundary_unresolved",
+        "method": "Round1 source polygons checked; proposed courtyard boundary not selected.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Pokus zachovat prázdný dvůr, zadní křídla a rozhraní mezi podloubím a domem.",
+      "source_refs": [
+        {
+          "id": "krajinska",
+          "title": "Krajinská třída",
+          "url": "https://www.encyklopedie.c-budejovice.cz/clanek/krajinska-trida",
+          "publisher": "Městská encyklopedie Českých Budějovic",
+          "supports": "Uliční lokalita pro návrh vnitroblokových testů.",
+          "accessed_at": "2026-11-16",
+          "source_type": "municipal_reference",
+          "access_note": "Lokalizační odkaz převzat z ověřené rešerše prvního kola; neověřuje jednotlivé dvory."
+        }
+      ],
+      "temporal_notes": "Datum vydání Overture není datum zaměření geometrie. Před porovnáním ověřit datum bodového mračna a fotografií.",
+      "source_epoch_requirements": [
+        "Zaznamenat datum pořízení každého mračna a datový stav půdorysu.",
+        "Porovnávat geometrii se snímky ze stejného nebo doloženě nezměněného období."
+      ],
+      "method_candidates": [
+        "Unie skutečných stavebních částí se zachováním děr a volných ploch; průchody jen z explicitních podkladů."
+      ],
+      "missing_inputs": [
+        "Polygon každého dvora a jeho aktuální pokrytí.",
+        "Rozlišení přístřešků, zadních křídel a otevřeného terénu.",
+        "Doložené vazby průchodů."
+      ],
+      "round1_anchors": [
+        "766e2987-0af0-4165-b25a-216597858fa9",
+        "acf04bcb-18f5-41ec-b7e7-14232e12fc1f",
+        "9659768d-7c0c-48f6-a646-2c1296afccd2"
+      ],
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    },
+    {
+      "id": "courtyard-townhall",
+      "name": "Vnitroblok za radnicí",
+      "category": "courtyard",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "description": "Návrh vnitroblokové oblasti za radnicí, náměstí Přemysla Otakara II. 1/1.",
+        "coordinates_wgs84": null,
+        "bbox_wgs84": null,
+        "anchor_buildings": [
+          {
+            "building_id": "e45c2485-616a-4003-92e4-428ce930f490",
+            "name": "Radnice – náměstí Přemysla Otakara II. 1/1",
+            "bbox_wgs84": [
+              14.4725414,
+              48.9741188,
+              14.4733635,
+              48.9744662
+            ],
+            "inside_preview": true
+          }
+        ]
+      },
+      "source_ids": [
+        {
+          "layer": "building",
+          "id": "e45c2485-616a-4003-92e4-428ce930f490",
+          "role": "round1_anchor_only_not_courtyard"
+        }
+      ],
+      "identity": {
+        "confidence": "candidate_search_area",
+        "note": "Pouze prostorový návrh; přesné hranice dvora ještě nejsou ověřeny."
+      },
+      "coverage": {
+        "status": "anchors_inside_preview_candidate_boundary_unresolved",
+        "method": "Round1 source polygons checked; proposed courtyard boundary not selected.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Kontrast k uliční fasádě: zadní hmoty, uzavřené a otevřené části bloku.",
+      "source_refs": [
+        {
+          "id": "townhall-round1",
+          "title": "Adresa magistrátu / lokalizace prvního kola",
+          "url": "https://www.c-budejovice.cz/sportovni-zarizeni",
+          "publisher": "Statutární město České Budějovice",
+          "accessed_at": "2026-11-16",
+          "supports": "Kontaktní adresa náměstí Přemysla Otakara II. 1/1. Samostatný dvůr tato stránka nevymezuje.",
+          "access_note": "Ověřeno při výběru prvního kola, zde odkaz na zachovanou referenci."
+        }
+      ],
+      "temporal_notes": "Datum vydání Overture není datum zaměření geometrie. Před porovnáním ověřit datum bodového mračna a fotografií.",
+      "source_epoch_requirements": [
+        "Zaznamenat datum pořízení každého mračna a datový stav půdorysu.",
+        "Porovnávat geometrii se snímky ze stejného nebo doloženě nezměněného období."
+      ],
+      "method_candidates": [
+        "Stavební půdorysy s dírami + separátní nižší přístavby; kontrola viditelnosti do dvora."
+      ],
+      "missing_inputs": [
+        "Přesný obrys vnitrobloku, datum přístaveb a průchozí spojení."
+      ],
+      "round1_anchors": [
+        "e45c2485-616a-4003-92e4-428ce930f490"
+      ],
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    },
+    {
+      "id": "courtyard-puklic",
+      "name": "Vnitroblok u Puklicova domu a severní strany náměstí",
+      "category": "courtyard",
+      "status": "not_tested",
+      "excluded_from_round1": true,
+      "location": {
+        "description": "Návrh oblasti za Krajinskou 36/2 u napojení na náměstí; přesné dvory budou teprve vybrány.",
+        "coordinates_wgs84": null,
+        "bbox_wgs84": null,
+        "anchor_buildings": [
+          {
+            "building_id": "427eb7c5-9db7-4919-9d98-7cf5bdef8e98",
+            "name": "Puklicův dům – Krajinská 36/2",
+            "bbox_wgs84": [
+              14.4736768,
+              48.9752171,
+              14.473847,
+              48.975476
+            ],
+            "inside_preview": true
+          }
+        ]
+      },
+      "source_ids": [
+        {
+          "layer": "building",
+          "id": "427eb7c5-9db7-4919-9d98-7cf5bdef8e98",
+          "role": "round1_anchor_only_not_courtyard"
+        }
+      ],
+      "identity": {
+        "confidence": "candidate_search_area",
+        "note": "Lokalizace navazuje na ověřený dům prvního kola; existence a hranice konkrétního průchodu se nepředpokládá."
+      },
+      "coverage": {
+        "status": "anchors_inside_preview_candidate_boundary_unresolved",
+        "method": "Round1 source polygons checked; proposed courtyard boundary not selected.",
+        "full_candidate_extent_validated": false
+      },
+      "why": "Složitější návaznost dlouhých městských parcel, dvorů a bočních křídel.",
+      "source_refs": [
+        {
+          "id": "puklic-round1",
+          "title": "Puklicův dům",
+          "url": "https://pamatkovykatalog.cz/mestsky-dum-19152358",
+          "publisher": "Národní památkový ústav",
+          "accessed_at": "2026-11-16",
+          "supports": "Identita kotevního domu, nikoli přesný rozsah dvora.",
+          "access_note": "Ověřený vyhledávací index v prvním kole; přímé otevření tehdy 503."
+        }
+      ],
+      "temporal_notes": "Datum vydání Overture není datum zaměření geometrie. Před porovnáním ověřit datum bodového mračna a fotografií.",
+      "source_epoch_requirements": [
+        "Zaznamenat datum pořízení každého mračna a datový stav půdorysu.",
+        "Porovnávat geometrii se snímky ze stejného nebo doloženě nezměněného období."
+      ],
+      "method_candidates": [
+        "Rozdělení bloku na jednoduché výškové objemy a explicitní volné dvory, zachování přerušení střech."
+      ],
+      "missing_inputs": [
+        "Hranice jednotlivých dvorů a nízkých přístaveb.",
+        "Poloha a světlé výšky průchodů, pokud jsou doložené."
+      ],
+      "round1_anchors": [
+        "427eb7c5-9db7-4919-9d98-7cf5bdef8e98"
+      ],
+      "detailed_candidate": false,
+      "round2_selection_status": "backlog_requires_separate_selection"
+    }
+  ],
+  "candidate_count": 21,
+  "categories": {
+    "building": 10,
+    "corridor": 2,
+    "bridge": 3,
+    "hydraulic": 1,
+    "sculpture": 1,
+    "fountain": 1,
+    "courtyard": 3
+  },
+  "preview_extent": {
+    "bbox_wgs84": [
+      14.459849583181951,
+      48.964279725070995,
+      14.49132641681805,
+      48.985080274929004
+    ],
+    "size_m": [
+      2300,
+      2300
+    ],
+    "source": "cities/ceske-budejovice/mesto.preview.json"
+  },
+  "local_inputs": [
+    {
+      "path": ".work/.preview/ceske-budejovice/data/address.parquet",
+      "bytes": 374445,
+      "rows": 3996,
+      "sha256": "b986cea7df559df437b9fbf3d128256d26076014b2a8e22e8b6679d932dd9aeb"
+    },
+    {
+      "path": ".work/.preview/ceske-budejovice/data/building.parquet",
+      "bytes": 1719649,
+      "rows": 9259,
+      "sha256": "20978834acfe5abbaad74862cca22958c6cf80be49b874f4a8605c14860d18cf"
+    },
+    {
+      "path": ".work/.preview/ceske-budejovice/data/infrastructure.parquet",
+      "bytes": 1190352,
+      "rows": 9426,
+      "sha256": "8be028437cc48d1534065c8eac80934fac7be7c286c2ac21ad6d37a575364845"
+    }
+  ],
+  "quality_rules": [
+    "Časové varianty Slavie jsou oddělené a nesmějí se sloučit do jedné referenční geometrie.",
+    "Source geometry anchor znamená pouze lokalizaci. Datum vydání Overture není datum měření.",
+    "Bod instituce nedokazuje rozsah areálu; propojení adresy s půdorysem je výslovně doložené.",
+    "Řídké letecké mračno samo neověřuje světlou výšku mostu, průchodu ani detail sochy.",
+    "Všechny položky jsou netestovaný backlog mimo stálý vzorek30 a jeho18 detailních kandidátů."
+  ],
+  "selection_compute_wall_seconds": 1.3262011999904644,
+  "updated_at_utc": "2026-11-16T01:21:07.543249+00:00"
+}

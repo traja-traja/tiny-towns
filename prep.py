@@ -9,6 +9,7 @@ from shapely.ops import transform
 from PIL import Image, ImageDraw, ImageFilter
 import geo
 from geo import HALF, HREF
+from nastroje.roof_policy import resolve_roof_shape
 
 DATA = sys.argv[1] if len(sys.argv) > 1 else 'data'
 CHUNK = tuple(int(v) for v in sys.argv[2].split(',')) if len(sys.argv) > 2 else (0, 0)
@@ -1175,7 +1176,9 @@ for _, r in bld.iterrows():
         if _dm and _dm['spec'].get('lm'): lm = _dm['spec']['lm']          # vlastní model z dominanty (např. radnice)
         hits = addr_tree.query(p.buffer(1.5))
         adrs = sorted({addr_txt[i] for i in hits if p.buffer(1.5).contains(addr_pts[i])})
-        rs = ROOF_MAP.get(r.roof_shape if isinstance(r.roof_shape, str) else '', None)
+        source_roof = ROOF_MAP.get(r.roof_shape if isinstance(r.roof_shape, str) else '', None)
+        rs = source_roof
+        dmp_flat_evidence = False
         # paneláky a vyšší bytové domy mají ploché střechy
         if not lm and (c == 'apartments' or (floors and floors >= 5) or (hgt and hgt >= 14)): rs = 'flat'
         tenement = panel = False
@@ -1190,13 +1193,19 @@ for _, r in bld.iterrows():
                 rs = rs0 if rs0 and rs0 != 'flat' else ('gabled' if h01(key + 't') < 0.75 else 'hipped')   # podle fotek centra: hlavně sedlové se štíty
         # tvar střechy podle měření DMP: plochá střecha má vršek (p90) skoro stejně vysoko jako medián, šikmá má hřeben výš
         if not lm and r.id in DMP and area > 80 and DMP[r.id][0] >= 6 and DMP[r.id][1] - DMP[r.id][0] < 0.4:
+            dmp_flat_evidence = True
             rs = 'flat'
             if tenement or (DMP[r.id][0] >= 11 and c in ('', 'residential', 'apartments', 'yes')): tenement = False; panel = True
         # i malý dům: laser na celé střeše ve stejné výšce znamená plochou nebo téměř plochou střechu (ověřeno na ortofotu)
         if not lm and r.id in DMP and area >= 25 and DMP[r.id][0] >= 2.2 and DMP[r.id][1] - DMP[r.id][0] < 0.35:
+            dmp_flat_evidence = True
             rs = 'flat'; tenement = False
         if lm == 'radnice': rs = 'hipped'
         if URBAN and not lm and rs not in (None, 'flat') and area > 2500: rs = 'flat'
+        if not lm:
+            rs = resolve_roof_shape(source_roof, rs, flat_surface_evidence=dmp_flat_evidence)
+            if rs == 'flat': tenement = False
+            elif rs: panel = False
         if c == 'roof': rs = 'flat'                     # přístřešek (nástupiště, zastávka): střecha na sloupech
         so = SAT['b'].get(r.id, {})
         dom = DOM_BY_ID.get(r.id); dsp = dom['spec'] if dom else None
