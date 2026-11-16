@@ -101,6 +101,11 @@ def render_report(input_path: Path, output_path: Path, three_path: Path | None =
         document = document[:begin]+'<div class="head-links"><a id="tile-link" hidden></a>'+links+'</div>\n'+document[end:]
         begin, end = document.index('<p class="rule">'), document.index('<details><summary>Porovnávané šablony')
         document = document[:begin]+'<p class="rule">'+html.escape(report.get('note', ''))+'</p>'+document[end:]
+    city_name = {'velesin': 'Velešín', 'ceske-budejovice': 'České Budějovice'}.get(
+        payload.get('city'), 'České Budějovice')
+    document = document.replace('Izomapa · České Budějovice', 'Izomapa · ' + html.escape(city_name))
+    document = document.replace('<title>Střechy v2 · České Budějovice</title>',
+                                '<title>Střechy v2 · ' + html.escape(city_name) + '</title>')
     # Replace script/data placeholders last to avoid touching literal user data.
     for key in ("@@COUNT@@", "@@GENERATED@@", "@@SCHEMA@@", "@@THREE@@", "@@VIEWER@@", "@@DATA@@"):
         document = document.replace(key, values[key])

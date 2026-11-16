@@ -15,27 +15,35 @@ from shapely.geometry import mapping
 from pyproj import Transformer
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--city', choices=prep.SUPPORTED_CITIES, default='ceske-budejovice',
+                        help='Select cached city inputs; default keeps the original CB experiment')
     parser.add_argument('--requests', required=True, type=Path)
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--reuse-inputs', type=Path)
     parser.add_argument('--reuse-id', action='append', default=[])
     parser.add_argument('--resume', action='store_true', help='Resume only an identical frozen address sample')
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
+    prep.configure_city(args.city)
     output = args.output.resolve()
     if output.exists() and any(output.iterdir()) and not args.resume:
         parser.error('Choose a new/empty output directory')
     if args.reuse_id and not args.reuse_inputs:
         parser.error('--reuse-id requires --reuse-inputs')
+    old = None
+    if args.reuse_inputs:
+        old = json.loads(args.reuse_inputs.read_text(encoding='utf-8'))
+        if old.get('city') != args.city:
+            parser.error('Reused input manifest belongs to a different city')
     with prep.guard.keep_awake():
         prep.resource_check()
         requested = json.loads(args.requests.read_text(encoding='utf-8'))
-        rows = pq.read_table(prep.PREVIEW/'data/building.parquet').to_pylist()
+        rows = pq.read_table(prep.DATA/'building.parquet').to_pylist()
         rows = [r for r in rows if r.get('geometry') and not r.get('is_underground')]
         shapes = shapely.make_valid(shapely.from_wkb([r['geometry'] for r in rows]))
         tree = shapely.STRtree(shapes)
-        addresses = pq.read_table(prep.PREVIEW/'data/address.parquet').to_pylist()
+        addresses = pq.read_table(prep.DATA/'address.parquet').to_pylist()
         _, source = prep.source_inventory()
         coverage = shapely.union_all([shapely.box(t['header']['bounds'][0][0], t['header']['bounds'][0][1],
             t['header']['bounds'][1][0], t['header']['bounds'][1][1]).buffer(.15) for t in source['tiles']])
@@ -74,7 +82,7 @@ def main():
             ensure_ascii=False),flush=True)
         del rows, shapes, tree, addresses, coverage
         gc.collect()
-        sample = {'type':'FeatureCollection', 'schema':'roof-v2-sample/1', 'city':'ceske-budejovice',
+        sample = {'type':'FeatureCollection', 'schema':'roof-v2-sample/1', 'city':args.city,
             'crs':'EPSG:5514', 'created_at_utc':prep.utc(), 'features':features,
             'selection':'Explicit user addresses; roof type is not supplied to the fitter.'}
         if args.resume and (output/'sample.json').exists():
@@ -86,8 +94,7 @@ def main():
         prep.atomic_json(output/'sample.json', sample)
         prep.CACHE = output/'point-clouds'
         inputs = prep.prepare(sample, output/'additional-inputs.json')
-        if args.reuse_inputs:
-            old = json.loads(args.reuse_inputs.read_text(encoding='utf-8'))
+        if old is not None:
             lookup = {b['id']:b for b in old['buildings']}
             for oid in args.reuse_id:
                 building = copy.deepcopy(lookup[oid])

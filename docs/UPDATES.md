@@ -135,3 +135,12 @@ Sjednocený seznam a zmrazené poslední modely: `cities/ceske-budejovice/experi
 Na výslovné přání znovu vypočítaná celá řada posledním nastavením `modular-roofs-4.5`: `cities/ceske-budejovice/experiments/roof-modular-batch-43/report.html`. Předchozí verze je `roof-latest-43`; všech 43 objektů má spárovaný poslední předchozí a aktuální model. Nastavení přesně souhlasí s finální dávkou 12. Vstupy jsou již uložené NPZ, velké LAZ soubory se znovu nečtou.
 
 43/43 modelů bez chyb, všechny objemy numericky uzavřené. Čas střech celkem 50,569 s, medián 0,996 s na dům, maximum 2,509 s. Celá modelovací dávka včetně HTML a balení 85,453 s. JSON, přesná konfigurace, souřadnicové reference, zdrojové záznamy, vstupy a příkaz pro další dávku vznikly automaticky. HTML ověřeno HTTP 200; bez optického hodnocení. Poznámka k předběžnému přiřazení Široká 422/3 → 428/3 zůstává ve vstupních metadatech.
+
+
+## Záloha a příprava Velešína — 2026-11-17
+
+Commit `13824f25f747864c2b90eef25379062b3f708652` zálohuje 143 souborů, přibližně 2,5 MB: kód, testy, konfigurace, výzkumné poznámky a Sportcentrum. Bez mračen, dlaždic, obrazových podkladů, cache a klíčů; všech 143 blobů bylo porovnáno kontrolním součtem s GitHubem. Rozsah datové zálohy vysvětluje [BACKUP.md](BACKUP.md).
+
+[Audit obnovy částí mapy](INCREMENTAL_RENDERING.md) rozlišuje existující cache čtverců/ruční výběr PNG od dosud neimplementované cache tematických vrstev. Vstupy střech nově podporují `--city velesin`, včetně správného zdrojového manifestu a provenance. Výpočetní algoritmus a výchozí nastavení ČB zůstávají stejné. Výběr ulic připravuje `select_roof_streets.py`; nejednoznačné adresy se nehádaným způsobem zaznamenají mimo dávku.
+
+Dávka 146 budov ve čtyřech velešínských ulicích je připravená k následnému spuštění, nikoli dokončená. Spuštění bylo pozastaveno při 98% využití RAM. Po dočasném uvolnění paměti prošlo 9 cílených testů směrování měst, výběru ulic, dávky a obnovování čtení (2,377 s). Následný pokus o spuštění skutečné dávky zastavila paměťová pojistka ještě před prvním krokem, protože volná RAM znovu klesla pod 1 GB. Příkazy s paměťovou pojistkou jsou v `cities/velesin/roof-streets/README.md`.

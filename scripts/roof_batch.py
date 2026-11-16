@@ -107,14 +107,18 @@ def compare_documents(current, previous, previous_label):
     return output
 
 
-def source_records(inputs_path, ids):
+def source_records(inputs_path, ids, city=None):
     saved = inputs_path.parent/'source_records.json'
     if saved.is_file():
         prior = read_json(saved)
         return {oid:prior.get(oid, {}) for oid in ids}
     records = {oid:{} for oid in ids}
-    preview = ROOT/'.work/.preview/ceske-budejovice'
-    parquet = preview/'data/building.parquet'
+    city = city or read_json(inputs_path).get('city', 'ceske-budejovice')
+    if city not in ('ceske-budejovice', 'velesin'):
+        raise ValueError(f'Unsupported roof input city: {city}')
+    preview = ROOT/'.work/.preview'/city
+    data = preview/('data_all' if city == 'velesin' else 'data')
+    parquet = data/'building.parquet'
     if parquet.is_file():
         import pyarrow.parquet as pq
         for row in pq.read_table(parquet, filters=[('id','in',list(ids))]).to_pylist():
@@ -176,7 +180,7 @@ def main(argv=None):
     previous = read_json(args.previous/'results.json') if args.test else None
     output.mkdir(parents=True, exist_ok=True)
     (output/'point-clouds').mkdir()
-    raw_sources = source_records(input_path, {b['id'] for b in selected})
+    raw_sources = source_records(input_path, {b['id'] for b in selected}, inputs.get('city'))
     write_json(output/'source_records.json', raw_sources)
     write_json(output/'config.json', roof_config)
     run = {'schema':'roof-batch-run/1', 'created_at_utc':datetime.now(timezone.utc).isoformat(),

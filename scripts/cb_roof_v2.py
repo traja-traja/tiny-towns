@@ -30,17 +30,41 @@ from shapely.affinity import translate
 import resource_guard as guard
 
 ROOT = Path(__file__).resolve().parents[1]
-PREVIEW = ROOT / '.work/.preview/ceske-budejovice'
-OUT = ROOT / 'cities/ceske-budejovice/experiments/roof-v2'
+SUPPORTED_CITIES = ('ceske-budejovice', 'velesin')
+CITY = 'ceske-budejovice'
+PREVIEW = ROOT / '.work/.preview' / CITY
+DATA = PREVIEW / 'data'
+OUT = ROOT / 'cities' / CITY / 'experiments/roof-v2'
 CACHE = ROOT / '.work/cb-roof-v2'
 SOURCE_MANIFEST = ROOT / '.work/cb-roof-pilot/sources/sources.json'
-PILOT_SAMPLE = ROOT / 'cities/ceske-budejovice/roof-pilot/sample.json'
-USER_SAMPLE = ROOT / 'cities/ceske-budejovice/roof-inference-sample.json'
+PILOT_SAMPLE = ROOT / 'cities' / CITY / 'roof-pilot/sample.json'
+USER_SAMPLE = ROOT / 'cities' / CITY / 'roof-inference-sample.json'
 WORTNER = '98192926-2e4d-4667-b3e9-9998dd4ea22a'
 SEED = 'cb-roof-v2-20261116'
 BUFFER = 20.0
 CHUNK = 100_000
 STREAM_RECOVERY = None
+
+
+def configure_city(city='ceske-budejovice'):
+    """Select local input provenance only; roof fitting and sampling math stay shared.
+
+    Address preparation uses Velesin's complete cached preview inputs (data_all).
+    The original CB experiment retains its exact data directory and defaults.
+    """
+    if city not in SUPPORTED_CITIES:
+        raise ValueError(f'Unsupported roof input city: {city}')
+    global CITY, PREVIEW, DATA, OUT, CACHE, SOURCE_MANIFEST, PILOT_SAMPLE, USER_SAMPLE, STREAM_RECOVERY
+    CITY = city
+    PREVIEW = ROOT / '.work/.preview' / city
+    DATA = PREVIEW / ('data_all' if city == 'velesin' else 'data')
+    OUT = ROOT / 'cities' / city / 'experiments/roof-v2'
+    CACHE = ROOT / ('.work/velesin-roof-v2' if city == 'velesin' else '.work/cb-roof-v2')
+    pilot_work = 'roof-pilot' if city == 'velesin' else 'cb-roof-pilot'
+    SOURCE_MANIFEST = ROOT / '.work' / pilot_work / 'sources/sources.json'
+    PILOT_SAMPLE = ROOT / 'cities' / city / 'roof-pilot/sample.json'
+    USER_SAMPLE = ROOT / 'cities' / city / 'roof-inference-sample.json'
+    STREAM_RECOVERY = None
 
 
 def rel(path):
@@ -106,7 +130,9 @@ def source_inventory():
 
 
 def make_sample(path=OUT / 'sample.json'):
-    """Freeze stratified random buildings independently of fitted roof results."""
+    """Freeze the original CB random sample; other cities use explicit addresses."""
+    if CITY != 'ceske-budejovice':
+        raise ValueError('Legacy random sampling is CB-only; use roof_address_inputs.py --city instead')
     if path.exists():
         return json.loads(path.read_text(encoding='utf-8'))
     start, cpu = time.perf_counter(), time.process_time()
@@ -324,14 +350,17 @@ def extract_stream(source, region):
     return np.concatenate(blocks), np.concatenate(labels), visited
 
 
-def prepare(sample, output=OUT / 'inputs.json'):
+def prepare(sample, output=None):
+    if sample.get('city', CITY) != CITY:
+        raise ValueError('Sample city differs from selected local inputs')
+    output = Path(output) if output is not None else OUT / 'inputs.json'
     start, cpu = time.perf_counter(), time.process_time()
     resource_check()
     old_manifest, source = source_inventory()
     sample_hash = hashlib.sha256(json.dumps(sample, sort_keys=True).encode()).hexdigest()
     if output.exists():
         saved = json.loads(output.read_text(encoding='utf-8'))
-        if saved.get('sample_sha256') == sample_hash and all('cache' not in p or
+        if saved.get('city') == CITY and saved.get('sample_sha256') == sample_hash and all('cache' not in p or
                 ((ROOT / p['cache']['path']).is_file() and (ROOT / p['cache']['path']).stat().st_size == p['cache']['bytes'])
                 for b in saved.get('buildings', []) for p in b.get('parts', [])):
             print('Input cache reused unchanged.', flush=True)
@@ -418,7 +447,8 @@ def prepare(sample, output=OUT / 'inputs.json'):
         del xyz, classes
     order = {f['id']:i for i,f in enumerate(sample['features'])}
     buildings.sort(key=lambda b:order[b['id']])
-    result = {'schema':'roof-v2-inputs/1','city':'ceske-budejovice','crs':'EPSG:5514','vertical_datum':'Bpv',
+    result = {'schema':'roof-v2-inputs/1','city':CITY,'crs':'EPSG:5514','vertical_datum':'Bpv',
+        'input_data_directory':rel(DATA),'source_manifest':rel(SOURCE_MANIFEST),
         'created_at_utc':utc(),'sample_sha256':sample_hash,'source':'dmpok','buildings':buildings,
         'source_tiles':source['tiles'],'input_files_read':read_files,
         'split':{'method':'centimetre world XY uint64 hash modulo 5; bin0 holdout','heldout_fraction_target':.2,
@@ -465,10 +495,11 @@ def external_metrics(result, points):
         'interpretation':'Vertical residual over all fixed heldout class6 points, including rooftop protrusions; not architectural ground truth.'}
 
 
-def run(inputs, output=OUT/'results.json', config=None, limit=None):
+def run(inputs, output=None, config=None, limit=None):
+    output = Path(output) if output is not None else OUT/'results.json'
     from roof_v2 import infer_roof_v2
     start,cpu = time.perf_counter(),time.process_time()
-    doc = {'schema':'roof-v2/1','city':'ceske-budejovice','source':'dmpok','crs':'EPSG:5514',
+    doc = {'schema':'roof-v2/1','city':inputs.get('city', CITY),'source':'dmpok','crs':'EPSG:5514',
         'vertical_datum':'Bpv','created_at_utc':utc(),'status':'running','sample_sha256':inputs['sample_sha256'],
         'split':inputs['split'],'buildings':[],'configuration':config or {}}
     diagnostics = {'schema':'roof-v2-diagnostics/1','sample_sha256':inputs['sample_sha256'],'buildings':[]}
