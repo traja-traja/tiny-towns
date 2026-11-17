@@ -172,3 +172,179 @@ Připraveny `night_roof_inputs.py` (plán, husté podklady, obnovitelná extrakc
 ## 2026-11-17 — řezy, parametry střech a výškové objemy
 
 Izolovaný experiment 15 domů Velešína/ČB porovnává pět variant s původním modelem; výsledkem je 90 validních modelů. Přidány přepínatelné robustní profily, vyhledání výškových skoků a pomocná bloková reprezentace. 17 syntetických testů prošlo. Ve třetím kole výpočet experimentů 20,212 s, dělení doloženo u čp.94; ostatní změny/krajní odchylky viz [ROOF_VOLUME_SECTIONS.md](ROOF_VOLUME_SECTIONS.md). Produkční pipeline a plošná dávka se nemění.
+
+
+## Podélné řezy bez straight skeletonu — 2026-11-17
+
+Samostatný test Husovy tř. 1829/12 odděluje dvě výškové hmoty podle opakovaného přechodu v podélných profilech; střechy dále počítá původní 4.9.1. Detektor a lokální runner jsou v `scripts/roof_longitudinal_split.py` a `scripts/roof_longitudinal_experiment.py`. Report, parametry, časy a omezení: [ROOF_LONGITUDINAL_SPLIT.md](ROOF_LONGITUDINAL_SPLIT.md). Produkční mapy se nemění.
+
+
+### Podélné dělení 0.2: přichycení a samostatné hmoty
+
+Obecný filtr dlouhých/zalomených půdorysů, přichycení řezu k blízké původní hraně, zachování malých přístavků i celého obrysu a zákaz dalšího dělení potomků. Dva samostatné modely používají 4.9.1. Aktuální měření a report verze v4 jsou v [ROOF_LONGITUDINAL_SPLIT.md](ROOF_LONGITUDINAL_SPLIT.md). 12 syntetických testů prošlo; městské dávky se nespouštěly.
+
+
+## Volné úhly křídel střech — 4.9.2, 2026-11-17
+
+Opraven výběr a délka doložených křídel i ukončení podle šikmých obvodových stěn. Pravý rám je omezen skutečným posunem konců stěn. Samostatná Husova v5 zachovává předchozí rozdělení a porovnává nové střechy s v4; staré mapy se nepřepisují. Příčina, obecné parametry, měření a omezení: [ROOF_OBLIQUE_WINGS.md](ROOF_OBLIQUE_WINGS.md).
+
+
+## Kontrolní dávka 44 ČB + 9 Velešín — 2026-11-17
+
+Algoritmus `modular-roofs-4.9.2` s volbou `--split-volumes` dokončil všech 53 domů bez chyby. Výpočet střech celkem 128,059 s. Po 19 domech zasáhla ochrana volné systémové RAM (350 MB); dávka byla bezpečně obnovena pomocí nového `--resume`, který ověřuje shodu konfigurace, výpočetních modulů a vstupních bodů a přeskočí uložené domy. Pět testů dávkového porovnání a obnovování prošlo.
+
+Report: `cities/ceske-budejovice/experiments/roof-v492-review-53/report.html`. Všech 53 modelů má předchozí verzi vedle nové, JSON metadata, přesné vstupní výřezy a samostatně exportované nalezené objemy. Velešín: náměstí J. V. Kamarýta 1, 4, 5, 13, 54, 69, 70, 72, 94. Měření prostředků a přerušení v `resource-summary.json`; maximální commit procesu přibližně 382 MiB. Kontrola pouze úplnosti souborů a HTTP 200, bez vizuálního hodnocení a bez přegenerování mapových tiles.
+
+
+## Zubaté půdorysy a kandidatura dlouhých/zahnutých budov — 2026-11-17
+
+Verze `modular-roofs-4.9.3` přidává vypínatelné zjednodušení opakovaných mělkých zubů půdorysu. Kostelní 1281/18: 54 → 6 vrcholů, J. Plachty 2059/5: 28 → 8; změny plochy jsou pod 1 %. Původní vstupy zůstávají zachované. Dokumentace: `ROOF_FOOTPRINT_REGULARIZATION.md`.
+
+Dělení objemů již nezávisí na úspěchu předchozího rozpoznání dvou střech. Dlouhé a zalomené/dvorní půdorysy se prověřují vždy, včetně předběžně plochých střech. Nové záložní podélné profily přijaly po dvou samostatných objemech u nám. Přemysla Otakara II. 114/30 v ČB a náměstí J. V. Kamarýta 4 a 72 ve Velešíně; běžné stejnovýškové L/U zůstávají v syntetických testech jedním objemem.
+
+Report pěti domů s předchozí verzí vlevo: `cities/ceske-budejovice/experiments/roof-v493-footprints-volumes-5/report.html`. Všech pět modelů dokončeno s platnou geometrií, výpočet 41,053 s, celý hlídaný proces 61,116 s, peak commit 220 131 328 B. Ověřeno HTTP 200, metadata a porovnání; bez vizuálního posuzování a bez přegenerování městských dlaždic. Podrobnosti v `validation-summary.json`. Testy zjednodušení, modulu objemů, původního dělení, přístavků a dávkování prošly.
+
+
+## Korytová střecha a půdorysy objemů — 2026-11-17
+
+`modular-roofs-4.9.4` přidává obecný vypínatelný kandidát butterfly: dvě roviny spádované do vnitřního vodorovného úžlabí, s podporou měřených bodů na obou stranách. Dokumentace postupu, prahů a skóre: `ROOF_BUTTERFLY.md`. U hlavní hmoty ČB nám. Přemysla Otakara II. 114/30 se počet rovin snížil 6 → 2; vybráno dosavadním pravidlem preference jednoduššího tvaru při blízkém skóre. Nejde o adresně vynucený výběr ani o menší bodovou odchylku než u původního U. Obecný kandidát se vybral i u nižší hmoty.
+
+HTML nově ukazuje 2D půdorysy barevně rozlišených objemů, původní obrys a počet hlavních objemů přímo v metrikách; přibyla vrstva Úžlabí. Nové porovnání: `cities/ceske-budejovice/experiments/roof-v494-butterfly-114-30/report.html`. Dvě hmoty, platná geometrie, výpočet 12,463 s, report HTTP 200. Šest nových numerických, 15 regresních a viewer DOM/data test prošly; bez optické kontroly.
+
+
+## Korytová střecha se třemi rovinami a podpora půdorysu — 4.9.5, 2026-11-17
+
+Obecný korytový kandidát nyní vychází ze skutečných hlavních stěn s vodorovnými horními hranami a přidává jednu čelní trojúhelníkovou plochu. Nové ověření místního směru sklonu brání záměně výškových úrovní za koryto. U 114/30 zůstává hlavní objem korytový (3 roviny, sklony přibližně 27–29°), nižší objem se vrací k pultové střeše. Dvě hmoty a dělicí řez zachovány. Podrobnosti: [ROOF_BUTTERFLY.md](ROOF_BUTTERFLY.md).
+
+Volitelná kontrola půdorysu pracuje před přesným ořezem se širším zmrazeným kontextem a s oddělením kontrolních střešních bodů. Husova 1829/12: odstraněno 60,467 m² nepodložené části, doplněn výklenek 19,444 m², 2D optimalizace 0,295 s; dva výsledné objemy. Parametry, reprodukce a omezení: [ROOF_FOOTPRINT_SUPPORT.md](ROOF_FOOTPRINT_SUPPORT.md).
+
+Report: cities/ceske-budejovice/experiments/roof-v495-butterfly-support-2/report.html. Dva domy, 41,913 s výpočtu, 59,264 s hlídaný proces, peak commit 176 MiB; C: 69,20 GB volných, projekt 5,75 GB. 38 cílených Python testů a JS viewer test prošly. Platná uzavřená geometrie a HTTP 200; bez optického hodnocení a bez přegenerování mapových tiles.
+
+
+## Rozšíření vzorku: Dr. Stejskala 112/4 — 2026-11-17
+
+Adresa přidána do roof-parallel-addresses.json a samostatného roof-additional-addresses.json. Připravena hlídaná lokální dávka .work/run-roof-stejskala-112.py: nejprve přiřazení adresy a příprava hustých bodů, poté model 4.9.5 s dělením objemů. Předchozí domy se nepřepočítávají. Při zápisu této poznámky dávka čeká na volnou RAM; dokončení je třeba ověřit podle .work/roof-stejskala-112-supervisor.log a výsledného run.json. Výstupní složka po úspěchu: cities/ceske-budejovice/experiments/roof-v495-stejskala-112. Příprava čeká na paměť nejvýše 600 s a při nedostatku bezpečně skončí. Tento záznam netvrdí dokončený model.
+
+Dokončení přírůstku Dr. Stejskala 112/4: místní příprava podkladů doběhla, nalezen samostatný objekt 626b5c0f-4dc2-40a3-9bd1-f7862e614857 se 6 561 střešními body. Model 4.9.5 dokončen bez chyby za 3,501 s výpočtu; report roof-v495-stejskala-112/report.html. Vzorek ČB se tím rozšiřuje ze 44 na 45 různých budov (vedle 9 kontrolních objektů Velešína). Předchozí modely nebyly přepočítány.
+
+
+## Husova: návaznost objemů a vyřazení pravoúhlé L šablony — 4.9.7, 2026-11-17
+
+Obecná oprava dělení doplňuje směry skutečných stěn a preferenci podloženého přichyceného řezu při téměř shodném skóre (0,03 m). Zjednodušování chrání doložené hlavní okapy. Starý pravoúhlý kandidát bent je na pokyn uživatele výchozí vypnutý; connected_wings zachovává vlastní směry křídel. Podrobnosti v ROOF_OBLIQUE_WINGS.md.
+
+Místní automatická dávka dokončila Husovu 1829/12 (20,866 s) a novou Dr. Stejskala 112/4 (2,468 s), celkem 23,335 s výpočtu a 27,031 s běhu dávky; nadřazený hlídaný proces 36,105 s, peak commit 183 316 480 B. Skript hlásí 2 dokončené budovy a 0 chyb. Po posledním uživatelském pokynu nebyly výsledné modely dále posuzovány ani kontrolovány. Report: cities/ceske-budejovice/experiments/roof-v497-husova-stejskala/report.html.
+
+## 2026-11-17: izolovaný skeleton a kandidátní štíty
+
+Dr. Stejskala 112/4: nový experimentální modul a samostatný CLI runner; 4 varianty
+včetně HTML porovnání se zachovanou v4.9.7, zabalené vstupy a automatická metadata.
+Výpočet střech 0.268 s, vybrána valbová varianta bez štítů. První lokální adaptér
+je omezen na trojúhelníková zakončení, tedy zatím neřeší všechny 3 uživatelem
+popsané štíty. 3 syntetické testy prošly; bez vizuálního hodnocení či plošné dávky.
+Podrobnosti a odkazy: ROOF_STRAIGHT_SKELETON.md.
+
+## 2026-11-17: skutečná podpora hřebene a audit štítových stran
+
+Nezávislá diagnostika z příčných řezů ukládá prostorové linky po objemech,
+podloženou délku a výšku, nejistotu a čas. Report rozlišuje Hřeben z bodů
+a Hřebeny modelu; všechny kandidátní i vyřazené strany mají ID a důvod.
+Společné generátory doplňují diagnostiku novým modelům bez změny jejich
+geometrie. Dr. Stejskala: nejistý hlavní úsek 4,80 m / 16,57 m, 5 řezů;
+měření 0,54 s. 18 Python testů + 2 JS sady prošly. Podrobnosti: ROOF_OBSERVED_RIDGES.md.
+
+
+## 2026-11-17: analytické řezy jen v testu a obecnější kandidátní štíty
+
+Reportová dávka vynuceně zapíná nezávislé pracovní hřebeny; mapová dávka
+je vynuceně vypíná i při opětovném použití reportové konfigurace. Řezy
+neovlivňují výběr ani geometrii; čas analytiky je uložen odděleně.
+
+Obecný experiment skeletonu zkouší tři virtuální obrysy a netrojúhelníkové
+koncové plochy. Dr. Stejskala 112/4: 64 kombinací, 56 hotových variant,
+vybrána varianta se dvěma štíty; všechny tři známé štíty zatím nepotvrzeny.
+Výpočet bez analytiky 3,530 s + řezy 0,661 s, skript s HTML 13,271 s.
+14 Python testů a 2 JS sady prošly. Předchozí model zachován, bez optického
+hodnocení a bez městské dávky. Podrobnosti: ROOF_STRAIGHT_SKELETON.md
+a ROOF_OBSERVED_RIDGES.md. Report: cities/ceske-budejovice/experiments/roof-skeleton-general-gables-stejskala-112/report.html.
+
+
+## 2026-11-17: štíty ověřované 0,8–1,5 m dovnitř od skutečné fasády
+
+Konfigurovatelný odsazený pás v experimentálním skeletonu nahrazuje dosavadní
+0–1,5 m. Neodstraňuje data z globálního fitu; omezuje pouze místní důkaz štítu.
+Dr. Stejskala: nově automaticky vyhrává small_steps / gables-1-3-4, 3 štíty.
+Předchozí tvrdý filtr odmítal třetí konec; po odsazení podporuje model 5/8 buněk.
+Sedm testů prošlo. Nový report roof-skeleton-inset-gables-stejskala-112/report.html,
+předchozí model vedle nového; výpočet 3,357 s včetně 0,512 s analytiky,
+skript 11,757 s. Bez optického posouzení a bez změny virtuálního půdorysu.
+Podrobnosti: ROOF_STRAIGHT_SKELETON.md.
+
+
+## 2026-11-17: 4.10.0 — skeleton ve společném výběru a měření kandidátů
+
+Obecné zjednodušení virtuálního půdorysu odstraňuje i krátká konvexní zkosení.
+Společná pipeline přidává podmíněný skeletonový kandidát, hodnotí jej na
+stejných buňkách jako ostatní typy a finální mesh vytváří až při výběru.
+Testovací běh zachycuje časy a počty skutečných kandidátních pokusů; souhrn
+na konci HTML rozlišuje rodiny, pravidla skeletonu a nejpomalejší domy.
+Mapová fronta má stručný agregovaný log a vypnutou analytiku hřebenů.
+
+Připravena sada54 (45ČB+9Velešín), poslední verze každého domu zachována.
+Spuštěna místní sekvenční dávka roof-v410-review-54. Při tomto zápisu běží;
+dokončení se určuje podle run.json. Dokumentace: ROOF_REVIEW_TELEMETRY.md.
+
+Dokončení série4.10.0: 54/54 domů, bez chyb na úrovni domu, všechny části
+mají kandidátní log. Střechy352,445s včetně33,585s analytiky; celý skript
+441,866s. Skeleton u32domů,2537interních pokusů/44,140s;16konstrukčních
+selhání kandidáta bezpečně přeskočeno. Report roof-v410-review-54/report.html
+a tabulky #candidate-performance mají HTTP200. Peak471,7MiB, C:69,63GB,
+projekt5,96GB. Bez optického posouzení. Podrobnosti ROOF_REVIEW_TELEMETRY.md.
+
+
+## 2026-11-17: 4.11.1 — sedm cílených oprav a pevný srovnávací základ
+
+Obecný kandidát spojených hřebenů podle skutečných směrů stěn nahrazuje mezery po vypnutí pravoúhlé L šablony. Paralelní sedlové střechy mají výchozí souměrné svahy a společná úžlabí/okapy. Dělení musí překonat další toleranci 0,10 m proti jednomu objemu. Ochrana okapů je místně vázána na příslušné křídlo. Téměř shodné koncové roviny lze sloučit s omezenou geometrickou změnou; numericky neplatné sloučení se omezeným postupem vrací.
+
+Report roof-v4111-targeted-7: 7/7 dokončeno, 54,307 s střechy, 72,406 s celý skript, peak 236,1 MiB. 47 cílených testů prošlo. Levá srovnávací verze zůstává roof-v410-review-inputs-54 až do dalšího pokynu, včetně opakovaného příkazu RUN.txt. Bez optického hodnocení a bez generování mapových tiles. Nová 1869/1 má nejistou vedlejší větev označenou; Dr. Stejskala 426/15 pouze návrh v TODO. Podrobnosti v ROOF_TARGETED_REGRESSIONS.md.
+
+
+## 2026-11-17: 4.12.1 — numerická fasádní stěna a místní štítové kandidáty
+
+Obecná oprava nepatrných nepokrytých oblastí při hranici půdorysu odstraňuje falešnou stěnu u Hroznové 247/32. Nové konečné rozsahy křídel a lokální důkaz štítu používají body 0,8–1,5 m od hrany; kandidát musí zachovat uzavřenost a spojitost. Výjimka z ochrany okapů platí jen pro doloženou štítovou stranu.
+
+Kněžská: požadované úplné prodloužení střech zatím není vyřešené. Varianta s 19 oblastmi a dvěma štíty deformuje jinou hlavní římsu o 2,34 m; kratší rozsahy vytvářejí vnitřní schody. Obě možnosti jsou správně odmítnuty, zůstává bezpečný model s 24 oblastmi. Potřebné geometrické pokračování zaznamenáno do TODO. Dr. Stejskala 426/15 má po obecných úpravách dva objemy, sedlovou a pultovou střechu; zvláštní dvorní kandidát zůstává TODO.
+
+Report roof-v4121-junctions-3: 3/3 dokončeno, 44,431 s střechy, 53,133 s celý skript, peak 217,7 MiB. 68 cílených testů prošlo a po úklidu experimentálních větví znovu tři testy konečných křídel. Vlevo nezměněné roof-v410-review-inputs-54. Bez optického hodnocení, bez přepočtu mapových tiles. Podrobnosti ROOF_JOINED_ENDS.md.
+
+
+## 2026-11-17: 4.13.0 — přísné dělení podle místní šířky ramen
+
+Nový vypínatelný 2D modul hodnotí každé přibližně pravoúhlé zalomení samostatně: 90° ± 15°, šířky kolmými sondami v obou ramenech, poměr alespoň 1,65. Krátké řezy navazují na původní hrany; dvě nebo tři dostatečně velké části přesně pokrývají půdorys. Jednoznačné dělení předchází výpočtu střechy a přeskočí společný fit i podélné výškové profily. Nejasnost nebo chyba zachová původní postup. Děti se dále nedělí. Počty objemů a čas jsou automaticky v JSON/HTML.
+
+Na pokyn uživatele byl generován pouze Dr. Stejskala 426/15, nikoli sada54. Výsledek: 3 části 311,662 / 104,370 / 249,959 m², střechy sedlová / pultová / plochá. Detektor 0,0082 s; střechy 6,467 s včetně analytiky; celý skript 7,568 s. Uzavřený mesh, 12 geometrických + 18 integračních/reportových testů prošlo. Pevný levý základ zachován. Report roof-v413-footprint-stejskala-426/report.html; podrobnosti ROOF_FOOTPRINT_WIDTHS.md. Kněžská se nepřepočítávala, její návaznosti zůstávají v TODO.
+
+
+## 2026-11-17: spuštění celé pracovní sady s 4.13.0
+
+Na nový výslovný pokyn spuštěno všech 54 pracovních modelů (45 ČB + 9 Velešín), sekvenčně místním skriptem. Výstup roof-v413-all-54, levá srovnávací verze stále roof-v410-review-inputs-54. V této chvíli běží; dokončení určuje run.json. Beze změny algoritmu, bez optické kontroly a bez mapových tiles.
+
+Dokončení celé sady 4.13.0: 54/54 modelů bez chyb; všechny výsledné sítě uzavřené, všech 54 levých modelů shodných s pevným srovnávacím základem. Nové přímé 2D dělení se uplatnilo u 5 domů. Střechy 286,439 s včetně 36,945 s analytiky; celý skript 383,001 s (6 min 23 s). Peak místního výpočetního procesu 471,2 MiB; C: 70,00 GB volno, projekt 6,06 GB. Report roof-v413-all-54/report.html dostupný přes localhost:8877. JSON uchovává rozhodování, kandidáty, časy, konfiguraci, validaci a zdrojové otisky. Bez optického hodnocení a beze změny mapových tiles.
+
+
+## 2026-11-17: 4.13.1 — omezení ztráty shody při zjednodušování
+
+Dr. Stejskala 112/4: skeleton již měl nejlepší skóre 0,6559, ale tolerance zjednodušování 0,10 vybrala třírovinnou střechu se skóre 0,7469. Nový obecný limit dovolí preferovat méně rovin pouze při zvýšení bodové složky nejvýše o 0,10 m; zde se zhoršovala o 0,161 m. Váhy rodin se nemění, vyřazené zjednodušení zůstává geometrickou zálohou. Konfigurace a důvod v JSON.
+
+Přepočítán pouze Dr. Stejskala 112/4: nyní skeleton small_steps / gables-1-4 (2 štíty, 10 rovin), uzavřený mesh. Výpočet 5,565 s, celý běh 6,496 s, 37 testů prošlo. Report roof-v4131-stejskala-112-fit/report.html; levý základ beze změny. Jírovcova pouze audit: geometrie stejná jako 4.11.1, paired ridge s polohami 15 % a 27,93 % šířky ramen vysvětluje nesymetrii; nebyla přepočtena. Podrobnosti ROOF_SIMPLIFICATION_POINT_FIT.md.
+
+
+## Lokální šířky párových křídel — 4.13.2 (2026-11-17)
+
+Obecný filtr odstraňuje dvojice pásů, které každý pokrývají téměř celý L půdorys. Lokální šířky ověřuje několika 2D sondami mimo napojení; přidána preference shodných protějších sklonů s možností doložené nesymetrie. Přepočet pouze Jírovcovy, levá srovnávací verze zachována. Viz [ROOF_LOCAL_WING_WIDTHS.md](ROOF_LOCAL_WING_WIDTHS.md).
+
+
+## Důkaz síťových hřebenů — 4.13.3 (2026-11-17)
+
+Lokální šířky zachovány. Malé rozdíly protějších sklonů do 5° bez trestu, větší plynule penalizovány. Každá větev U/O potřebuje souvislou délku výškové podpory a měřený pokles na obě strany; nejistota znamená měkkou penalizaci. Zjednodušení chrání také shodu s body každého podloženého křídla zvlášť a při volbě dělení na objemy se přenášejí penalizace nejistoty vybraných střech, vážené plochou. 52 cílených testů a následných 20 testů křídel/objemů prošlo. Viz [ROOF_NETWORK_RIDGE_EVIDENCE.md](ROOF_NETWORK_RIDGE_EVIDENCE.md).
+
+Finální přepočet Jírovcovy: roof-v4133-jirovcova-ridge-evidence-final/report.html, 1 objem / 4 roviny, uzavřená síť. Střecha 11,290 s, dávka 14,517 s; levá geometrie nezměněna, bez optické kontroly.

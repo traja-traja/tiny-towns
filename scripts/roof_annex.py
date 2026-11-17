@@ -12,7 +12,8 @@ import shapely
 from shapely.geometry import Polygon, LineString, shape, mapping
 from shapely.ops import unary_union
 from scipy.optimize import least_squares
-from roof_config import resolve_config, point_error
+from roof_config import resolve_config, point_error, ALGORITHM_VERSION
+from roof_candidate_telemetry import record_attempt, record_selection
 from roof_flat_majority import detect_flat_majority
 from roof_flat_protrusions import detect_flat_protrusions
 from roof_eave_planes import infer_eave_roof, _frame, _primary_extent, _polygons, _segments
@@ -269,7 +270,26 @@ def _finish_flat_protrusions(result, poly, points, cfg):
     return result
 
 
-def infer_modular_roof(footprint, xyz, config=None):
+def infer_modular_roof(footprint, xyz, config=None, _footprint_prepared=False):
+    """Preprocess source walls once, before any roof or annex candidates."""
+    from roof_footprint_regularization import prepare_footprint, attach_footprint_metadata
+    started,cpu=time.perf_counter(),time.process_time()
+    cfg=resolve_config(config)
+    poly=shape(footprint) if isinstance(footprint,dict) else footprint
+    if _footprint_prepared:
+        return _infer_modular_roof(poly,xyz,cfg)
+    poly,metadata=prepare_footprint(poly,cfg)
+    result=_infer_modular_roof(poly,xyz,cfg)
+    attach_footprint_metadata(result,metadata)
+    if cfg['modules']['observed_ridges']:
+        from roof_observed_ridges import attach_observed_ridges
+        attach_observed_ridges(result,poly,xyz,cfg['observed_ridges'])
+    result['timing']['total_seconds']=time.perf_counter()-started
+    result['timing']['cpu_seconds']=time.process_time()-cpu
+    return result
+
+
+def _infer_modular_roof(footprint, xyz, config=None):
     """MODULE pipeline: optional annex stage around the existing roof fitter."""
     cfg = resolve_config(config); modules = cfg['modules']
     started, cpu = time.perf_counter(), time.process_time()
@@ -289,6 +309,9 @@ def infer_modular_roof(footprint, xyz, config=None):
             flat.update(detect_flat_majority(poly, cells, cfg['sampling']['cell_size_m'], cfg['flat_majority']))
         else:
             flat['reason'] = 'insufficient_cells'
+        record_attempt('flat',label='flat_majority',stage='eligibility',count=0,
+            status='eligible' if flat['accepted'] else 'skipped',reason=flat.get('reason'),
+            overhead_seconds=time.perf_counter()-flat_started)
         if flat['accepted']:
             height = float(flat['height_m'])
             regions = [{'polygon':mapping(poly), 'plane':[0.,0.,height]}]
@@ -301,6 +324,8 @@ def infer_modular_roof(footprint, xyz, config=None):
                     raise ValueError('Flat majority roof could not form a closed volume')
             except (ValueError, shapely.errors.GEOSException) as error:
                 flat.update(accepted=False, reason='geometry_failed', geometry_error=str(error))
+                record_attempt('flat',label='flat_majority',status='failed',reason=str(error),
+                    geometry_seconds=time.perf_counter()-geometry_started)
             else:
                 model = {'type':'flat', 'mesh':mesh, 'regions':regions, 'ridge_lines':[],
                     'height_range_m':[height,height], 'metadata':{
@@ -315,7 +340,7 @@ def infer_modular_roof(footprint, xyz, config=None):
                              roof_boundary_lines=boundary)
                 score = point_error(abs(cells[:,2]-height), cfg['scoring'])
                 flat_seconds = geometry_started-flat_started
-                result = {'algorithm':'modular-roofs-4.9.1', 'configuration':cfg, 'model':model,
+                result = {'algorithm':ALGORITHM_VERSION, 'configuration':cfg, 'model':model,
                     'candidates':[{'candidate_id':0, 'type':'flat', 'score':score, 'selected':True,
                         'status':'Vybráno podle převahy vodorovné plochy', 'rejected':[],
                         'data_error_m':score, 'complexity_penalty_m':0., 'plane_count':1}],
@@ -334,6 +359,10 @@ def infer_modular_roof(footprint, xyz, config=None):
                         'flat_majority_seconds':flat_seconds, 'main_roof_seconds':0.,
                         'annex_2d_seconds':0., 'annex_profiles_seconds':0.,
                         'annex_evaluation_seconds':0., 'annex_assembly_seconds':0.}}
+                record_attempt('flat',label='flat_majority',geometry_seconds=time.perf_counter()-geometry_started)
+                record_selection('flat',label='flat_majority')
+                record_attempt('straight_skeleton',label='gate',stage='eligibility',count=0,
+                    status='skipped',reason='flat_majority' if modules.get('straight_skeleton',False) else 'module_disabled')
                 return _finish_flat_protrusions(result, poly, points, cfg)
     flat_seconds = time.perf_counter()-flat_started
     times = {'annex_2d_seconds':0., 'annex_profiles_seconds':0., 'annex_evaluation_seconds':0.,
@@ -422,7 +451,7 @@ def infer_modular_roof(footprint, xyz, config=None):
             main = fit_main(poly)
     else:
         main = fit_main(poly)
-    main['algorithm'] = 'modular-roofs-4.9.1'
+    main['algorithm'] = ALGORITHM_VERSION
     main['configuration'] = cfg
     main['diagnostics']['annex_detection'] = diagnostics
     main['diagnostics']['flat_majority'] = flat

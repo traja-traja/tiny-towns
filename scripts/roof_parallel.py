@@ -2,8 +2,10 @@
 
 Fit a small piecewise-linear transverse height profile to the existing cells.
 Each segment becomes one planar roof face, clipped to the original footprint.
-No address rules. Ridge spacing and heights are fitted; ridges stay aligned
-with the main wall directions. The candidate competes with all existing types.
+No address rules. By default each bay has a centred ridge, mirrored slopes
+and a common horizontal valley/eave height. Bay widths and ridge heights are
+fitted; ridges stay aligned with the main wall directions. The legacy free
+profile is available only through the explicit symmetric_bays=False setting.
 """
 import numpy as np
 import shapely
@@ -59,28 +61,62 @@ def parallel_proposal(poly, matrix, extent, cells, count, settings):
         proposed.append(v1)
         if np.min(np.diff(proposed))>gap:
             knots = np.array(proposed)
-    residual_widths = np.maximum(np.diff(knots)-gap,1e-4)
-    widths = np.clip(np.log(residual_widths[:-1]/residual_widths[-1]),-3.,3.)
     q10,q90 = np.quantile(z,[.1,.9])
     eave = max(.6,float(q10)-.5)
     max_rise = max(5.,float(np.ptp(z))+5.)
-    rises = np.clip(np.interp(knots[1::2],centers,smooth)-eave,cfg['min_rise_m'],max_rise-.01)
-    initial = np.r_[widths,eave,rises,np.full(count-1,.8)]
-    lower = np.r_[np.full(segments-1,-3.),.5,np.full(count,cfg['min_rise_m']),np.full(count-1,.1)]
-    upper = np.r_[np.full(segments-1,3.),max(1.,float(q90)),np.full(count,max_rise),np.ones(count-1)]
-    initial = np.clip(initial,lower+1e-7,upper-1e-7)
+    symmetric = cfg.get('symmetric_bays',True)
+    if symmetric:
+        # MODULE symmetric_parallel_bays: one common gutter level prevents
+        # an ascending/descending row of roof wedges. Fit only whole bay
+        # widths; a ridge is exactly midway between its two gutters. Unequal
+        # bay widths and ridge heights remain possible, without asymmetric
+        # slopes inside a bay. These are geometry constraints, not penalties
+        # that an outlier patch at a neighbouring roof could overwhelm.
+        bay_gap = max(cfg['min_bay_width_m'],2*gap)
+        if span < count*bay_gap:
+            return None
+        boundaries = knots[::2]
+        residual_widths = np.maximum(np.diff(boundaries)-bay_gap,1e-4)
+        widths = np.clip(np.log(residual_widths[:-1]/residual_widths[-1]),-3.,3.)
+        ridge_seeds = (boundaries[:-1]+boundaries[1:])/2
+        rises = np.clip(np.interp(ridge_seeds,centers,smooth)-eave,
+                        cfg['min_rise_m'],max_rise-.01)
+        initial = np.r_[widths,eave,rises]
+        lower = np.r_[np.full(count-1,-3.),.5,np.full(count,cfg['min_rise_m'])]
+        upper = np.r_[np.full(count-1,3.),max(1.,float(q90)),np.full(count,max_rise)]
 
-    def decode(parameters):
-        weights = np.exp(np.r_[parameters[:segments-1],0.])
-        lengths = gap+(span-segments*gap)*weights/weights.sum()
-        positions = np.r_[v0,v0+np.cumsum(lengths)]
-        E = parameters[segments-1]
-        rise = parameters[segments:segments+count]
-        depth = parameters[segments+count:]
-        heights = np.full(segments+1,E)
-        heights[1::2] = E+rise
-        heights[2:-1:2] = E+np.minimum(rise[:-1],rise[1:])*(1-depth)
-        return positions,heights
+        def decode(parameters):
+            weights = np.exp(np.r_[parameters[:count-1],0.])
+            lengths = bay_gap+max(0.,span-count*bay_gap)*weights/weights.sum()
+            boundaries = np.r_[v0,v0+np.cumsum(lengths)]
+            positions = np.empty(segments+1)
+            positions[::2] = boundaries
+            positions[1::2] = (boundaries[:-1]+boundaries[1:])/2
+            heights = np.full(segments+1,parameters[count-1])
+            heights[1::2] += parameters[count:]
+            return positions,heights
+    else:
+        # Legacy profile is opt-in for experiments, never the default model.
+        residual_widths = np.maximum(np.diff(knots)-gap,1e-4)
+        widths = np.clip(np.log(residual_widths[:-1]/residual_widths[-1]),-3.,3.)
+        rises = np.clip(np.interp(knots[1::2],centers,smooth)-eave,
+                        cfg['min_rise_m'],max_rise-.01)
+        initial = np.r_[widths,eave,rises,np.full(count-1,.8)]
+        lower = np.r_[np.full(segments-1,-3.),.5,np.full(count,cfg['min_rise_m']),np.full(count-1,.1)]
+        upper = np.r_[np.full(segments-1,3.),max(1.,float(q90)),np.full(count,max_rise),np.ones(count-1)]
+
+        def decode(parameters):
+            weights = np.exp(np.r_[parameters[:segments-1],0.])
+            lengths = gap+(span-segments*gap)*weights/weights.sum()
+            positions = np.r_[v0,v0+np.cumsum(lengths)]
+            E = parameters[segments-1]
+            rise = parameters[segments:segments+count]
+            depth = parameters[segments+count:]
+            heights = np.full(segments+1,E)
+            heights[1::2] = E+rise
+            heights[2:-1:2] = E+np.minimum(rise[:-1],rise[1:])*(1-depth)
+            return positions,heights
+    initial = np.clip(initial,lower+1e-7,upper-1e-7)
 
     fit = least_squares(lambda p:_predict(v,*decode(p))-z,initial,bounds=(lower,upper),
         loss='soft_l1',f_scale=.25,max_nfev=cfg['max_fit_evaluations'],
@@ -88,6 +124,9 @@ def parallel_proposal(poly, matrix, extent, cells, count, settings):
     knots,heights = decode(fit.x)
     residual = abs(_predict(v,knots,heights)-z)
     support, evidence_rejections = [], []
+    slopes_deg = np.degrees(np.arctan(np.abs(np.diff(heights)/np.diff(knots)))).reshape(count,2)
+    if float(slopes_deg.max()) > cfg.get('max_slope_deg',65.):
+        evidence_rejections.append('parallel_flank_exceeds_max_slope')
     for index in range(count):
         peak = 2*index+1
         prominence = float(heights[peak]-max(heights[peak-1],heights[peak+1]))
@@ -135,4 +174,7 @@ def parallel_proposal(poly, matrix, extent, cells, count, settings):
         'valley_heights_m':heights[2:-1:2].tolist(), 'cross_section_uvz':np.c_[knots,heights].tolist(),
         'eave_height_m':float(heights[0]),'ridge_height_m':float(max(heights)),
         'matrix':matrix,'extent':extent,'branch_support':support,'ridge_count':count,
-        'evidence_rejections':evidence_rejections}
+        'evidence_rejections':evidence_rejections,
+        'symmetric_bays':symmetric,'valleys_at_eave':symmetric,
+        'bay_widths_m':np.diff(knots[::2]).tolist(),
+        'bay_slopes_deg':slopes_deg.tolist()}

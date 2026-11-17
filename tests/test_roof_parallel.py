@@ -64,14 +64,44 @@ class ParallelRoofTests(unittest.TestCase):
         rejected = parallel_proposal(poly,np.eye(2),[0,16,0,16,0,0],sparse,2,cfg)
         self.assertIn('parallel_ridge_0_short_longitudinal_support',rejected['evidence_rejections'])
 
-    def test_supported_asymmetric_ridge_is_not_centered(self):
+    def test_legacy_asymmetric_profile_requires_explicit_switch(self):
         poly,points = self.fixture(2)
         points[:,2] = _predict(points[:,1],np.array([0.,2.5,8.,13.,16.]),np.array([8.,12.,8.,13.,8.]))
-        candidate = parallel_proposal(poly,np.eye(2),[0,16,0,16,0,0],points,2,resolve_config())
+        candidate = parallel_proposal(poly,np.eye(2),[0,16,0,16,0,0],points,2,resolve_config({'parallel_gables':{'symmetric_bays':False}}))
         self.assertIsNotNone(candidate)
         self.assertFalse(candidate['evidence_rejections'])
+        self.assertFalse(candidate['symmetric_bays'])
         self.assertLess(candidate['cross_section_uvz'][1][0],3.)
         self.assertTrue(all(s['supported_span_fraction']>=.5 for s in candidate['branch_support']))
+
+    def test_asymmetric_points_do_not_create_one_steep_flank_or_raised_valley(self):
+        poly,points = self.fixture(2)
+        points[:,2] = _predict(points[:,1],np.array([0.,3.,8.,15.,16.]),
+                               np.array([6.,10.,8.,9.5,6.]))
+        candidate = parallel_proposal(poly,np.eye(2),[0,16,0,16,0,0],points,2,resolve_config())
+        section = np.array(candidate['cross_section_uvz'])
+        self.assertTrue(candidate['symmetric_bays'])
+        np.testing.assert_allclose(section[1::2,0],(section[:-1:2,0]+section[2::2,0])/2,atol=1e-10)
+        np.testing.assert_allclose(section[::2,1],section[0,1],atol=1e-10)
+        slopes = np.array(candidate['bay_slopes_deg'])
+        np.testing.assert_allclose(slopes[:,0],slopes[:,1],atol=1e-9)
+        self.assertTrue(build_mesh(poly,candidate['strip_regions'])['diagnostics']['valid'])
+
+    def test_nearly_vertical_gable_flanks_are_rejected(self):
+        poly,points = self.fixture(2)
+        points[:,2] = _predict(points[:,1],np.array([0.,4.,8.,12.,16.]),
+                               np.array([8.,22.,8.,22.,8.]))
+        candidate = parallel_proposal(poly,np.eye(2),[0,16,0,16,0,0],points,2,resolve_config())
+        self.assertIn('parallel_flank_exceeds_max_slope',candidate['evidence_rejections'])
+
+    def test_unequal_bay_widths_still_allow_symmetric_roofs(self):
+        poly,points = self.fixture(2)
+        points[:,2] = _predict(points[:,1],np.array([0.,3.,6.,11.,16.]),
+                               np.array([8.,11.,8.,12.5,8.]))
+        candidate = parallel_proposal(poly,np.eye(2),[0,16,0,16,0,0],points,2,resolve_config())
+        self.assertLess(candidate['data_error_m'],.08)
+        np.testing.assert_allclose(candidate['bay_widths_m'],[6.,10.],atol=.1)
+        self.assertFalse(candidate['evidence_rejections'])
 
 
 if __name__=='__main__':

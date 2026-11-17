@@ -258,6 +258,9 @@ def build_mesh(footprint, regions, base_z=0.0):
     cells = []
     numerical_repair_cells = 0
     numerical_repair_area = 0.0
+    numerical_boundary_gap_cells = 0
+    numerical_boundary_gap_area = 0.0
+    boundary_roundoff_band = footprint.boundary.buffer(3*XY_GRID)
     area_tolerance = max(1e-7, footprint.area*1e-8)
     for cell in polygonize(partition):
         point = cell.representative_point()
@@ -270,6 +273,21 @@ def build_mesh(footprint, regions, base_z=0.0):
             # Input coverage was already checked; assign only tolerance-sized
             # ambiguity, never a substantial missing architectural region.
             areas = [cell.intersection(g).area for g in geoms]
+            # A grid-snapped facade edge may differ from its independently
+            # clipped roof boundary by a fraction of a micrometre. A long,
+            # empty boundary sliver can span several roof planes: assigning
+            # it ONE plane extrapolates that slope across the other slope
+            # and creates a tall vertical fin, despite a watertight mesh.
+            # Omit only empty, tolerance-sized slivers wholly in the boundary
+            # roundoff band. The adjacent roof cells then close their own
+            # facade, shifting the mesh perimeter by at most 3*XY_GRID.
+            # Owned regions and internal gaps/real height steps are retained.
+            if (not owners and cell.area <= area_tolerance
+                    and max(areas) <= XY_GRID**2
+                    and cell.difference(boundary_roundoff_band).area <= XY_GRID**2):
+                numerical_boundary_gap_cells += 1
+                numerical_boundary_gap_area += cell.area
+                continue
             best = int(np.argmax(areas))
             ambiguous_area = cell.area if len(owners) > 1 else cell.area-max(areas)
             if ambiguous_area > area_tolerance:
@@ -433,6 +451,9 @@ def build_mesh(footprint, regions, base_z=0.0):
         'height_step_edge_count':step_edges,
         'numerical_partition_repair_cells':numerical_repair_cells,
         'numerical_partition_repair_area_m2':float(numerical_repair_area),
+        'numerical_boundary_gap_cells':numerical_boundary_gap_cells,
+        'numerical_boundary_gap_area_m2':float(numerical_boundary_gap_area),
+        'numerical_boundary_gap_max_shift_m':3*XY_GRID,
         'xy_precision_m':XY_GRID,'z_weld_tolerance_m':Z_WELD,
     }
     return {'vertices':vertices,'roof_faces':roof_faces,'wall_faces':wall_faces,

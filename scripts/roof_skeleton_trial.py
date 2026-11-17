@@ -123,6 +123,8 @@ def main():
     for label,tolerance,opening in config:
         print('Computing '+label,flush=True)
         newpart=fit_trial(part,points,tolerance,opening)
+        from roof_observed_ridges import attach_observed_ridges
+        attach_observed_ridges(newpart['result'],newpart['footprint'],points)
         building=copy.deepcopy(baseline);building['parts']=[newpart]
         building['timing']={'roof_compute_seconds':newpart['result']['timing']['total_seconds']}
         current=dict(schema='roof-v2/1',city=args.city,status='complete',buildings=[building])

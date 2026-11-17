@@ -23,6 +23,7 @@ class RidgeNetworkTests(unittest.TestCase):
         z = np.minimum(outside[:,active].min(axis=1), inside[:,active].max(axis=1))
         candidate = _network_proposal(poly, np.eye(2), [0,20,0,20,0,0], np.c_[xy,z], missing)
         self.assertIsNotNone(candidate)
+        self.assertAlmostEqual(candidate['support_penalty_m'],0.,places=8,msg=str(candidate['branch_support']))
         regions = _regions(poly, candidate)
         self.assertLess(np.max(abs(predict_regions(regions, xy)-z)), .03)
         self.assertTrue(build_mesh(poly, regions)['diagnostics']['valid'])

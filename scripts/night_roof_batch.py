@@ -26,12 +26,14 @@ for key in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS',
 import resource_guard as guard
 import atomic_io
 
-VERSION = 'modular-roofs-4.9.1'
+from roof_config import ALGORITHM_VERSION as VERSION
+from roof_candidate_telemetry import capture
 STOP_FILE = None
 ALGORITHM_FILES = ('roof_annex.py', 'roof_config.py', 'roof_eave_planes.py',
                    'roof_connected_wings.py', 'roof_parallel.py',
                    'roof_flat_majority.py', 'roof_flat_protrusions.py',
-                   'roof_v2.py', 'roof_v2_geometry.py')
+                   'roof_v2.py', 'roof_v2_geometry.py', 'roof_footprint_regularization.py', 'roof_butterfly.py', 'roof_butterfly_support.py', 'roof_observed_ridges.py', 'roof_candidate_telemetry.py', 'roof_skeleton_candidate.py',
+                   'roof_skeleton_gables.py', 'roof_skeleton_caps.py', 'roof_virtual_outline.py')
 
 
 def read(path):
@@ -207,11 +209,12 @@ def stage_index(output, state):
 def worker(args):
     import numpy as np
     from roof_annex import infer_modular_roof
-    from roof_config import resolve_config
+    from roof_config import resolve_execution_config
     from roof_batch import source_records
     output, cache, manifest_path = args.output.resolve(), args.cache.resolve(), args.inputs.resolve()
     inputs = read(manifest_path)
-    config = resolve_config(read(args.config) if args.config else None)
+    config = resolve_execution_config(read(args.config) if args.config else None, mode='map')
+    # Analytical point-profile cuts belong to requested HTML tests, not map production.
     engine = identity(config)
     cache.mkdir(parents=True, exist_ok=True); output.mkdir(parents=True, exist_ok=True)
     frozen = output / 'engine.json'
@@ -243,6 +246,7 @@ def worker(args):
     state = read(state_path) if state_path.exists() else {
         'schema': 'night-roof-stage/1', 'city': inputs['city'], 'entries': [],
         'started_at_utc': utc(), 'roof_seconds': 0., 'active_seconds': 0.}
+    state.update(execution_mode='map', analytical_ridges=False)
     done = {e['id']: e for e in state['entries']}
     state.update(status='running', expected=len(inputs['buildings']))
     header = {k: inputs.get(k) for k in ('city', 'source', 'crs', 'vertical_datum')}
@@ -288,7 +292,9 @@ def worker(args):
                         with np.load(path) as data:
                             points = data['train']
                         io_seconds = time.perf_counter() - io_start
-                        result = infer_modular_roof(part['footprint'], points, config=config)
+                        with capture(detailed=False) as candidate_trace:
+                            result = infer_modular_roof(part['footprint'], points, config=config)
+                        result.setdefault('diagnostics',{})['candidate_telemetry']=candidate_trace.to_dict()
                         result['timing']['input_read_seconds'] = io_seconds
                         meta = result['model']['metadata']
                         meta.update(source_floor_count=source.get('source_attributes', {}).get('num_floors'),
@@ -416,7 +422,7 @@ def dashboard(output, state):
                '<title>Noční generování střech</title><style>body{font:17px/1.6 system-ui;max-width:950px;'
                'margin:40px auto;padding:0 20px;background:#f5f6f2;color:#243a31}td,th{padding:12px;'
                'text-align:left;border-bottom:1px solid #ccc}a{color:#06645f}</style>'
-               '<h1>Noční generování střech · Velešín a ČB</h1><p>Algoritmus 4.9.1 · '
+               '<h1>Noční generování střech · Velešín a ČB</h1><p>Algoritmus ' + html.escape(VERSION) + ' · '
                + html.escape(state['status']) + '</p><p>Pořadí: čtyři velešínské ulice → celý Velešín '
                '→ náměstí a navazující ulice ČB. Pokud tyto kroky skončí do 2 hodin, další ČB nejvýše 4 hodiny.</p>'
                '<p>Lokální Python, jeden dům za druhým. Samostatné čtení mračen. Hotové shodné modely se '
@@ -430,20 +436,21 @@ def dashboard(output, state):
 
 def run(args):
     global STOP_FILE
-    from roof_config import resolve_config
+    from roof_config import resolve_execution_config
     output = args.output.resolve(); output.mkdir(parents=True, exist_ok=True)
     STOP_FILE = output / 'STOP'
     state_path = output / 'night.json'
     state = read(state_path) if state_path.exists() else {
         'schema': 'night-roof-run/1', 'started_epoch': time.time(), 'started_at_utc': utc(),
         'stages': [], 'status': 'starting', 'algorithm': VERSION}
-    config = resolve_config(read(args.config) if args.config else None)
+    config = resolve_execution_config(read(args.config) if args.config else None, mode='map')
     engine = identity(config)
     if 'engine' in state and state['engine'] != engine:
         raise ValueError('Algorithm changed; start a new version directory')
     prior_active, session = begin_session(state)
     session_clock = time.monotonic()
     state['engine'] = engine
+    state.update(execution_mode='map', analytical_ridges=False)
     def persist():
         session['seconds'] = time.monotonic() - session_clock
         state['active_elapsed_seconds'] = prior_active + session['seconds']

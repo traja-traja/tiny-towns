@@ -173,6 +173,10 @@ def run_one(entry,output,config):
         compute_seconds=time.perf_counter()-tick;fresh_seconds+=compute_seconds
         variants={'baseline':baseline_result}
         variants.update({k:v for k,v in outcomes['variants'].items() if k not in ('selected','baseline') and isinstance(v,dict) and v.get('model')})
+        # This runner only builds analytical HTML experiments.
+        from roof_observed_ridges import attach_observed_ridges
+        for result in variants.values():
+            attach_observed_ridges(result,part['footprint'],train)
         evaluation_started=time.perf_counter();validation=evaluate(variants,holdout)
         detail=dict(part_index=part.get('part_index',0),decision=outcomes.get('decision'),profiles=outcomes.get('profiles'),
             errors=outcomes.get('errors',{}),module_timing=outcomes.get('timing'),validation=validation,
