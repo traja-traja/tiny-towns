@@ -38,3 +38,12 @@ LAZ se čte postupně po malých blocích. Průběžné binární výřezy mají
 C: alespoň 25 GB volných; projekt nejvýše 20 GB. Výpočetní proces má limit 1,5 GB přidělené paměti, nejvýše dvě CPU v procesní skupině a jedno vlákno numerických knihoven; nízká priorita. Začíná při alespoň 1 GB dostupné RAM, při nedostatku čeká nejvýše hodinu; pod 250 MB zastaví. Automatické uspání systému je blokováno jen během běhu.
 
 11 cílených testů prošlo: pravidla časů, identity modelů a vstupů, bezpečné obnovení LAZ, pořadí ulic, shoda půdorysů a dat. Technický průchod jednoho skutečného plochého modelu trval 0,632 s výpočtu; druhá verze ho převzala bez přepočtu. Současně byl ověřen záznam chybějícího terénního podkladu bez pádu celé dávky. Vzhled modelů nebyl posuzován.
+
+
+## Ranní oprava souběžného zápisu — 17. 11. 2026
+
+První dávka běžela od 03:58:05 do 04:02:37 SEČ. Dokončila 35 modelů ze 146 v prvních ulicích; k dalším etapám se nedostala. Důvodem byl `PermissionError / WinError 5` při nahrazení `active.json`, souběžně čteného hlídacím procesem. Dokončené modely a připravené vstupy zůstaly uložené.
+
+Zápis stavů a HTML nyní používá `atomic_io.py`: jedinečný dočasný soubor, zachování starého cíle do úspěšného nahrazení a nejvýše pět sekund opakování krátkého přístupového/sdílecího konfliktu. Chyby typu plný disk se neopakují. Historie jednotlivých spuštění se ukládá zvlášť; několik hodin, kdy byl proces zastavený, se nepřičítá k dvouhodinové výpočetní podmínce. Čekání na RAM během běžícího spuštění se stále počítá.
+
+Prošlo 11 cílených testů atomického zápisu a řízení dávky. Jeden vyvolal skutečné zamknutí na Windows otevřeným čtecím handlem bez `FILE_SHARE_DELETE`, ověřil zachování původního obsahu během konfliktu a úspěšný zápis po uvolnění. Další ověřují trvalé chyby, zachování checkpointu a navázání časového rozpočtu bez započtení odstávky. Hromadné pokračování zatím zůstává pozastavené na následné přání uživatele, který nejprve řeší geometrii rohů střech.

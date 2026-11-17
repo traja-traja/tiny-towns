@@ -29,6 +29,7 @@ from shapely.geometry import shape, mapping
 from shapely.affinity import translate
 import cb_roof_v2 as prep
 import resource_guard as guard
+import atomic_io
 
 ROOT = Path(__file__).resolve().parents[1]
 VELESIN_STREETS = ['Náměstí J. V. Kamarýta', 'Družstevní', 'Školní', 'U Přehrady']
@@ -52,11 +53,13 @@ def stage_for(city, streets):
 
 
 def write(path, document):
-    prep.atomic_json(Path(path), document)
+    payload = json.dumps(document, ensure_ascii=False, indent=2, allow_nan=False) + '\n'
+    guard.check_budget(reserve_bytes=len(payload.encode('utf-8')))
+    atomic_io.write_text(path, payload)
 
 
 def read(path):
-    return json.loads(Path(path).read_text(encoding='utf-8'))
+    return json.loads(atomic_io.read_text(path))
 
 
 def expired(deadline):

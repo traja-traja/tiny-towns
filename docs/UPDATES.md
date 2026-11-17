@@ -161,3 +161,10 @@ Podrobnosti a omezení: [záznam běhu](ROOF_WINGS_AND_PROTRUSIONS_2026-11-17.md
 ## 2026-11-17 — samostatná noční fronta
 
 Připraveny `night_roof_inputs.py` (plán, husté podklady, obnovitelná extrakce) a `night_roof_batch.py` (postupné modelování, shodná cache, časové limity, stránkované HTML). Pořadí Velešín 146 ulicových → 1904 automatických objektů celkem se zachováním Sportcentra → ČB 287 centrálních objektů → podmíněně další čtyři hodiny ČB. Podrobnosti, spuštění a technické testy: [noční dávka](NIGHT_ROOFS_2026-11-17.md). Stav a výsledné počty určuje automaticky generovaný night.json; tento zápis sám netvrdí dokončení měst.
+
+## 2026-11-17 — obnova dávky a pokus se straight skeletonem
+
+- Opraven Windows souběh čtení/zápisu stavových JSON: jedinečný dočasný soubor, atomická náhrada s omezeným opakováním při sdílecím zámku. Starý checkpoint zůstává do úspěšného zápisu.
+- Aktivní čas obnovené dávky se sčítá po relacích; ranní odstávka se nepočítá do dvouhodinové podmínky. Historie chyby se zachovává. 11 cílených testů prošlo včetně reálného Windows zámku.
+- Noční běh dokončil 35 domů; další generování uživatel pozastavil kvůli rohům střech.
+- Izolovaný adaptér knihovny a tři varianty jednoho domu: viz [ROOF_STRAIGHT_SKELETON.md](ROOF_STRAIGHT_SKELETON.md). Produkční generátor 4.9.1 zůstává beze změny.

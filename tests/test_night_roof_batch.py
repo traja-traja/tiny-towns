@@ -51,5 +51,30 @@ class NightPolicyTests(unittest.TestCase):
         path = night.model_file(folder, '../../outside', 'a' * 64)
         self.assertEqual(path.parent, folder)
 
+    def test_resume_keeps_compute_time_and_archives_failure_not_stopped_hours(self):
+        error = {'type': 'PermissionError', 'message': 'locked active.json'}
+        state = {'started_epoch': 1000, 'started_at_utc': 'original start',
+                 'updated_at_utc': 'original stop', 'elapsed_seconds': 271.903,
+                 'status': 'stopped', 'error': error}
+        prior, session = night.begin_session(state, epoch=1000 + 7 * 3600)
+        self.assertEqual(prior, 271.903)
+        self.assertEqual(state['active_elapsed_seconds'], 271.903)
+        self.assertEqual(state['sessions'][0]['error'], error)
+        self.assertEqual(state['sessions'][0]['ended_at_utc'], 'original stop')
+        self.assertEqual(session['started_epoch'], 1000 + 7 * 3600)
+        self.assertEqual(session['seconds'], 0)
+        self.assertNotIn('error', state)
+        self.assertTrue(night.extra_allowed(prior + 300, True))
+
+    def test_subsequent_resume_does_not_duplicate_legacy_duration(self):
+        state = {'sessions': [{'status': 'stopped', 'seconds': 271.903}],
+                 'active_elapsed_seconds': 271.903, 'elapsed_seconds': 50000,
+                 'error': {'type': 'old'}}
+        prior, session = night.begin_session(state, epoch=90000)
+        self.assertEqual(prior, 271.903)
+        self.assertEqual(len(state['sessions']), 2)
+        self.assertIs(state['sessions'][-1], session)
+        self.assertNotIn('error', state)
+
 
 if __name__ == '__main__': unittest.main()

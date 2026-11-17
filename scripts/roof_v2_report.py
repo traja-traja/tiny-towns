@@ -13,6 +13,7 @@ import html
 import json
 from pathlib import Path
 import sys
+import atomic_io
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DIR = ROOT / "cities" / "ceske-budejovice" / "experiments" / "roof-v2"
@@ -63,7 +64,7 @@ import * as THREE from "data:text/javascript;base64,@@THREE@@";
 
 
 def render_report(input_path: Path, output_path: Path, three_path: Path | None = None) -> dict:
-    payload = json.loads(input_path.read_text(encoding="utf-8-sig"))
+    payload = json.loads(atomic_io.read_text(input_path))
     if not isinstance(payload, dict) or payload.get("schema") != "roof-v2/1":
         raise ValueError("Expected results schema roof-v2/1")
     buildings = payload.get("buildings")
@@ -110,9 +111,7 @@ def render_report(input_path: Path, output_path: Path, three_path: Path | None =
     for key in ("@@COUNT@@", "@@GENERATED@@", "@@SCHEMA@@", "@@THREE@@", "@@VIEWER@@", "@@DATA@@"):
         document = document.replace(key, values[key])
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = output_path.with_suffix(output_path.suffix + ".tmp")
-    temporary.write_text(document, encoding="utf-8", newline="\n")
-    temporary.replace(output_path)
+    atomic_io.write_text(output_path, document)
     return {"report": str(output_path.resolve()), "buildings": len(buildings), "bytes": output_path.stat().st_size}
 
 

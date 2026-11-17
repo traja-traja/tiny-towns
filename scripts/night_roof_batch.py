@@ -24,6 +24,7 @@ for key in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS',
             'NUMEXPR_NUM_THREADS', 'ARROW_NUM_THREADS'):
     os.environ[key] = '1'
 import resource_guard as guard
+import atomic_io
 
 VERSION = 'modular-roofs-4.9.1'
 STOP_FILE = None
@@ -34,7 +35,7 @@ ALGORITHM_FILES = ('roof_annex.py', 'roof_config.py', 'roof_eave_planes.py',
 
 
 def read(path):
-    return json.loads(Path(path).read_text(encoding='utf-8-sig'))
+    return json.loads(atomic_io.read_text(path))
 
 
 def write(path, value):
@@ -45,9 +46,7 @@ def write(path, value):
         if hasattr(item, 'item'): return item.item()
         raise TypeError(type(item).__name__)
     payload = json.dumps(value, ensure_ascii=False, allow_nan=False, separators=(',', ':'), default=scalar)
-    temp = path.with_suffix(path.suffix + '.tmp')
-    temp.write_text(payload, encoding='utf-8')
-    temp.replace(path)
+    atomic_io.write_text(path, payload)
 
 
 def utc():
@@ -71,6 +70,24 @@ def fingerprint(building, engine):
 
 def extra_allowed(initial_seconds, essential_complete):
     return bool(essential_complete and initial_seconds < 2 * 3600)
+
+
+def begin_session(state, epoch=None):
+    """Preserve failed attempts; stopped hours do not consume computing budget."""
+    epoch = time.time() if epoch is None else epoch
+    if 'sessions' not in state:
+        seconds = float(state.get('elapsed_seconds', 0))
+        state['active_elapsed_seconds'] = seconds
+        state['sessions'] = []
+        if seconds:
+            state['sessions'].append({'started_at_utc': state.get('started_at_utc'),
+                'ended_at_utc': state.get('updated_at_utc'), 'seconds': seconds,
+                'status': state.get('status'), 'error': state.get('error'), 'legacy': True})
+    state.pop('error', None)
+    session = {'started_at_utc': datetime.fromtimestamp(epoch, timezone.utc).isoformat(),
+               'started_epoch': epoch, 'status': 'running', 'seconds': 0.}
+    state['sessions'].append(session)
+    return float(state.get('active_elapsed_seconds', 0)), session
 
 
 @contextlib.contextmanager
@@ -184,7 +201,7 @@ def stage_index(output, state):
                ' · <a href="config.json">Nastavení</a></p><table><tr><th>Dům</th><th>Stav</th>'
                '<th>Střecha (s)</th></tr>' + ''.join(rows) + '</table></html>')
     path = Path(output) / 'report.html'
-    temp = path.with_suffix('.html.tmp'); temp.write_text(content, encoding='utf-8'); temp.replace(path)
+    atomic_io.write_text(path, content)
 
 
 def worker(args):
@@ -321,12 +338,16 @@ def python_command(script, arguments):
     return [sys.executable, '-S', '-u', '-X', 'utf8', '-c', boot]
 
 
-def supervise(command, log_path, deadline=None, active_path=None, house_timeout=180):
+def supervise(command, log_path, deadline=None, active_path=None, house_timeout=180, on_progress=None):
     """Bound child tree and individual fitting; no overnight AI supervision."""
     check_stop(); guard.check_budget(force=True)
     wait_start = time.monotonic()
+    last_progress = 0.
     while guard.memory_status()['available'] < 1_000_000_000:
         check_stop()
+        if on_progress and time.monotonic() - last_progress >= 10:
+            on_progress('waiting_for_memory')
+            last_progress = time.monotonic()
         if deadline and time.time() >= deadline:
             return {'status': 'time_budget_reached'}
         if time.monotonic() - wait_start > 3600:
@@ -334,6 +355,7 @@ def supervise(command, log_path, deadline=None, active_path=None, house_timeout=
         guard.check_budget(); time.sleep(3)
     log_path.parent.mkdir(parents=True, exist_ok=True)
     start = time.monotonic(); job = None; peak = 0; stop = None
+    started_at = utc()
     with log_path.open('a', encoding='utf-8') as log:
         process = subprocess.Popen(command, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT,
                                    creationflags=0x08000000 if os.name == 'nt' else 0)
@@ -342,6 +364,9 @@ def supervise(command, log_path, deadline=None, active_path=None, house_timeout=
                 job = guard._WindowsJob(process, 1_500_000_000)
             while process.poll() is None:
                 check_stop()
+                if on_progress and time.monotonic() - last_progress >= 10:
+                    on_progress('running')
+                    last_progress = time.monotonic()
                 guard.check_budget()
                 if guard.memory_status()['available'] < 250_000_000:
                     raise guard.ResourceLimit('STOP: available system RAM below 250 MB')
@@ -360,7 +385,7 @@ def supervise(command, log_path, deadline=None, active_path=None, house_timeout=
                 process.wait(timeout=15)
             result = dict(stop or {'status': 'complete' if process.returncode == 0 else 'failed'},
                           exit_code=process.returncode, elapsed_seconds=time.monotonic() - start,
-                          peak_job_commit_bytes=peak)
+                          peak_job_commit_bytes=peak, started_at_utc=started_at, finished_at_utc=utc())
             if job: result.update(job.accounting())
             write(log_path.with_suffix('.metrics.json'), result)
             return result
@@ -383,7 +408,8 @@ def dashboard(output, state):
         counts = str(stage.get('completed', 0)) + ' / ' + str(stage.get('expected', '?'))
         if stage.get('input_excluded'):
             counts += ' (mimo dostupné podklady: ' + str(stage['input_excluded']) + ')'
-        rows.append('<tr><td>' + label + '</td><td>' + html.escape(stage['status']) +
+        displayed_status = 'čekání na volnou RAM' if stage.get('process_phase') == 'waiting_for_memory' else stage['status']
+        rows.append('<tr><td>' + label + '</td><td>' + html.escape(displayed_status) +
                     '</td><td>' + counts + '</td></tr>')
     content = ('<!doctype html><html lang="cs"><meta charset="utf-8"><meta name="viewport" '
                'content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="60">'
@@ -399,7 +425,7 @@ def dashboard(output, state):
                '</table><p><a href="night.json">Průběh, časy a případné chyby JSON</a></p>'
                '<p>Limity: C: alespoň 25 GB volných, projekt nejvýše 20 GB, procesní paměť 1,5 GB; '
                'ochrana před automatickým uspáním po dobu běhu. Nedostupné podklady jsou zaznamenané v plánu.</p></html>')
-    tmp = output / 'report.html.tmp'; tmp.write_text(content, encoding='utf-8'); tmp.replace(output / 'report.html')
+    atomic_io.write_text(output / 'report.html', content)
 
 
 def run(args):
@@ -415,7 +441,16 @@ def run(args):
     engine = identity(config)
     if 'engine' in state and state['engine'] != engine:
         raise ValueError('Algorithm changed; start a new version directory')
+    prior_active, session = begin_session(state)
+    session_clock = time.monotonic()
     state['engine'] = engine
+    def persist():
+        session['seconds'] = time.monotonic() - session_clock
+        state['active_elapsed_seconds'] = prior_active + session['seconds']
+        state['elapsed_seconds'] = state['active_elapsed_seconds']
+        state['wall_span_seconds'] = time.time() - state['started_epoch']
+        state['updated_at_utc'] = utc()
+        write(state_path, state); dashboard(output, state)
     write(output / 'config.json', config)
     city_roots = {'velesin': output, 'ceske-budejovice': ROOT / 'cities/ceske-budejovice/experiments' / output.name}
     schedule = [('velesin', 'streets', 'Velešín · čtyři zadané ulice'),
@@ -434,19 +469,27 @@ def run(args):
                     state['stages'].append(stage)
                 deadline = None
                 if stage_name == 'extra':
-                    elapsed = state.setdefault('initial_elapsed_seconds', time.time() - state['started_epoch'])
+                    elapsed = state.setdefault('initial_elapsed_seconds', prior_active + time.monotonic() - session_clock)
                     essentials = all(s['status'] in ('complete', 'complete_with_errors') for s in state['stages'] if s is not stage)
                     if not extra_allowed(elapsed, essentials):
                         stage['status'] = 'not_scheduled'; stage['reason'] = 'Initial stages exceeded two hours or did not complete'
                         continue
                     deadline = state.setdefault('extra_deadline_epoch', time.time() + 4 * 3600)
                 state['status'] = 'running'; stage['status'] = 'preparing_inputs'
-                write(state_path, state); dashboard(output, state)
+                def progress(phase):
+                    stage['process_phase'] = phase
+                    live_path = stage_dir / 'stage.json'
+                    if live_path.exists():
+                        live = read(live_path)
+                        stage.update(completed=sum(e['status'] in ('complete', 'reused') for e in live['entries']),
+                                     roof_seconds=live['roof_seconds'], model_active_seconds=live['active_seconds'])
+                    persist()
+                persist()
                 plan_dir = city_roots[city] / 'plan'
                 plan_file = plan_dir / 'queue.json'
                 if not plan_file.exists():
                     result = supervise(python_command(ROOT / 'scripts/night_roof_inputs.py',
-                        ['plan', '--city', city, '--output', plan_dir]), output / 'logs' / (city + '-plan.log'), deadline)
+                        ['plan', '--city', city, '--output', plan_dir]), output / 'logs' / (city + '-plan.log'), deadline, on_progress=progress)
                     if result['status'] != 'complete':
                         raise RuntimeError('Planning failed: ' + city + ' ' + str(result))
                 input_dir = city_roots[city] / ('inputs-' + stage_name)
@@ -454,7 +497,9 @@ def run(args):
                 if stage_name != 'extra': prepare_args += ['--download-missing']
                 if deadline: prepare_args += ['--deadline-utc', datetime.fromtimestamp(deadline, timezone.utc).isoformat()]
                 result = supervise(python_command(ROOT / 'scripts/night_roof_inputs.py', prepare_args),
-                                   output / 'logs' / (city + '-' + stage_name + '-inputs.log'), deadline)
+                                   output / 'logs' / (city + '-' + stage_name + '-inputs.log'), deadline, on_progress=progress)
+                if stage.get('input_process'):
+                    stage.setdefault('previous_input_attempts', []).append(stage['input_process'])
                 stage['input_process'] = result
                 if result['status'] == 'time_budget_reached':
                     stage['status'] = 'time_budget_reached'; break
@@ -473,7 +518,7 @@ def run(args):
                     stage['status'] = 'time_budget_reached'; break
                 stage['expected'] = len(prepared['buildings'])
                 stage['input_excluded'] = len(prepared.get('excluded', []))
-                stage['status'] = 'fitting'; write(state_path, state); dashboard(output, state)
+                stage['status'] = 'fitting'; persist()
                 worker_args = ['worker', '--inputs', manifest, '--output', stage_dir,
                                '--cache', city_roots[city] / 'models', '--config', output / 'config.json']
                 if city == 'ceske-budejovice':
@@ -484,7 +529,7 @@ def run(args):
                     stage_dir.mkdir(parents=True, exist_ok=True); write(stage_dir / 'active.json', {'idle': True})
                     result = supervise(python_command(Path(__file__).resolve(), worker_args),
                         output / 'logs' / (city + '-' + stage_name + '-models.log'), deadline,
-                        stage_dir / 'active.json', args.house_timeout)
+                        stage_dir / 'active.json', args.house_timeout, on_progress=progress)
                     if result['status'] == 'building_timeout':
                         sp = stage_dir / 'stage.json'
                         ss = read(sp) if sp.exists() else {'schema': 'night-roof-stage/1', 'city': city,
@@ -494,6 +539,8 @@ def run(args):
                             ss['entries'].append({'id': active['id'], 'address': active.get('address'),
                                 'status': 'timeout', 'roof_seconds': 0., 'error': 'Exceeded per-building time budget'})
                         write(sp, ss); continue
+                    if stage.get('model_process'):
+                        stage.setdefault('previous_model_attempts', []).append(stage['model_process'])
                     stage['model_process'] = result
                     if (stage_dir / 'stage.json').exists():
                         ss = read(stage_dir / 'stage.json')
@@ -512,7 +559,8 @@ def run(args):
                     elif stage['input_excluded']:
                         stage['status'] = 'complete_with_missing_inputs'
                     break
-                write(state_path, state); dashboard(output, state)
+                stage.pop('process_phase', None)
+                persist()
             state['status'] = 'finished'
     except BaseException as error:
         state.update(status='stopped', error={'type': type(error).__name__, 'message': str(error)})
@@ -520,8 +568,9 @@ def run(args):
             state['stages'][-1]['status'] = 'stopped'
         raise
     finally:
-        state['updated_at_utc'] = utc(); state['elapsed_seconds'] = time.time() - state['started_epoch']
-        write(state_path, state); dashboard(output, state)
+        session.update(ended_at_utc=utc(), status=state['status'])
+        if state.get('error'): session['error'] = state['error']
+        persist()
 
 
 def main():
