@@ -49,6 +49,30 @@ class ParallelRoofTests(unittest.TestCase):
         disabled = infer_eave_roof(poly,points,allow_parallel=True,config=cfg)
         self.assertFalse(any(c['type']=='parallel_gables' for c in disabled['candidates']))
 
+    def test_short_patch_cannot_support_a_whole_parallel_ridge(self):
+        poly,points = self.fixture(2)
+        # Both transverse peaks exist, with many matching cells. Only a
+        # quarter of the longitudinal span supports the first peak, however.
+        sparse = points[(points[:,1]>=8.) | (points[:,0]<4.)]
+        cfg = resolve_config({'parallel_gables':{'min_supported_span_fraction':0.}})
+        candidate = parallel_proposal(poly,np.eye(2),[0,16,0,16,0,0],sparse,2,cfg)
+        self.assertIsNotNone(candidate)
+        self.assertFalse(candidate['evidence_rejections'])
+        self.assertGreater(candidate['branch_support'][0]['supported_cells'],5)
+        self.assertLess(candidate['branch_support'][0]['supported_span_fraction'],.3)
+        cfg['parallel_gables']['min_supported_span_fraction'] = .5
+        rejected = parallel_proposal(poly,np.eye(2),[0,16,0,16,0,0],sparse,2,cfg)
+        self.assertIn('parallel_ridge_0_short_longitudinal_support',rejected['evidence_rejections'])
+
+    def test_supported_asymmetric_ridge_is_not_centered(self):
+        poly,points = self.fixture(2)
+        points[:,2] = _predict(points[:,1],np.array([0.,2.5,8.,13.,16.]),np.array([8.,12.,8.,13.,8.]))
+        candidate = parallel_proposal(poly,np.eye(2),[0,16,0,16,0,0],points,2,resolve_config())
+        self.assertIsNotNone(candidate)
+        self.assertFalse(candidate['evidence_rejections'])
+        self.assertLess(candidate['cross_section_uvz'][1][0],3.)
+        self.assertTrue(all(s['supported_span_fraction']>=.5 for s in candidate['branch_support']))
+
 
 if __name__=='__main__':
     unittest.main()

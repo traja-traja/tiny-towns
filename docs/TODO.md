@@ -98,3 +98,38 @@ Upřesněno s Pavlem 16. listopadu 2026. Nejprve rozebrat postup; nový výběr 
 - [ ] Zachovávat jednoduché rovinné střešní plochy; lichoběžníkový polygon nevyžaduje deformaci kvůli textuře. UV odvozovat z lokálních os každé roviny ve stejném měřítku.
 - [ ] U běžných domů zachovat celý vnější obrys. Pokud je známý vnitřní obrys dvora, případné malé korekce omezit na něj a ukládat původní i navrženou geometrii; zatím bez automatického rozpoznávání uličních čar. Hranici přípustného posunu teprve určit.
 - [ ] Když přesný půdorys a vodorovné okapy nedovolují vodorovný hřeben, upřednostnit několik rovin s mírně šikmým hřebenem, případně jednu dodatečnou plochu. Plynule prohnuté střechy nepřidávat jen jako opravu neslučitelných vazeb. Pořadí priorit nejprve potvrdit s Pavlem.
+
+
+## Víceúrovňové ploché střechy — 2026-11-17
+
+- [x] Aktuální zjednodušení 4.7.2: vodorovné části alespoň 5 % každá, největší alespoň 20 %, součet alespoň 55 %; jedna základní rovina ve výšce největší části. Původní návrh přesného modelu několika úrovní je odložen.
+- Nejprve prokázat lokální vodorovné plochy, sloučit blízké výšky a souvislé oblasti; malé nástavby zanedbat nebo oddělit. Omezit počet významných úrovní a složitost jejich půdorysu.
+- Základní objemy oříznout půdorysem a uzavřít schodové stěny stávajícím build_mesh. Rozlišení výškového schodu od skutečného sklonu musí mít kontrolní testy, aby sedlové střechy nevznikaly jako schodiště.
+- Regresní příklady: Fráni Šrámka 2609 a Široká 432/11. Informaci o skutečném plochém typu poskytl uživatel; automatické optické hodnocení neprobíhá.
+
+## Soustavy střech zalomených budov — ověření 4.9.1, 2026-11-17
+
+- [x] Vypínatelný kandidát z protilehlých okapů: samostatné směry křídel, společný sklon, varianty štít/valba a délky pásů. Při doloženém rozdílu výšek společný sklon se samostatnými okapy.
+- [x] Šest kroků optimalizace a vizuální i numerické posouzení výslovně povolené uživatelem: Husova tř. 1829/12, Kněžská 410/8, Široká 421/1, Hroznová 314/18. Obecná pravidla, bez adresních výjimek; u Hroznové zachován lepší původní kandidát U.
+- [x] Geometrie uzavřená; nejistota křídla bez bodů zaznamenána. Výsledky: docs/ROOF_WINGS_AND_PROTRUSIONS_2026-11-17.md.
+- [ ] Ověřit zobecnění na nepoužitém vzorku a následně na celé sadě; sledovat čas, počet rovin i neúspěchy. Čtyři cílené domy neprokazují úspěšnost pro celé město.
+- [ ] Později samostatné sklony křídel a 2D rozpoznání sousedních půdorysů pro pomoc při volbě štítu; nyní vstup sousedů chybí.
+
+## Nástavby nad plochým základem — 4.8.1
+
+- [x] Vypínatelný modul: souvislé oblasti nad 2 m a od 1 m², zjednodušený obrys, plochý vršek podle 90. percentilu; parametry a čas v JSON.
+- [x] Přepočítaná sada 44 domů a porovnání s 4.7.2, 8 nástaveb na 4 domech; viz docs/ROOF_FLAT_PROTRUSIONS_RUN_2026-11-17.md.
+- [ ] Vizuální posouzení uživatelem; automatické rozlišení sousedních budov a vegetace zůstává nevyřešené.
+
+## Pravidelné obrysy nástaveb — 4.9.1
+
+- [x] Orientované obdélníky / jednoduché pravoúhlé obrysy podle směru domu, s omezením ztracené a přidané plochy a bezpečným návratem k původnímu zjednodušení. Vypínatelné a nastavitelné.
+- [x] Čtyři dotčené domy přepočteny: 8 nástaveb, 162 → 39 vrcholů obrysu; původní prahy 2 m / 1 m² / percentil 90 zachovány.
+- [ ] Automatické odlišení vegetace a sousedů stále není vyřešeno; tvarové zjednodušení ho nenahrazuje.
+
+## Samostatná noční fronta 2026-11-17
+
+- [x] Samostatná příprava hustých bodů s obnovením, modelování po jednom domu, kontrolní součty a opakované využití shodných hotových modelů.
+- [x] Postupné etapy Velešín / ČB s pravidlem méně než 2 hodiny → nejvýše další 4 hodiny; stopfile, časový limit domu, disk/RAM a ochrana před uspáním.
+- [ ] Uživatel posoudí výsledné modely noční dávky; skutečné dokončení a chybějící objekty číst z night.json a stage.json, nikoli předpokládat podle plánu.
+- [ ] Následně převést schválené modely do verzované mapové pipeline; noční dávka vytváří 3D galerie, nevykresluje celé městské dlaždice.

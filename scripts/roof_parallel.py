@@ -87,15 +87,31 @@ def parallel_proposal(poly, matrix, extent, cells, count, settings):
         ftol=2e-4,xtol=2e-4,gtol=2e-4)
     knots,heights = decode(fit.x)
     residual = abs(_predict(v,knots,heights)-z)
-    support = []
+    support, evidence_rejections = [], []
     for index in range(count):
         peak = 2*index+1
         prominence = float(heights[peak]-max(heights[peak-1],heights[peak+1]))
         nearby = abs(v-knots[peak])<cfg['support_distance_m']
-        supported = int(np.sum(nearby & (residual<cfg['support_error_m'])))
-        support.append({'nearby_cells':int(nearby.sum()),'supported_cells':supported,'prominence_m':prominence})
-        if prominence<cfg['min_prominence_m'] or supported<cfg['min_support_cells']:
-            return None
+        supported_mask = nearby & (residual<cfg['support_error_m'])
+        supported = int(np.sum(supported_mask))
+        # A transverse profile is extruded along the common building axis.
+        # A small perpendicular wing or a few edge cells must not invent an
+        # additional ridge across that whole span. Quantiles avoid allowing
+        # isolated matching cells at the far ends to establish a long ridge.
+        along_range = np.quantile(uv[supported_mask,0],[.1,.9]) if supported else np.array([u0,u0])
+        supported_span = float(along_range[1]-along_range[0])
+        span_fraction = min(1.,supported_span/max(u1-u0,1e-9))
+        support.append({'nearby_cells':int(nearby.sum()),'supported_cells':supported,'prominence_m':prominence,
+            'supported_longitudinal_range_m':along_range.tolist(),
+            'supported_span_m':supported_span,'supported_span_fraction':span_fraction,
+            'support_span_quantiles':[.1,.9],'span_reference_m':float(u1-u0),
+            'min_supported_span_fraction':cfg.get('min_supported_span_fraction',.5)})
+        if prominence<cfg['min_prominence_m']:
+            evidence_rejections.append(f'parallel_ridge_{index}_insufficient_prominence')
+        if supported<cfg['min_support_cells']:
+            evidence_rejections.append(f'parallel_ridge_{index}_insufficient_nearby_cells')
+        if span_fraction<cfg.get('min_supported_span_fraction',.5):
+            evidence_rejections.append(f'parallel_ridge_{index}_short_longitudinal_support')
     uv_poly = shapely.get_coordinates(poly)@matrix
     low_u,high_u = float(uv_poly[:,0].min())-1,float(uv_poly[:,0].max())+1
     low_v,high_v = float(uv_poly[:,1].min())-1,float(uv_poly[:,1].max())+1
@@ -118,4 +134,5 @@ def parallel_proposal(poly, matrix, extent, cells, count, settings):
         'ridge_heights_m':heights[1::2].tolist(), 'valley_xy':[line(t) for t in knots[2:-1:2]],
         'valley_heights_m':heights[2:-1:2].tolist(), 'cross_section_uvz':np.c_[knots,heights].tolist(),
         'eave_height_m':float(heights[0]),'ridge_height_m':float(max(heights)),
-        'matrix':matrix,'extent':extent,'branch_support':support,'ridge_count':count}
+        'matrix':matrix,'extent':extent,'branch_support':support,'ridge_count':count,
+        'evidence_rejections':evidence_rejections}

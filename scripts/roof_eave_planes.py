@@ -15,13 +15,14 @@ import numpy as np
 import shapely
 from scipy.optimize import least_squares
 from shapely.geometry import Polygon, LineString, box, shape, mapping
-from shapely.ops import unary_union
+from shapely.ops import unary_union, linemerge
 from roof_v2 import _cells, _lines
 from roof_v2_geometry import plane_regions, build_mesh
 from roof_config import DEFAULT_CONFIG, resolve_config, point_error
 from roof_parallel import parallel_proposal
+from roof_connected_wings import connected_wing_proposals
 
-VERSION = 'eave-planes-3.0'
+VERSION = 'eave-planes-4.9.1'
 
 
 def _groups(values, tolerance=.8):
@@ -332,6 +333,59 @@ def _merge_regions(result):
             for plane, pieces in groups.items() for p in _polygons(unary_union(pieces))]
 
 
+def _near_candidates(ordered, poly, scoring):
+    """A measured courtyard network cannot lose a wing just to save planes.
+
+    Ordinary simplicity tolerance still applies inside one roof family. For
+    a substantial real courtyard and a best-fitting network, changing family
+    requires much closer agreement. No addresses or prescribed roof types.
+    """
+    if not ordered:
+        return [], False
+    best = ordered[0]
+    minimum_area = max(scoring['min_courtyard_area_m2'], scoring['min_courtyard_area_fraction']*poly.area)
+    has_courtyard = any(Polygon(ring).area >= minimum_area for ring in poly.interiors)
+    protected = has_courtyard and best['kind'] in ('u_shaped', 'ring', 'connected_wings')
+    near = []
+    for proposal in ordered:
+        tolerance = scoring['simplification_tolerance_m']
+        if protected and proposal['kind'] != best['kind']:
+            tolerance = min(tolerance, scoring['courtyard_topology_tolerance_m'])
+        if proposal['score'] <= best['score']+tolerance:
+            near.append(proposal)
+    return near, protected
+
+
+def _visible_mesh_ridges(mesh):
+    """Read horizontal crests from welded mesh adjacency, not float polygons.
+
+    Adjacent roof triangles must both descend from the shared edge. This
+    excludes valleys, coplanar triangulation seams and vertical height steps.
+    Reading welded vertices also retains ridges whose planar-region outlines
+    differ by a submicrometre after numerical noding.
+    """
+    vertices = np.asarray(mesh['vertices'], float)
+    edges = {}
+    for face in mesh['roof_faces']:
+        for i in range(3):
+            a, b, third = face[i], face[(i+1)%3], face[(i+2)%3]
+            edges.setdefault(tuple(sorted((a,b))), []).append(third)
+    segments = []
+    for (a,b), thirds in edges.items():
+        if len(thirds) != 2:
+            continue
+        first,last = vertices[a],vertices[b]
+        if abs(first[2]-last[2]) > .05 or np.linalg.norm(first[:2]-last[:2]) < .01:
+            continue
+        if all(vertices[c,2] < min(first[2],last[2])-.005 for c in thirds):
+            segments.append(LineString([first,last]))
+    if not segments:
+        return []
+    lines = linemerge(segments)
+    return [[[float(v) for v in point] for point in line.coords]
+            for line in _segments(lines) if line.length > .15]
+
+
 def infer_eave_roof(footprint, xyz, allow_networks=False, allow_flat=False, allow_pyramidal=False, config=None, allow_parallel=False):
     started = time.perf_counter()
     cpu_started = time.process_time()
@@ -352,13 +406,29 @@ def infer_eave_roof(footprint, xyz, allow_networks=False, allow_flat=False, allo
     fit_started = time.perf_counter()
     proposals = []
     proposal_errors = []
+    evidence_rejections = []
     def propose(function, *args):
         try:
             candidate = function(*args)
+            if candidate is not None and candidate.get('evidence_rejections'):
+                evidence_rejections.append({'type':candidate['kind'],
+                    'reasons':candidate['evidence_rejections'],
+                    'score':candidate['score'],
+                    'branch_support':candidate.get('branch_support', [])})
+                return
             if candidate is not None and np.isfinite(candidate['score']):
                 proposals.append(candidate)
         except (ValueError, FloatingPointError, ZeroDivisionError) as error:
             proposal_errors.append({'stage':'candidate_fit', 'error':str(error)})
+    connected_started = time.perf_counter()
+    if modules.get('connected_wings', False):
+        try:
+            for candidate in connected_wing_proposals(poly, cells, settings):
+                if candidate is not None and np.isfinite(candidate['score']):
+                    proposals.append(candidate)
+        except (ValueError, FloatingPointError, ZeroDivisionError, shapely.errors.GEOSException) as error:
+            proposal_errors.append({'stage':'connected_wings', 'error':str(error)})
+    connected_seconds = time.perf_counter()-connected_started
     if allow_flat:
         height = float(np.median(cells[:, 2]))
         absolute = abs(cells[:, 2]-height)
@@ -390,9 +460,21 @@ def infer_eave_roof(footprint, xyz, allow_networks=False, allow_flat=False, allo
         if allow_parallel and modules['parallel_gables']:
             for count in range(2,settings['parallel_gables']['max_ridges']+1):
                 propose(parallel_proposal,poly,frame,extent,cells,count,settings)
-        for hips in itertools.product((False, True), repeat=2):
-            if modules['straight']:
-                propose(_proposal, 'straight', hips, frame, extent, cells, scoring)
+        # MODULE primary envelope: a short protrusion must not be the only
+        # possible reference eave. Fit the dominant wall pair as an alternative
+        # for gables/hips too, then clip planes to the unchanged real footprint.
+        simple_extents = [('outer_bounds', extent)]
+        if modules['primary_wall_envelope']:
+            primary = _primary_extent(local_lines)
+            if not np.allclose(primary[:4], extent[:4], atol=1e-6):
+                simple_extents.append(('main_walls', primary))
+        for envelope, simple_extent in simple_extents:
+            for hips in itertools.product((False, True), repeat=2):
+                if modules['straight']:
+                    before = len(proposals)
+                    propose(_proposal, 'straight', hips, frame, simple_extent, cells, scoring)
+                    if len(proposals) > before:
+                        proposals[-1]['supporting_envelope'] = envelope
         for sign in (-1, 1):
             f = frame@np.diag([1, sign])
             ls = [local_lines[0], sorted((offset*sign, weight) for offset, weight in local_lines[1])]
@@ -415,7 +497,7 @@ def infer_eave_roof(footprint, xyz, allow_networks=False, allow_flat=False, allo
     chosen = None
     ordered = sorted(proposals, key=lambda p:p['score'])
     best_score = ordered[0]['score'] if ordered else None
-    near = [p for p in ordered if p['score'] <= best_score+scoring['simplification_tolerance_m']]
+    near, courtyard_topology_protected = _near_candidates(ordered, poly, scoring)
     # Near-equivalent fits prefer fewer distinct planes, independent of type.
     # This avoids selecting a more complex topology for a few centimetres.
     for candidate in near:
@@ -425,7 +507,7 @@ def infer_eave_roof(footprint, xyz, allow_networks=False, allow_flat=False, allo
         except (ValueError, shapely.errors.GEOSException):
             candidate['plane_count'] = float('inf')
     near.sort(key=lambda p:(p['plane_count'],p['score']))
-    for candidate in near+[p for p in ordered if p['score'] > best_score+scoring['simplification_tolerance_m']]:
+    for candidate in near+[p for p in ordered if not any(p is q for q in near)]:
         try:
             regions = candidate['_regions'] if '_regions' in candidate else _regions(poly,candidate)
             mesh = build_mesh(poly, regions)
@@ -438,10 +520,10 @@ def infer_eave_roof(footprint, xyz, allow_networks=False, allow_flat=False, allo
     if chosen is None:
         raise ValueError('No candidate could form a closed roof volume')
     eave = chosen['eave_height_m']; ridge = chosen['ridge_height_m']
-    model = {'type': 'pyramidal' if chosen['kind']=='pyramidal' else 'flat' if chosen['kind']=='flat' else 'compound' if chosen['kind'] in ('bent', 'u_shaped', 'ring', 'parallel_gables') else
+    model = {'type': 'pyramidal' if chosen['kind']=='pyramidal' else 'flat' if chosen['kind']=='flat' else 'compound' if chosen['kind'] in ('bent', 'u_shaped', 'ring', 'parallel_gables', 'connected_wings') else
              'skillion' if chosen['kind'] == 'skillion' else 'hipped' if any(chosen['hips']) else 'gabled',
              'mesh': mesh, 'regions': regions}
-    _, actual_eaves, boundary = _lines(model, poly)
+    detected_ridges, actual_eaves, boundary = _lines(model, poly)
     ridge_heights = chosen.get('ridge_heights_m',[ridge]*len(chosen['ridge_xy']))
     ridges = [[[float(x), float(y), height] for x, y in line.coords]
               for line_xy,height in zip(chosen['ridge_xy'],ridge_heights)
@@ -476,7 +558,9 @@ def infer_eave_roof(footprint, xyz, allow_networks=False, allow_flat=False, allo
                            'eaves_are_reference_lines': True,
                            'nonparallel_wall_policy': 'Common main frame; actual clipped edges may slope. No claim that nonparallel wall edges can all be horizontal eaves.',
                            'automatic_neighbor_noise_filter': False,
-                           'automatic_multi_level_detection': False})
+                           'automatic_multi_level_detection': False,
+                           'supporting_envelope': chosen.get('supporting_envelope'),
+                           'nominal_roof_plane_count': chosen.get('plane_count')})
     if chosen['kind'] == 'pyramidal':
         apex = [*chosen['apex_xy'], ridge]
         model['apex_points'] = [apex]
@@ -492,6 +576,21 @@ def infer_eave_roof(footprint, xyz, allow_networks=False, allow_flat=False, allo
             ridge_heights_m=chosen['ridge_heights_m'], valley_heights_m=chosen['valley_heights_m'],
             transverse_profile_m=chosen['cross_section_uvz'],
             nominal_roof_plane_count=2*chosen['ridge_count'])
+    if chosen['kind'] == 'connected_wings':
+        detected_ridges = _visible_mesh_ridges(mesh)
+        model.update(ridge_lines=detected_ridges, eave_lines=actual_eaves)
+        model['metadata'].update(connected_wings=chosen['connected_wings'],
+            reference_ridge_heights_m=chosen.get('ridge_heights_m', []),
+            ridge_heights_m=sorted({round(float(np.mean(np.asarray(line)[:,2])),6) for line in detected_ridges}),
+            nominal_ridge_segment_count=len(detected_ridges),
+            ridge_lines_from_actual_regions=True,
+            ridge_line_source='welded_roof_mesh_adjacency',
+            footprint_modified=False,
+            nominal_roof_plane_count=len({tuple(round(v,8) for v in r['plane']) for r in regions}),
+            ridge_direction_constrained=True,
+            ridge_offset_is_free=False,
+            minor_footprint_features='Primary eave pairs define wing roofs; unchanged footprint clips their union.',
+            nonparallel_wall_policy='Each wing has its own local frame; small wall deviations only clip the roof planes.')
     if allow_networks:
         model['metadata'].update(
             courtyard_eave_height_m=chosen.get('courtyard_eave_height_m'),
@@ -500,6 +599,8 @@ def infer_eave_roof(footprint, xyz, allow_networks=False, allow_flat=False, allo
             nominal_ridge_segment_count=sum(len(r)-1 for r in chosen['ridge_xy']),
             branch_support=chosen.get('branch_support', []),
             footprint_modified=False)
+    if chosen['kind'] == 'connected_wings':
+        model['metadata']['nominal_ridge_segment_count'] = len(detected_ridges)
     candidates = []
     for index, candidate in enumerate(sorted(proposals, key=lambda p:p['score'])):
         candidates.append({'candidate_id':index, 'type':candidate['kind'], 'score':candidate['score'],
@@ -516,17 +617,22 @@ def infer_eave_roof(footprint, xyz, allow_networks=False, allow_flat=False, allo
             'ridge_count':candidate.get('ridge_count'),
             'plane_count':candidate.get('plane_count') if np.isfinite(candidate.get('plane_count',np.nan)) else None,
             'branch_support':candidate.get('branch_support', [])})
+        if candidate['kind'] == 'connected_wings':
+            candidates[-1]['connected_wings'] = candidate['connected_wings']
     other_scores = [p['score'] for p in proposals if p is not chosen and not p.get('rejected')]
     flags = ['higher_ranked_mesh_rejected'] if any(p.get('rejected') for p in proposals) else []
     if chosen['score'] > best_score+1e-8 and any(chosen is p for p in near):
         flags.append('simpler_near_equivalent_candidate')
-    return {'algorithm': 'eave-planes-4.5',
+    return {'algorithm': VERSION,
             'model': model, 'candidates': candidates,
             'diagnostics': {'status': 'Varianta k optickému posouzení', 'review_required': True,
                             'flags': flags, 'train': {'n': len(points)}, 'fit_cells':len(cells),
                             'candidate_fit_errors':proposal_errors,
-                            'selection_rule':'Robust point error + complexity + support penalty; within simplification tolerance prefer fewer distinct roof planes, then lower score. Closed geometry required.',
+                            'candidate_evidence_rejections':evidence_rejections,
+                            'selection_rule':'Robust point error + complexity + support penalty; within tolerance prefer fewer planes. Real courtyard network topology has a tighter cross-family tolerance. Closed geometry required.',
                             'simplification_tolerance_m':scoring['simplification_tolerance_m'],
+                            'courtyard_topology_protected':courtyard_topology_protected,
+                            'courtyard_topology_tolerance_m':scoring['courtyard_topology_tolerance_m'],
                             'best_unadjusted_score':best_score,
                             'selected_score_above_best_m':chosen['score']-best_score,
                             'runner_up_gap':min(other_scores)-chosen['score'] if other_scores else None,
@@ -536,4 +642,5 @@ def infer_eave_roof(footprint, xyz, allow_networks=False, allow_flat=False, allo
                        'preprocessing_seconds':fit_started-started,
                        'fitting_seconds':geometry_started-fit_started,
                        'geometry_seconds':time.perf_counter()-geometry_started,
+                       'connected_wings_seconds':connected_seconds,
                        'cpu_seconds':time.process_time()-cpu_started}}

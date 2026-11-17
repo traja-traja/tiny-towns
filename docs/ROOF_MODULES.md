@@ -1,11 +1,13 @@
 # Moduly generování střech
 
-Verze `modular-roofs-4.5`. Spouštěč: `scripts/roof_batch.py`.
+Verze `modular-roofs-4.9.1`. Spouštěč: `scripts/roof_batch.py`.
 Výpočty používají místní body; výstupem je geometrie, metadata a HTML.
 
 | Modul | Soubor / funkce | Úloha |
 | --- | --- | --- |
 | Konfigurace | `roof_config.py` / `resolve_config` | Výchozí hodnoty, kontrola klíčů, jednotek a rozsahů |
+| Převaha vodorovné plochy | `roof_flat_majority.py` / `detect_flat_majority` | Součet ploch v různých výškách; při alespoň 55 % jedna plochá střecha |
+| Nástavby nad plochou střechou | `roof_flat_protrusions.py` a dokončovací krok v `roof_annex.py` | Souvislé vyvýšené plochy; jeden plochý vršek v percentilu 90 |
 | Půdorys přístavků | `roof_annex.py` / `footprint_candidates` | Hlavní dlouhé stěny; významné přesahy přes jednotlivé stěny |
 | Jednoduchá střecha přístavku | `roof_annex.py` / `simple_annex_plane` | Robustní plochá/pultová rovina podle bodů |
 | Dva výškové profily | `roof_annex.py` / `height_profiles` | Pás přes napojení a kolmý pás uvnitř přístavku |
@@ -13,6 +15,7 @@ Výpočty používají místní body; výstupem je geometrie, metadata a HTML.
 | Sestavení modelu | `roof_annex.py` / `infer_modular_roof` | Vynechá body přístavku z hlavního fitu, spojí plochy a uzavře výškové schody |
 | Kandidáti hlavní střechy | `roof_eave_planes.py` | Plochá, přímý hřeben, pult, L, U/okruh, stanová |
 | Souběžné sedlové střechy | `roof_parallel.py` | 2–4 rovnoběžné vodorovné hřebeny, mezilehlá úžlabí a jednoduché střešní roviny |
+| Navazující křídla | `roof_connected_wings.py` | Protilehlé hlavní okapy, různé směry a šířky křídel; společný sklon, varianty výšek okapů a konců |
 | Uzavřená geometrie | `roof_v2_geometry.py` / `build_mesh` | Střechy, stěny, podstava, schody, topologická kontrola |
 | Dávka a report | `roof_batch.py`, `roof_v2_report.py` | Vstupy, rozhodnutí, časy, porovnání, přesná konfigurace |
 
@@ -20,7 +23,7 @@ Výpočty používají místní body; výstupem je geometrie, metadata a HTML.
 
 `--no-annex` vypne celé hledání přístavků. V JSON lze samostatně vypnout
 `modules.annex_profiles` nebo jednotlivé rodiny střech: `flat`, `straight`,
-`skillion`, `bent`, `networks`, `pyramidal`, `parallel_gables`. Pro původní sadu
+`skillion`, `bent`, `networks`, `pyramidal`, `parallel_gables`, `connected_wings`. Pro původní sadu
 kandidátů 4.2 vypněte `annex_detection` i `parallel_gables` a nastavte
 `scoring.simplification_tolerance_m` na 0.
 Samotné vypnutí profilů zachová půdorysný výběr a porovnání bodů s rovinami.
@@ -89,8 +92,58 @@ JSON rozlišuje `annex_2d_seconds`, `annex_profiles_seconds`,
 se kvůli vnořenému měření nesčítají všechny dohromady. Nejasný kandidát může
 vyžadovat druhý fit hlavní střechy; ten může stát více než samotné dva profily.
 
-Skóre podobná v mezích `scoring.simplification_tolerance_m` (výchozí 0,05 m)
+Skóre podobná v mezích `scoring.simplification_tolerance_m` (výchozí 0,10 m)
 se rozhodují podle menšího počtu různých rovin, poté podle skóre. Nejde o
 maximální vzdálenost každého bodu ani geometrickou záruku přesnosti 5 cm.
 JSON uvádí nejnižší původní skóre, rozdíl vybrané varianty a případný příznak
 `simpler_near_equivalent_candidate`. Hodnota 0 vypíná tuto preferenci.
+
+
+## Výběr hlavní hmoty — 4.6
+
+`modules.primary_wall_envelope` přidává pro sedlové a valbové střechy také
+obálku dominantních dlouhých stěn, nejen vnější krajní body. Obě varianty
+soutěží podle bodů; skutečný půdorys se nemění a pouze ořezává výsledné roviny.
+Parametr lze vypnout, střecha ani její hřeben se ručně neposouvají podle adresy.
+
+Souběžné hřebeny musí mít souhlasné body rozprostřené alespoň přes polovinu
+společné délky extrudovaného profilu (`parallel_gables.min_supported_span_fraction=0.5`).
+Měří se rozsah 10.–90. percentilu podélných souřadnic buněk u hřebene s odchylkou
+menší než `support_error_m`; nejde o měření souvislosti celé linie. Tím se krátké
+kolmé křídlo nemůže snadno vydávat za dlouhou souběžnou střechu. Skutečné střechy
+s různě dlouhými souběžnými křídly mohou vyžadovat pozdější rozdělení na objemy.
+Nastavení 0 vypne tento nový délkový práh. Důvody vyřazení a metriky jsou v
+`diagnostics.candidate_evidence_rejections`, nikoli vydávané za chybu sítě.
+
+Tolerance při preferenci méně rovin je zvýšena z 0,05 na 0,10 m ve váženém skóre.
+Je to obecná preference jednoduššího objemu při podobné shodě s body; není to
+mezní odchylka jednotlivých bodů. Předchozí hodnotu lze obnovit konfigurací.
+
+Geometrie několika plochých výškových úrovní zůstává v TODO. Aktuální režim
+při převaze vodorovných ploch úrovně záměrně zjednodušuje na jednu střechu
+(viz následující oddíl); samostatné schody se nyní nevytvářejí.
+
+
+## Převaha ploché střechy — 4.7.2
+
+Před hledáním přístavků se nově zkouší `roof_flat_majority.py`. Když téměř
+vodorovné oblasti pokrývají alespoň 55 % půdorysu, celá střecha se zjednoduší
+na jednu rovinu ve výšce největší takové oblasti. Každá započítaná souvislá
+oblast musí mít alespoň 5 % půdorysu a největší alespoň 20 %. Různé výškové úrovně se mohou
+započítat společně, ve výsledné geometrii se ale nezachovají. Nový modul lze
+vypnout přes `modules.flat_majority`; podrobnosti v [ROOF_FLAT_MAJORITY.md](ROOF_FLAT_MAJORITY.md).
+Tím je doplněna předchozí jediná plochá šablona. Skutečný model několika
+plochých výškových úrovní zůstává budoucím úkolem.
+
+## Nástavby na plochém základu — 4.8
+
+Po výběru základní ploché střechy se volitelně vrací významné vyvýšené části: převýšení nad 2 m, plocha alespoň 1 m², jeden vršek v p90. Podrobnosti a přepínač: [ROOF_FLAT_PROTRUSIONS.md](ROOF_FLAT_PROTRUSIONS.md). Základní pravidlo ploché střechy 5 / 20 / 55 % zůstává stejné.
+
+
+## Regularizace nástaveb a soustavy křídel — 4.9
+
+`flat_protrusions.regularize_footprints` zkouší obdélník podle nejdelší hlavní stěny a jednoduchý pravoúhlý obrys. Výchozí maximum je 8 vnějších vrcholů, zachování alespoň 80 % pozorované plochy a doplnění nejvýše 15 %; neúspěch ponechá předchozí bezpečné zjednodušení. Prahy 2 m / 1 m² a výšky P90 se nemění.
+
+`modules.connected_wings` přidává samostatného kandidáta, s vahami a prahy v sekci `connected_wings`. Rozměry a směry křídel vycházejí z hlavních protilehlých okapů; výšky z buněk bodů. Vedle společného okapu se zkouší doložené výškové skupiny křídel (nejméně 20 buněk, rozdíl 1 m), stále se společným sklonem. Malé výčnělky ořezávají hotové roviny. Modely s neplatnou geometrií nemohou vyhrát.
+
+Na skutečném významném dvoře je změna rodiny nejlepší střešní soustavy při zjednodušování dovolena jen při rozdílu skóre do 0,025 m, místo běžných 0,10 m. Hodnoty jsou v `scoring.courtyard_topology_tolerance_m`, `min_courtyard_area_m2` a `min_courtyard_area_fraction`. Skóre není pravděpodobnost.

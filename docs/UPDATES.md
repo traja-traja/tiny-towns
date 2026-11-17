@@ -144,3 +144,20 @@ Commit `13824f25f747864c2b90eef25379062b3f708652` zálohuje 143 souborů, přibl
 [Audit obnovy částí mapy](INCREMENTAL_RENDERING.md) rozlišuje existující cache čtverců/ruční výběr PNG od dosud neimplementované cache tematických vrstev. Vstupy střech nově podporují `--city velesin`, včetně správného zdrojového manifestu a provenance. Výpočetní algoritmus a výchozí nastavení ČB zůstávají stejné. Výběr ulic připravuje `select_roof_streets.py`; nejednoznačné adresy se nehádaným způsobem zaznamenají mimo dávku.
 
 Dávka 146 budov ve čtyřech velešínských ulicích je připravená k následnému spuštění, nikoli dokončená. Spuštění bylo pozastaveno při 98% využití RAM. Po dočasném uvolnění paměti prošlo 9 cílených testů směrování měst, výběru ulic, dávky a obnovování čtení (2,377 s). Následný pokus o spuštění skutečné dávky zastavila paměťová pojistka ještě před prvním krokem, protože volná RAM znovu klesla pod 1 GB. Příkazy s paměťovou pojistkou jsou v `cities/velesin/roof-streets/README.md`.
+
+
+## Nástavby nad plochými střechami — 2026-11-17
+
+Modulární algoritmus 4.8.1 zachová nad plochým základem souvislé objemy vyšší než 2 m a s doloženou plochou alespoň 1 m²; plochý vršek používá 90. percentil prostorově vyvážených výšek. Parametry jsou nastavitelné, modul vypínatelný. Automatická sada 44 domů doplnila 8 objemů na 4 domech. 48 testů prošlo, všech 44 výsledných objemů je numericky uzavřených; opticky neposuzováno. Střechy 69,840 s, nový modul 1,329 s, celá dávka 135,064 s. [Dokumentace a měření](ROOF_FLAT_PROTRUSIONS_RUN_2026-11-17.md). Report: http://127.0.0.1:8877/cities/ceske-budejovice/experiments/roof-flat-protrusions-v481-44/report.html .
+
+
+## 2026-11-17 — navazující křídla a obrysy nástaveb 4.9.1
+
+Šest kroků optimalizace čtyř zalomených střech, obecný modul protilehlých okapů a navazujících křídel; měřené rozdílné výšky okapů při společném sklonu. Ochrana doloženého U/okruhu před záměnou za nepatrně jednodušší kandidát a úplné zvýraznění hřebenů ze sousednosti výsledné geometrie. Pravidelnější obrysy 8 nástaveb na dalších 4 domech (162 → 39 vrcholů). Osm dotčených modelů uzavřených; 63 testů, výpočet střech 22,178 s, celá dávka 39,566 s. Původní sada 44 domů zůstává pro porovnání; mapové dlaždice nepřegenerovány.
+
+Podrobnosti a omezení: [záznam běhu](ROOF_WINGS_AND_PROTRUSIONS_2026-11-17.md). Výstup `cities/ceske-budejovice/experiments/roof-regularized-wings-v491-8/report.html`; archiv šesti kroků `cities/ceske-budejovice/experiments/roof-wings-optimization-v49/index.html`.
+
+
+## 2026-11-17 — samostatná noční fronta
+
+Připraveny `night_roof_inputs.py` (plán, husté podklady, obnovitelná extrakce) a `night_roof_batch.py` (postupné modelování, shodná cache, časové limity, stránkované HTML). Pořadí Velešín 146 ulicových → 1904 automatických objektů celkem se zachováním Sportcentra → ČB 287 centrálních objektů → podmíněně další čtyři hodiny ČB. Podrobnosti, spuštění a technické testy: [noční dávka](NIGHT_ROOFS_2026-11-17.md). Stav a výsledné počty určuje automaticky generovaný night.json; tento zápis sám netvrdí dokončení měst.

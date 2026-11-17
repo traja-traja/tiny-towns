@@ -1,0 +1,43 @@
+{
+  "schema": "roof-wing-candidates/1",
+  "status": "implemented_target_sample_validated",
+  "city": "ceske-budejovice",
+  "baseline": "cities/ceske-budejovice/experiments/roof-flat-protrusions-v481-44",
+  "purpose": "Test a footprint-derived roof network for significant bends and courtyards, with per-wing ridges and hip/gable alternatives; no address-specific fitting rules.",
+  "buildings": [
+    {
+      "id": "7dfbe4f6-933d-4a01-8f72-866ed4f6a859",
+      "address": "Husova tř. 1829/12"
+    },
+    {
+      "id": "b33d93aa-69b7-478b-9e09-d829bfebe892",
+      "address": "Kněžská 410/8"
+    },
+    {
+      "id": "e693b3c4-7a02-4ff6-973d-7b074ac4efcc",
+      "address": "Široká 421/1"
+    },
+    {
+      "id": "d5572d0b-e221-4d5a-afab-bbca1768d7ce",
+      "address": "Hroznová 314/18"
+    }
+  ],
+  "method": "opposing_eave_pairs_and_bounded_plane_envelopes",
+  "references": [
+    "https://doc.cgal.org/6.1.1/Straight_skeleton_2/index.html",
+    "https://doc.cgal.org/6.2/Straight_skeleton_2/group__PkgStraightSkeleton2Extrusion.html"
+  ],
+  "constraints": [
+    "Keep flat-majority 5/20/55 policy first.",
+    "Suppress minor footprint features before proposing the roof network; preserve the measured footprint for final clipping.",
+    "Common eave and pitch is an initial hypothesis, not architectural truth.",
+    "Use measured point heights to fit and rank the candidate.",
+    "No neighbouring footprints are currently passed to infer_modular_roof.",
+    "Four target buildings may be assessed visually as explicitly authorized on 2026-11-17.",
+    "Separate measured eave groups may share a pitch; unsupported wings retain an explicit uncertainty flag."
+  ],
+  "reference_note": "Background research only; implementation uses NumPy/SciPy/Shapely, not CGAL.",
+  "algorithm": "modular-roofs-4.9.1",
+  "result": "cities/ceske-budejovice/experiments/roof-regularized-wings-v491-8",
+  "validation_note": "Four development roofs visually reviewed and numerically validated; generalization to unseen buildings remains untested."
+}

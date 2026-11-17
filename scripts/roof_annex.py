@@ -12,7 +12,9 @@ import shapely
 from shapely.geometry import Polygon, LineString, shape, mapping
 from shapely.ops import unary_union
 from scipy.optimize import least_squares
-from roof_config import resolve_config
+from roof_config import resolve_config, point_error
+from roof_flat_majority import detect_flat_majority
+from roof_flat_protrusions import detect_flat_protrusions
 from roof_eave_planes import infer_eave_roof, _frame, _primary_extent, _polygons, _segments
 from roof_v2 import _cells, _lines
 from roof_v2_geometry import build_mesh
@@ -197,6 +199,76 @@ def evaluate_annex(candidate, cells, main, main_poly, config, profile_cells=None
     return region if meta['accepted'] else None, meta, profile_seconds
 
 
+
+def _finish_flat_protrusions(result, poly, points, cfg):
+    """MODULE flat_protrusions: append measured flat-topped blocks atomically.
+
+    The base roof classification/height stays fixed. Detected XY areas replace
+    the underlying base roof cells; build_mesh closes the vertical boundaries.
+    Pitched/compound bases and internal tiers are outside this module's scope.
+    """
+    tick, cpu = time.perf_counter(), time.process_time()
+    enabled = cfg['modules']['flat_protrusions']
+    model = result['model']
+    diagnostic = {'enabled':enabled, 'accepted_count':0, 'detected_count':0,
+                  'status':'disabled' if not enabled else 'skipped_non_flat_base'}
+    detection_seconds = geometry_seconds = 0.
+    model['metadata']['protrusion_count'] = 0
+    if enabled and model['type']=='flat' and len(model['regions'])==1:
+        base_plane = model['regions'][0]['plane']
+        if abs(base_plane[0])+abs(base_plane[1]) < 1e-9:
+            height = float(base_plane[2])
+            detection_tick = time.perf_counter()
+            raised, detection = detect_flat_protrusions(poly, points, height, cfg['flat_protrusions'])
+            detection_seconds = time.perf_counter()-detection_tick
+            diagnostic.update(detection, enabled=True, detected_count=len(raised), accepted_count=0,
+                              status='no_supported_protrusions', base_height_m=height)
+            if raised:
+                geometry_tick = time.perf_counter()
+                try:
+                    raised_union = unary_union([shape(r['polygon']) for r in raised])
+                    remainder = poly.difference(raised_union)
+                    regions = [{'polygon':mapping(p), 'plane':[0.,0.,height]}
+                               for p in _polygons(remainder)] + raised
+                    mesh = build_mesh(poly, regions)
+                    diagnostic['geometry_validation'] = mesh['diagnostics']
+                    if not mesh['diagnostics']['valid']:
+                        raise ValueError('Flat protrusions do not form a closed valid volume')
+                    # Commit only after every surface has passed numerical validation.
+                    updated = dict(model, regions=regions, mesh=mesh)
+                    _, eaves, boundary = _lines(updated, poly)
+                    top = max(float(r['plane'][2]) for r in raised)
+                    model.update(regions=regions, mesh=mesh, height_range_m=[height,top],
+                                 eave_lines=eaves, actual_horizontal_boundary_lines=eaves,
+                                 roof_boundary_lines=boundary, ridge_lines=[])
+                    model['metadata'].update(main_roof_type='flat', flat_base_height_m=height,
+                        protrusion_count=len(raised), building_top_height_m=top,
+                        max_protrusion_height_m=top-height,
+                        nominal_roof_plane_count=1+len(raised), footprint_modified=False,
+                        protrusion_height_policy='quantile_of_elevated_cell_medians_relative_to_base',
+                        protrusion_height_quantile=cfg['flat_protrusions']['height_quantile'],
+                        automatic_multi_level_detection=True,
+                        multi_level_detection_scope='one flat top per supported elevated component',
+                        flat_simplification_scope='one main base plane plus measured raised components')
+                    diagnostic.update(status='added', accepted_count=len(raised), geometry_accepted=True,
+                                      internal_height_tiers_preserved=False)
+                    result['diagnostics'].setdefault('flags', []).append('flat_roof_protrusions_added')
+                except (ValueError, shapely.errors.GEOSException) as error:
+                    diagnostic.update(status='geometry_fallback', geometry_accepted=False,
+                                      geometry_error=str(error), accepted_count=0)
+                geometry_seconds = time.perf_counter()-geometry_tick
+    result['diagnostics']['flat_protrusions'] = diagnostic
+    timing = result['timing']
+    timing['flat_protrusions_detection_seconds'] = detection_seconds
+    timing['flat_protrusions_geometry_seconds'] = geometry_seconds
+    timing['flat_protrusions_seconds'] = time.perf_counter()-tick
+    timing['preprocessing_seconds'] = timing.get('preprocessing_seconds',0.)+detection_seconds
+    timing['geometry_seconds'] = timing.get('geometry_seconds',0.)+geometry_seconds
+    timing['total_seconds'] += timing['flat_protrusions_seconds']
+    timing['cpu_seconds'] += time.process_time()-cpu
+    return result
+
+
 def infer_modular_roof(footprint, xyz, config=None):
     """MODULE pipeline: optional annex stage around the existing roof fitter."""
     cfg = resolve_config(config); modules = cfg['modules']
@@ -205,6 +277,65 @@ def infer_modular_roof(footprint, xyz, config=None):
     points = np.asarray(xyz, float)
     points = points[np.isfinite(points).all(axis=1)]
     points = points[shapely.intersects_xy(poly, points[:,0], points[:,1])]
+    # MODULE flat_majority: user's whole-volume simplification precedes annex
+    # splitting. Supported horizontal patches may occupy different heights;
+    # their area determines the type, the largest patch determines one height.
+    flat_started = time.perf_counter()
+    flat = {'enabled':bool(modules['flat_majority'] and modules['flat']),
+            'accepted':False, 'reason':'disabled'}
+    if flat['enabled']:
+        cells = _cells(points, cfg['sampling']['cell_size_m']) if len(points) else np.empty((0,3))
+        if len(cells) >= cfg['sampling']['min_cells']:
+            flat.update(detect_flat_majority(poly, cells, cfg['sampling']['cell_size_m'], cfg['flat_majority']))
+        else:
+            flat['reason'] = 'insufficient_cells'
+        if flat['accepted']:
+            height = float(flat['height_m'])
+            regions = [{'polygon':mapping(poly), 'plane':[0.,0.,height]}]
+            geometry_started = time.perf_counter()
+            try:
+                if height <= 0:
+                    raise ValueError('Representative roof height is not above ground')
+                mesh = build_mesh(poly, regions)
+                if not mesh['diagnostics']['valid']:
+                    raise ValueError('Flat majority roof could not form a closed volume')
+            except (ValueError, shapely.errors.GEOSException) as error:
+                flat.update(accepted=False, reason='geometry_failed', geometry_error=str(error))
+            else:
+                model = {'type':'flat', 'mesh':mesh, 'regions':regions, 'ridge_lines':[],
+                    'height_range_m':[height,height], 'metadata':{
+                        'ridge_kind':'flat', 'ridge_height_m':height, 'eave_height_m':height,
+                        'roof_height_m':0., 'nominal_roof_plane_count':1, 'annex_count':0,
+                        'footprint_modified':False, 'flat_majority_area_fraction':flat['covered_area_fraction'],
+                        'height_levels_collapsed':True, 'minor_features_simplified':True,
+                        'representative_height_policy':'area_weighted_median_of_largest_horizontal_patch',
+                        'automatic_multi_level_detection':False, 'module_states':modules}}
+                _, eaves, boundary = _lines(model, poly)
+                model.update(eave_lines=eaves, actual_horizontal_boundary_lines=eaves,
+                             roof_boundary_lines=boundary)
+                score = point_error(abs(cells[:,2]-height), cfg['scoring'])
+                flat_seconds = geometry_started-flat_started
+                result = {'algorithm':'modular-roofs-4.9.1', 'configuration':cfg, 'model':model,
+                    'candidates':[{'candidate_id':0, 'type':'flat', 'score':score, 'selected':True,
+                        'status':'Vybráno podle převahy vodorovné plochy', 'rejected':[],
+                        'data_error_m':score, 'complexity_penalty_m':0., 'plane_count':1}],
+                    'diagnostics':{'status':'Varianta k optickému posouzení', 'review_required':True,
+                        'flags':['flat_majority_whole_building_simplification'],
+                        'train':{'n':len(points)}, 'fit_cells':len(cells), 'flat_majority':flat,
+                        'annex_detection':{'enabled':modules['annex_detection'], 'accepted_count':0,
+                            'candidates':[], 'status':'skipped_flat_majority'},
+                        'selection_rule':'Horizontal components satisfy the configured individual, largest and total area thresholds; select the main flat base at the height of the largest patch.',
+                        'selection_score':score, 'score_is_probability':False,
+                        'complex_candidates_skipped':True, 'visual_assessment_performed':False,
+                        'independent_validation_performed':False},
+                    'timing':{'total_seconds':time.perf_counter()-started,
+                        'cpu_seconds':time.process_time()-cpu, 'preprocessing_seconds':flat_seconds,
+                        'fitting_seconds':0., 'geometry_seconds':time.perf_counter()-geometry_started,
+                        'flat_majority_seconds':flat_seconds, 'main_roof_seconds':0.,
+                        'annex_2d_seconds':0., 'annex_profiles_seconds':0.,
+                        'annex_evaluation_seconds':0., 'annex_assembly_seconds':0.}}
+                return _finish_flat_protrusions(result, poly, points, cfg)
+    flat_seconds = time.perf_counter()-flat_started
     times = {'annex_2d_seconds':0., 'annex_profiles_seconds':0., 'annex_evaluation_seconds':0.,
              'main_roof_seconds':0., 'annex_assembly_seconds':0.}
     calls = []
@@ -291,15 +422,18 @@ def infer_modular_roof(footprint, xyz, config=None):
             main = fit_main(poly)
     else:
         main = fit_main(poly)
-    main['algorithm'] = 'modular-roofs-4.5'
+    main['algorithm'] = 'modular-roofs-4.9.1'
     main['configuration'] = cfg
     main['diagnostics']['annex_detection'] = diagnostics
+    main['diagnostics']['flat_majority'] = flat
     main['model']['metadata'].setdefault('annex_count', 0)
     main['model']['metadata']['module_states'] = modules
     main['timing'].update(times)
-    main['timing']['preprocessing_seconds'] = sum(t['preprocessing_seconds'] for t in calls)
+    main['timing']['preprocessing_seconds'] = sum(t['preprocessing_seconds'] for t in calls)+flat_seconds
+    main['timing']['flat_majority_seconds'] = flat_seconds
     main['timing']['fitting_seconds'] = sum(t['fitting_seconds'] for t in calls)
+    main['timing']['connected_wings_seconds'] = sum(t.get('connected_wings_seconds',0.) for t in calls)
     main['timing']['geometry_seconds'] = sum(t['geometry_seconds'] for t in calls)+times['annex_assembly_seconds']
     main['timing']['total_seconds'] = time.perf_counter()-started
     main['timing']['cpu_seconds'] = time.process_time()-cpu
-    return main
+    return _finish_flat_protrusions(main, poly, points, cfg)

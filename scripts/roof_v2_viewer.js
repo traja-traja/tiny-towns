@@ -2,9 +2,10 @@
 const data = JSON.parse(document.getElementById('roof-data').textContent);
 const $ = id => document.getElementById(id);
 const names = {flat:'Plochá',multi_flat:'Více plochých úrovní',flat_levels:'Více plochých úrovní',shed:'Pultová',skillion:'Pultová',gabled:'Sedlová',hipped:'Valbová',pyramidal:'Stanová',pyramid:'Stanová',compound:'Složená',butterfly:'Úžlabní',sawtooth:'Pilová',barrel:'Valená',fallback:'Odhad'};
-Object.assign(names,{straight:'Přímý hřeben',bent:'Hřeben do L',u_shaped:'Hřeben do U',ring:'Uzavřený hřeben',parallel_gables:'Souběžné sedlové střechy'});
+Object.assign(names,{straight:'Přímý hřeben',bent:'Hřeben do L',u_shaped:'Hřeben do U',ring:'Uzavřený hřeben',parallel_gables:'Souběžné sedlové střechy',connected_wings:'Navazující střechy křídel'});
 const flagNames={weak_plane_evidence:'Slabá podpora orientace střešních ploch v bodech',insufficient_data:'Nedostatek vstupních bodů',fallback_geometry_not_roof_classification:'Záložní objem; typ střechy nebyl určen',poor_template_fit:'Šablona má velké odchylky od bodů',ambiguous_type:'Dva typy dosáhly blízkého skóre',incomplete_point_coverage:'Body nepokrývají dostatečně celý půdorys',part_boundaries_need_review:'Hranice částí vyžadují kontrolu',optimizer_iteration_limit:'Dosažen limit iterací',higher_ranked_mesh_rejected:'Lépe hodnocený kandidát neprošel kontrolou geometrie',source_type_disagrees:'Zvolený typ se liší od typu uvedeného ve zdrojových datech'};
 const buildings = Array.isArray(data.buildings) ? data.buildings : [];
+Object.assign(flagNames,{flat_majority_whole_building_simplification:'Převaha vodorovných ploch: zjednodušený plochý základ střechy',flat_roof_protrusions_added:'Nad plochou střechou zachovány naměřené nástavby',simpler_near_equivalent_candidate:'Při podobné shodě vybrána jednodušší střecha'});
 const issues = [];
 window.addEventListener('error', e => issues.push(e.message));
 window.addEventListener('unhandledrejection', e => issues.push(String(e.reason)));
@@ -70,6 +71,26 @@ function metricRows(part) {
     if(Array.isArray(m.ridge_heights_m))rows.push(['Výšky hřebenů',m.ridge_heights_m.map(h=>format(h)+' m').join(' / ')]);
     if(m.main_roof_type)rows.push(['Hlavní střecha',names[m.main_roof_type] || m.main_roof_type]);
     if(Number.isFinite(m.annex_count))rows.push(['Oddělené přístavky',format(m.annex_count,0)]);
+    if(d.flat_majority?.enabled){
+      if(Number.isFinite(d.flat_majority.covered_area_fraction))rows.push(['Vodorovné plochy z půdorysu',format(100*d.flat_majority.covered_area_fraction,1)+' %']);
+      if(Number.isFinite(d.flat_majority.largest_patch_area_fraction))rows.push(['Největší souvislá plochá část',format(100*d.flat_majority.largest_patch_area_fraction,1)+' %']);
+      if(Number.isFinite(d.flat_majority.min_patch_area_fraction))rows.push(['Minima: část / největší / součet',[d.flat_majority.min_patch_area_fraction,d.flat_majority.min_largest_patch_fraction,d.flat_majority.min_coverage_fraction].map(v=>format(100*v,0)+' %').join(' / ')]);
+      rows.push(['Převaha ploché střechy',d.flat_majority.accepted?(m.protrusion_count?'Ano — plochý základ a nástavby':'Ano — jedna rovina pro celý dům'):'Ne']);
+      if(d.flat_majority.accepted)rows.push(['Volba výšky','Největší doložená vodorovná plocha']);
+    }
+    if(d.flat_protrusions?.enabled){
+      rows.push(['Nástavby nad plochou střechou',format(m.protrusion_count || 0,0)]);
+      if(Number.isFinite(m.max_protrusion_height_m))rows.push(['Nejvyšší nástavba nad střechou',format(m.max_protrusion_height_m)+' m']);
+      if(Number.isFinite(m.building_top_height_m))rows.push(['Celková výška s nástavbami',format(m.building_top_height_m)+' m']);
+    }
+    if(Number.isFinite(t.flat_protrusions_seconds))rows.push(['Nástavby: detekce a geometrie',format(t.flat_protrusions_seconds*1000,2)+' ms']);
+    if(m.connected_wings){
+      rows.push(['Střešní křídla',format(m.connected_wings.wing_count,0)],['Společný sklon',format(m.connected_wings.pitch_degrees,1)+'°']);
+      if(Array.isArray(m.connected_wings.wing_eaves_m))rows.push(['Okapy křídel',m.connected_wings.wing_eaves_m.map(v=>format(v)+' m').join(', ')]);
+      if(m.connected_wings.unsupported_wings?.length)rows.push(['Křídla bez dostatečných bodů',format(m.connected_wings.unsupported_wings.length,0)]);
+    }
+    if(Number.isFinite(t.connected_wings_seconds))rows.push(['Křídla: kandidáti a geometrie',format(t.connected_wings_seconds*1000,2)+' ms']);
+    if(Number.isFinite(t.flat_majority_seconds))rows.push(['Detekce ploché střechy',format(t.flat_majority_seconds*1000,2)+' ms']);
     for(const [key,label] of [['annex_2d_seconds','Přístavky: půdorys'],['annex_profiles_seconds','Přístavky: dva profily'],['annex_evaluation_seconds','Přístavky: ověření včetně profilů'],['annex_assembly_seconds','Přístavky: spojení geometrie']])if(Number.isFinite(t[key]))rows.push([label,format(t[key]*1000,2)+' ms']);
     rows.push(['Vstupních bodů',format(train.n,0)],['Výpočetních buněk',format(d.fit_cells,0)]);
     if(Number.isFinite(d.selection_score))rows.push(['Výběrové skóre',format(d.selection_score,4)]);

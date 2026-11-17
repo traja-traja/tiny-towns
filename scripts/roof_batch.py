@@ -184,11 +184,11 @@ def main(argv=None):
     write_json(output/'source_records.json', raw_sources)
     write_json(output/'config.json', roof_config)
     run = {'schema':'roof-batch-run/1', 'created_at_utc':datetime.now(timezone.utc).isoformat(),
-           'algorithm':'modular-roofs-4.5', 'input_manifest':str(input_path),
+           'algorithm':'modular-roofs-4.9.1', 'input_manifest':str(input_path),
            'output':str(output), 'previous':str(args.previous.resolve()) if args.previous else None,
            'configuration':{'roof':roof_config, 'threads':1, 'test_mode':args.test},
            'source_code':{}, 'errors':[], 'status':'running', 'expected_buildings':len(selected)}
-    for name in ['roof_batch.py','roof_annex.py','roof_config.py','roof_eave_planes.py','roof_parallel.py','roof_v2.py','roof_v2_geometry.py','roof_v2_report.py','roof_v2_viewer.js']:
+    for name in ['roof_batch.py','roof_annex.py','roof_config.py','roof_eave_planes.py','roof_connected_wings.py','roof_parallel.py','roof_flat_majority.py','roof_flat_protrusions.py','roof_v2.py','roof_v2_geometry.py','roof_v2_report.py','roof_v2_viewer.js']:
         run['source_code'][name] = hashlib.sha256((ROOT/'scripts'/name).read_bytes()).hexdigest()
     document = {k:inputs[k] for k in ('city','source','crs','vertical_datum')}
     document.update(schema='roof-v2/1', status='running', created_at_utc=run['created_at_utc'],
