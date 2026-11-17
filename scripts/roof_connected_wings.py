@@ -30,11 +30,7 @@ DEFAULTS = {'simplify_m':.65, 'min_wall_m':3., 'max_parallel_deviation_deg':16.,
     'snap_frame_max_shift_m':.30,'supported_subset_variants':True,'extend_supported_wings':True,'anchor_actual_end_walls':True,
     'ridge_support_distance_m':.9,'ridge_support_height_m':.9,
     'min_ridge_support_cells':8,'min_ridge_support_fraction':.35,
-    'paired_ridge_variants':True,'max_paired_layouts':8,
-    'paired_local_widths':True,'paired_min_exclusive_fraction':.04,
-    'paired_width_probe_count':5,'paired_width_support_fraction':.6,
-    'paired_width_tolerance_m':1.8,'paired_width_tolerance_fraction':.15,
-    'paired_prefer_symmetric':True,'paired_asymmetry_penalty_m':.15,'paired_slope_tolerance_deg':5.,'paired_slope_full_penalty_deg':25.,'paired_min_coverage_fraction':.85,
+    'paired_ridge_variants':True,'max_paired_layouts':8,'paired_min_coverage_fraction':.85,
     'paired_ridge_offset_limit':.35,'paired_complexity_penalty_m':.075,
     'paired_min_support_fraction':.15,'paired_weak_support_penalty_m':.05,
     'paired_min_supported_span_m':2.,'paired_max_slope_deg':85.,'paired_min_roof_height_m':.5,
@@ -541,58 +537,6 @@ def _fitted_proposal(poly,cells,settings,cfg,boxes,layout,unit_wings,ends,label,
             '_cap_base_height_m':base,'_cap_scoring':settings['scoring'],'_cap_domains':domains}
 
 
-def _paired_symmetry_penalty(units, rise, cfg):
-    """Tolerate small pitch differences; penalize strong asymmetry smoothly."""
-    differences=[abs(math.degrees(math.atan(float(np.linalg.norm(wing[0][:2])*rise)))-
-                     math.degrees(math.atan(float(np.linalg.norm(wing[1][:2])*rise)))) for wing in units]
-    excess=max(differences,default=0.)-cfg['paired_slope_tolerance_deg']
-    span=cfg['paired_slope_full_penalty_deg']-cfg['paired_slope_tolerance_deg']
-    weight=float(np.clip(excess/span,0.,1.)) if cfg['paired_prefer_symmetric'] else 0.
-    return weight*cfg['paired_asymmetry_penalty_m']
-
-
-def _paired_layout_evidence(poly, wings, cfg):
-    """MODULE local widths: require two distinct arms before fitting their roof.
-
-    Broad overlapping strips can each cover an entire L. Coverage alone then
-    rewards the wrong opposite wall. Check each arm outside the junction, with
-    a few 2D sections through its own exclusive footprint. Small facade steps
-    may differ from the virtual eave line within the configured tolerance.
-    """
-    if not cfg['paired_local_widths']:
-        return {'accepted':True,'enabled':False,'wings':[]}
-    evidence=[]
-    for i,wing in enumerate(wings):
-        exclusive=wing['inside'].difference(wings[1-i]['inside'])
-        fraction=float(exclusive.area/poly.area)
-        row={'wing_index':i,'width_m':float(wing['width']),
-             'exclusive_area_fraction':fraction,'probes':[]}
-        evidence.append(row)
-        if fraction < cfg['paired_min_exclusive_fraction']:
-            return {'accepted':False,'enabled':True,'reason':'redundant_wing_width','wings':evidence}
-        coords=shapely.get_coordinates(exclusive)
-        along=coords@wing['u'];lo,hi=float(along.min()),float(along.max())
-        mid=(wing['bottom']+wing['top'])/2
-        span=max(poly.bounds[2]-poly.bounds[0],poly.bounds[3]-poly.bounds[1])*2+1
-        tolerance=max(cfg['paired_width_tolerance_m'],cfg['paired_width_tolerance_fraction']*wing['width'])
-        for t in np.linspace(lo+.1*(hi-lo),hi-.1*(hi-lo),int(cfg['paired_width_probe_count'])):
-            center=wing['u']*t+wing['v']*mid
-            if not exclusive.covers(shapely.Point(center)):
-                continue
-            cut=LineString([center-wing['v']*span,center+wing['v']*span])
-            pieces=[q for q in _line_parts(poly.intersection(cut)) if q.distance(shapely.Point(center))<1e-6]
-            if not pieces:continue
-            section=max(pieces,key=lambda q:q.length);transverse=np.asarray(section.coords)@wing['v']
-            low,high=float(transverse.min()),float(transverse.max())
-            supported=max(abs(low-wing['bottom']),abs(high-wing['top']))<=tolerance
-            row['probes'].append({'along_m':float(t),'measured_width_m':high-low,'supported':bool(supported)})
-        probes=row['probes'];support=sum(r['supported'] for r in probes)/max(1,len(probes))
-        row['width_support_fraction']=float(support)
-        if len(probes)<2 or support<cfg['paired_width_support_fraction']:
-            return {'accepted':False,'enabled':True,'reason':'unsupported_local_wing_width','wings':evidence}
-    return {'accepted':True,'enabled':True,'wings':evidence}
-
-
 def _paired_ridge_proposals(poly,cells,settings,cfg):
     """MODULE paired ridges: point-fitted bent roof using actual wall directions.
 
@@ -619,12 +563,7 @@ def _paired_ridge_proposals(poly,cells,settings,cfg):
             coverage=a['inside'].union(b['inside']).area/poly.area
             if coverage<cfg['paired_min_coverage_fraction']:continue
             if a['inside'].intersection(b['inside']).area<4.:continue
-            evidence=_paired_layout_evidence(poly,[a,b],cfg)
-            if not evidence['accepted']:
-                record_attempt('connected_wings','paired ridge layout',status='rejected',count=0,
-                    stage='preprocessing',reason=evidence['reason'])
-                continue
-            pairs.append((coverage,[a,b],evidence))
+            pairs.append((coverage,[a,b]))
     pairs.sort(key=lambda row:-row[0]);pairs=pairs[:int(cfg['max_paired_layouts'])]
     record_attempt('connected_wings',label='paired ridge layouts',count=0,stage='preprocessing',
         overhead_seconds=time.perf_counter()-tick)
@@ -634,7 +573,7 @@ def _paired_ridge_proposals(poly,cells,settings,cfg):
     low=[.5-offset,.5-offset,.5,.4]
     high=[.5+offset,.5+offset,max(1.,z90),max(4.,np.ptp(z)+4)]
     coords=shapely.get_coordinates(poly)
-    for layout_index,(coverage,ws,width_evidence) in enumerate(pairs):
+    for layout_index,(coverage,ws) in enumerate(pairs):
         normals=np.array([w['v'] for w in ws])
         def geometry(p,cap_sides,with_lines=False):
             halves=[];ridge_offsets=[]
@@ -664,47 +603,38 @@ def _paired_ridge_proposals(poly,cells,settings,cfg):
                     wings,_,_=geometry(p,sides)
                     unit=np.max([np.min(A@q.T,axis=1) for q in wings],axis=0)
                     return p[2]+p[3]*unit
-                for fit_mode in (('symmetric','free') if cfg['paired_prefer_symmetric'] else ('free',)):
-                    variant_tick=time.perf_counter()
-                    initial=[.5,.5,max(.6,z10-.8),max(.6,z90-z10+1.)]
-                    if fit_mode=='symmetric':
-                        fit=least_squares(lambda p:prediction(np.r_[.5,.5,p])-z,
-                            np.clip(initial[2:],low[2:],high[2:]),bounds=(low[2:],high[2:]),
-                            loss='soft_l1',f_scale=.25,max_nfev=cfg['max_nfev'],ftol=2e-4,xtol=2e-4,gtol=2e-4)
-                        fit.x=np.r_[.5,.5,fit.x]
-                    else:
-                        fit=least_squares(lambda p:prediction(p)-z,np.clip(initial,low,high),bounds=(low,high),
-                            loss='soft_l1',f_scale=.25,max_nfev=cfg['max_nfev'],ftol=2e-4,xtol=2e-4,gtol=2e-4)
-                    units,joint,ridges=geometry(fit.x,sides,with_lines=True)
-                    height=float(fit.x[2]+fit.x[3]);support=[]
-                    for i,line in enumerate(ridges):
-                        segment=LineString(line);distance=shapely.distance(shapely.points(xy),segment)
-                        near=distance<cfg['ridge_support_distance_m']
-                        good=near&(np.abs(z-height)<cfg['ridge_support_height_m'])
-                        along=xy[good]@ws[i]['u']
-                        span=float(np.ptp(np.quantile(along,[.1,.9]))) if len(along)>1 else 0.
-                        support.append({'wing_index':i,'nearby_cells':int(near.sum()),'supported_cells':int(good.sum()),
-                            'width_m':ws[i]['width'],'length_m':float(segment.length),'ridge_height_m':height,
-                            'supported_span_m':span})
-                    valid=poly.buffer(.3).covers(shapely.Point(joint)) and all(
-                        r['length_m']>=cfg['min_length_m'] and r['supported_span_m']>=cfg['paired_min_supported_span_m']
-                        and r['supported_cells']>=cfg['min_ridge_support_cells']
-                        and r['supported_cells']/max(1,r['nearby_cells'])>=cfg['paired_min_support_fraction'] for r in support)
-                    max_slope=max(math.degrees(math.atan(float(np.linalg.norm(q[:2])*fit.x[3]))) for wing in units for q in wing[:2])
-                    valid=valid and max_slope<=cfg['paired_max_slope_deg']
-                    label=f'paired_ridge_{layout_index}_{side_a}{side_b}'+('_symmetric' if fit_mode=='symmetric' else '')
-                    elapsed=time.perf_counter()-variant_tick
-                    record_attempt('connected_wings',label,status='considered' if valid else 'rejected',
-                        reason=None if valid else 'unsupported_joint_or_branch',fitting_seconds=elapsed)
-                    if not valid:continue
-                    error=float(point_error(abs(prediction(fit.x)-z),settings['scoring']))
-                    weak=sum(r['supported_cells']/max(1,r['nearby_cells'])<cfg['min_ridge_support_fraction'] for r in support)
-                    symmetry_penalty=_paired_symmetry_penalty(units,float(fit.x[3]),cfg)
-                    penalty=weak*cfg['paired_weak_support_penalty_m']
-                    fitted.append((error+cfg['paired_complexity_penalty_m']+penalty+symmetry_penalty,error,ws,coverage,fit.x,units,ridges,support,label,elapsed,width_evidence,fit_mode,symmetry_penalty))
+                initial=[.5,.5,max(.6,z10-.8),max(.6,z90-z10+1.)]
+                fit=least_squares(lambda p:prediction(p)-z,np.clip(initial,low,high),bounds=(low,high),
+                    loss='soft_l1',f_scale=.25,max_nfev=cfg['max_nfev'],ftol=2e-4,xtol=2e-4,gtol=2e-4)
+                units,joint,ridges=geometry(fit.x,sides,with_lines=True)
+                height=float(fit.x[2]+fit.x[3]);support=[]
+                for i,line in enumerate(ridges):
+                    segment=LineString(line);distance=shapely.distance(shapely.points(xy),segment)
+                    near=distance<cfg['ridge_support_distance_m']
+                    good=near&(np.abs(z-height)<cfg['ridge_support_height_m'])
+                    along=xy[good]@ws[i]['u']
+                    span=float(np.ptp(np.quantile(along,[.1,.9]))) if len(along)>1 else 0.
+                    support.append({'wing_index':i,'nearby_cells':int(near.sum()),'supported_cells':int(good.sum()),
+                        'width_m':ws[i]['width'],'length_m':float(segment.length),'ridge_height_m':height,
+                        'supported_span_m':span})
+                valid=poly.buffer(.3).covers(shapely.Point(joint)) and all(
+                    r['length_m']>=cfg['min_length_m'] and r['supported_span_m']>=cfg['paired_min_supported_span_m']
+                    and r['supported_cells']>=cfg['min_ridge_support_cells']
+                    and r['supported_cells']/max(1,r['nearby_cells'])>=cfg['paired_min_support_fraction'] for r in support)
+                max_slope=max(math.degrees(math.atan(float(np.linalg.norm(q[:2])*fit.x[3]))) for wing in units for q in wing[:2])
+                valid=valid and max_slope<=cfg['paired_max_slope_deg']
+                label=f'paired_ridge_{layout_index}_{side_a}{side_b}'
+                elapsed=time.perf_counter()-variant_tick
+                record_attempt('connected_wings',label,status='considered' if valid else 'rejected',
+                    reason=None if valid else 'unsupported_joint_or_branch',fitting_seconds=elapsed)
+                if not valid:continue
+                error=float(point_error(abs(prediction(fit.x)-z),settings['scoring']))
+                weak=sum(r['supported_cells']/max(1,r['nearby_cells'])<cfg['min_ridge_support_fraction'] for r in support)
+                penalty=weak*cfg['paired_weak_support_penalty_m']
+                fitted.append((error+cfg['paired_complexity_penalty_m']+penalty,error,ws,coverage,fit.x,units,ridges,support,label,elapsed))
     # Construct only the best bounded hypotheses. All evaluated fits are logged.
     proposals=[]
-    for score,error,ws,coverage,p,units,ridges,support,label,elapsed,width_evidence,fit_mode,symmetry_penalty in sorted(fitted,key=lambda x:x[0])[:3]:
+    for score,error,ws,coverage,p,units,ridges,support,label,elapsed in sorted(fitted,key=lambda x:x[0])[:3]:
         geo_tick=time.perf_counter();base=float(p[2]);rise=float(p[3]);wings=[rise*q for q in units]
         regions=[{'polygon':r['polygon'],'plane':[r['plane'][0],r['plane'][1],base+r['plane'][2]]}
                  for r in _envelope(poly,wings,clamp_base=False)]
@@ -716,9 +646,7 @@ def _paired_ridge_proposals(poly,cells,settings,cfg):
         frame=np.column_stack((ws[0]['u'],ws[0]['v']));uv=coords@frame
         eaves=np.repeat(base,2);counts=[int(shapely.intersects_xy(w['inside'],xy[:,0],xy[:,1]).sum()) for w in ws]
         metadata={**layout,'wing_count':2,'covered_fraction':float(coverage),'variant':label,
-            'common_eave':True,'common_pitch':False,'common_ridge':True,'ridge_offsets_fitted':fit_mode=='free',
-            'opposing_slopes_symmetric':bool(np.max(np.abs(p[:2]-.5))<1e-6),
-            'local_width_evidence':width_evidence,'symmetry_preference_penalty_m':float(symmetry_penalty),
+            'common_eave':True,'common_pitch':False,'common_ridge':True,'ridge_offsets_fitted':True,
             'eave_mode':'common_eave','wing_eaves_m':eaves.tolist(),'wing_cell_counts':counts,
             'wing_widths_m':[float(w['width']) for w in ws],
             'wing_frames_xy':[np.column_stack((w['u'],w['v'])).tolist() for w in ws],
@@ -731,7 +659,7 @@ def _paired_ridge_proposals(poly,cells,settings,cfg):
         geometry_elapsed=time.perf_counter()-geo_tick
         record_attempt('connected_wings',label,count=0,stage='geometry',geometry_seconds=geometry_elapsed)
         proposals.append({'kind':'connected_wings','hips':(),'score':float(score),'data_error_m':error,
-            'complexity_penalty_m':cfg['paired_complexity_penalty_m']+symmetry_penalty,'support_penalty_m':float(score-error-cfg['paired_complexity_penalty_m']-symmetry_penalty),
+            'complexity_penalty_m':cfg['paired_complexity_penalty_m'],'support_penalty_m':float(score-error-cfg['paired_complexity_penalty_m']),
             'parameters':p,'strip_regions':regions,'ridge_xy':[r.tolist() for r in ridges],
             'ridge_heights_m':[base+rise]*2,'eave_height_m':base,'ridge_height_m':base+rise,
             'matrix':frame,'extent':[float(uv[:,0].min()),float(uv[:,0].max()),float(uv[:,1].min()),float(uv[:,1].max())],

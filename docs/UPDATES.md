@@ -348,3 +348,12 @@ Obecný filtr odstraňuje dvojice pásů, které každý pokrývají téměř ce
 Lokální šířky zachovány. Malé rozdíly protějších sklonů do 5° bez trestu, větší plynule penalizovány. Každá větev U/O potřebuje souvislou délku výškové podpory a měřený pokles na obě strany; nejistota znamená měkkou penalizaci. Zjednodušení chrání také shodu s body každého podloženého křídla zvlášť a při volbě dělení na objemy se přenášejí penalizace nejistoty vybraných střech, vážené plochou. 52 cílených testů a následných 20 testů křídel/objemů prošlo. Viz [ROOF_NETWORK_RIDGE_EVIDENCE.md](ROOF_NETWORK_RIDGE_EVIDENCE.md).
 
 Finální přepočet Jírovcovy: roof-v4133-jirovcova-ridge-evidence-final/report.html, 1 objem / 4 roviny, uzavřená síť. Střecha 11,290 s, dávka 14,517 s; levá geometrie nezměněna, bez optické kontroly.
+
+
+## 2026-11-18 – návrat algoritmu střech na 4.13.0
+
+Na žádost uživatele je aktivní opět `modular-roofs-4.13.0`, přesně podle běhu `cities/ceske-budejovice/experiments/roof-v413-all-54/run.json`. SHA-256 všech 29 evidovaných zdrojových modulů souhlasí s původním během (po normalizaci konců řádků na LF). Obnoveny byly pouze `roof_config.py`, `roof_eave_planes.py`, `roof_connected_wings.py` a `roof_volume_pipeline.py`; dalších 25 modulů již souhlasilo.
+
+Odstraněny jsou pozdější změny skórování 4.13.1–4.13.3, dodatečné filtry šířek a preference symetrie křídel, průkaznost větví hřebenů a přenos jejich penalizace do dělení objemů. Testy těchto odstraněných funkcí jsou zachované v předchozím Git commitu, nikoli aktivní v sadě 4.13.0. Ověření: 53 cílených testů prošlo, `git diff --check` bez chyb. Modely se znovu negenerovaly; existující report i jeho levá porovnávací verze zůstaly zachované.
+
+Novější kompletní zdroje 4.13.3 zůstávají v commitu `c34cb08b1c0bcac8cd93679c85a506fc59f9c916`. Tento návrat je nový commit, nikoli přepis historie. Další funkční kroky se ukládají samostatně.

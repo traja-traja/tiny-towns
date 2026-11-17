@@ -6,7 +6,7 @@ not probabilities. A JSON file may override any subset; unknown keys fail fast.
 import copy
 import math
 
-ALGORITHM_VERSION = 'modular-roofs-4.13.3'
+ALGORITHM_VERSION = 'modular-roofs-4.13.0'
 
 DEFAULT_CONFIG = {
     # Legacy fixed-right-angle L template is opt-in only for reproducing old runs.
@@ -68,10 +68,6 @@ DEFAULT_CONFIG = {
         'min_cells':6, 'min_width_m':.6, 'height_quantile':.9, 'simplify_tolerance_m':.25, 'max_simplification_area_increase_fraction':.15,
         'regularize_footprints':True, 'regularization_min_retained_area_fraction':.80, 'regularization_max_vertices':8},
     'connected_wings': {'paired_ridge_variants':True, 'max_paired_layouts':8,
-        'paired_local_widths':True,'paired_min_exclusive_fraction':.04,
-    'paired_width_probe_count':5,'paired_width_support_fraction':.6,
-    'paired_width_tolerance_m':1.8,'paired_width_tolerance_fraction':.15,
-    'paired_prefer_symmetric':True,'paired_asymmetry_penalty_m':.15,'paired_slope_tolerance_deg':5.,'paired_slope_full_penalty_deg':25.,
         'paired_min_coverage_fraction':.85, 'paired_ridge_offset_limit':.35, 'paired_complexity_penalty_m':.075,
         'paired_min_support_fraction':.15, 'paired_weak_support_penalty_m':.05,
         'paired_min_supported_span_m':2., 'paired_max_slope_deg':85., 'paired_min_roof_height_m':.5,
@@ -107,9 +103,7 @@ DEFAULT_CONFIG = {
               'profile_min_step_m':.3},
     'sampling': {'cell_size_m':.7, 'min_cells':20},
     'scoring': {'mean_weight':.6, 'quantile_weight':.4, 'error_cap_m':1.5,
-                'simplification_tolerance_m':.10, 'protect_point_fit':True, 'max_simplification_data_error_increase_m':.10,
-                'volume_inherit_support_penalty':True,
-                'protect_wing_fit':True, 'wing_fit_min_cells':8, 'wing_fit_inset_m':.8,
+                'simplification_tolerance_m':.10,
                 'protect_main_eaves':True, 'main_eave_min_length_m':6.,
                 'main_eave_parallel_deg':12., 'main_eave_reference_span_m':.20,
                 'main_eave_height_tolerance_m':.35, 'main_eave_max_span_increase_m':.30,
@@ -120,13 +114,7 @@ DEFAULT_CONFIG = {
                 'quantile':.8, 'hip_end_penalty_m':.012,
                 'complexity_m':{'flat':0., 'straight':.035, 'bent':.065, 'skillion':.025,
                                 'pyramidal':.05, 'u_shaped':.095, 'ring':.12, 'parallel_gables':.07, 'butterfly':.035},
-                'weak_branch_penalty_m':.10,
-                'network_branch_evidence':True,'network_ridge_band_m':.6,
-                'network_flank_band_m':2.5,'network_edge_exclusion_m':.8,
-                'network_ridge_height_tolerance_m':.6,'network_ridge_min_cells':8,
-                'network_ridge_min_span_m':3.,'network_ridge_min_span_fraction':.35,
-                'network_ridge_bin_m':1.5,'network_flank_min_drop_m':.12,
-                'network_flank_min_bins':2,'network_flank_min_fraction':.5},
+                'weak_branch_penalty_m':.10},
 }
 
 
@@ -197,8 +185,6 @@ def resolve_config(overrides=None):
         raise ValueError('scoring.quantile must be between zero and one')
     if result['scoring']['mean_weight']+result['scoring']['quantile_weight'] <= 0:
         raise ValueError('At least one score weight must be positive')
-    if result['scoring']['wing_fit_min_cells'] < 3 or result['scoring']['wing_fit_inset_m'] < 0:
-        raise ValueError('Wing-fit guard needs at least three cells and a nonnegative boundary inset')
     if not 0 <= result['scoring']['main_eave_parallel_deg'] < 45 or result['scoring']['main_eave_min_length_m'] <= 0:
         raise ValueError('Main-eave protection needs positive edge length and an angle below 45 degrees')
     if result['scoring']['main_eave_probe_inset_m'] <= 0 or not 0 < result['scoring']['main_eave_min_supported_fraction'] <= 1:
@@ -234,22 +220,7 @@ def resolve_config(overrides=None):
         raise ValueError('flat_protrusions requires positive area and at least three cells')
     if not 0 < protrusions['regularization_min_retained_area_fraction'] <= 1 or protrusions['regularization_max_vertices'] < 4:
         raise ValueError('flat_protrusions regularization needs a retained fraction in (0,1] and at least four vertices')
-    network=result['scoring']
-    if not 0 < network['network_ridge_band_m'] < network['network_flank_band_m']:
-        raise ValueError('Network ridge/flank bands must be positive and ordered')
-    if network['network_ridge_min_cells']<3 or network['network_flank_min_bins']<2:
-        raise ValueError('Network evidence needs at least 3 ridge cells and 2 flank bins')
-    for key in ('network_ridge_bin_m','network_ridge_min_span_m','network_ridge_height_tolerance_m'):
-        if network[key]<=0:raise ValueError('scoring.'+key+' must be positive')
-    for key in ('network_ridge_min_span_fraction','network_flank_min_fraction'):
-        if not 0<network[key]<=1:raise ValueError('scoring.'+key+' must be in (0,1]')
     wings = result['connected_wings']
-    if not 0 <= wings['paired_slope_tolerance_deg'] < wings['paired_slope_full_penalty_deg'] < 90:
-        raise ValueError('Paired slope tolerance must precede full-penalty angle below 90 degrees')
-    if not 0 <= wings['paired_min_exclusive_fraction'] < .5 or not 0 < wings['paired_width_support_fraction'] <= 1:
-        raise ValueError('Invalid paired wing exclusive area or width support fraction')
-    if wings['paired_width_probe_count'] < 2 or wings['paired_width_tolerance_m'] < 0 or not 0 <= wings['paired_width_tolerance_fraction'] < 1:
-        raise ValueError('Invalid paired wing width probes or tolerance')
     if not 0 <= wings['local_gable_inset_min_m'] < wings['local_gable_inset_max_m'] or not 0 < wings['local_gable_min_support_fraction'] <= 1 or wings['local_gable_support_error_m'] <= 0:
         raise ValueError('Invalid local gable evidence band or support bounds')
     if not 0 < wings['paired_min_coverage_fraction'] <= 1 or not 0 < wings['paired_ridge_offset_limit'] < .5:

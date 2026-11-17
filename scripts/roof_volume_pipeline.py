@@ -17,24 +17,6 @@ from roof_config import resolve_config, ALGORITHM_VERSION
 from roof_footprint_regularization import prepare_footprint, attach_footprint_metadata
 
 
-def _variant_support_penalty(result):
-    """Carry roof-evidence penalties into the whole-versus-split decision.
-
-    A split must not erase the uncertainty already measured on its roof parts.
-    Only selected roofs count, weighted by footprint area. Complexity is not
-    charged again; the existing per-volume penalty already prices added bodies.
-    """
-    def selected_penalty(roof):
-        return sum(max(0.,float(c.get('support_penalty_m') or 0.))
-            for c in roof.get('candidates',[]) if c.get('selected'))
-    children=result.get('_child_results',[])
-    if not children:return selected_penalty(result)
-    bodies=result.get('model',{}).get('metadata',{}).get('bodies',[])
-    weights=[max(0.,float(b.get('area_m2',0.))) for b in bodies]
-    if len(weights)!=len(children) or sum(weights)<=0:weights=[1.]*len(children)
-    return sum(w*selected_penalty(child) for w,child in zip(weights,children))/sum(weights)
-
-
 def _select_volume_variant(scores,detection):
     """Keep the whole body when added volume freedom gives only a near-tie.
 
@@ -135,9 +117,7 @@ def infer_volume_roof(footprint,points,config=None,split_config=None,extra_volum
         pred=predict_regions(result['model']['regions'],cells[:,:2]);ok=np.isfinite(pred)
         loss=float(np.mean(np.minimum(abs(pred[ok]-cells[ok,2]),2.))) if len(cells) and ok.all() else 100.
         penalty=extra_volume_penalty*max(0,variant_counts[key]-1)
-        support_penalty=_variant_support_penalty(result) if config['scoring']['volume_inherit_support_penalty'] else 0.
-        scores[key]=dict(data_loss_m=loss,volume_penalty_m=penalty,roof_support_penalty_m=support_penalty,
-            score=loss+penalty+support_penalty,
+        scores[key]=dict(data_loss_m=loss,volume_penalty_m=penalty,score=loss+penalty,
             plane_count=len(result['model']['regions']))
     if connector['partition_used']:
         selected='footprint_connector'
@@ -152,7 +132,7 @@ def infer_volume_roof(footprint,points,config=None,split_config=None,extra_volum
     decision=dict(selected_variant=selected,counts=counts,scores=scores,candidate_errors=errors,partition_selection=partition_choice,
         reason=('Strict 2D width partition; each body fitted independently, no longitudinal height profiles or recursive splitting.'
             if connector['partition_used'] else
-            'Current whole model versus split candidates; training loss plus volume and area-weighted roof-support penalties, keep whole within simplicity tolerance, then prefer supported wall cuts among clearly better splits; no holdout selection.'))
+            'Current whole model versus split candidates; training loss plus volume penalty, keep whole within simplicity tolerance, then prefer supported wall cuts among clearly better splits; no holdout selection.'))
     result['algorithm']=ALGORITHM_VERSION
     result.setdefault('diagnostics',{})['volume_detection']={**detection,'decision':decision,'assembly_algorithm':VERSION}
     result['model'].setdefault('metadata',{}).update(volume_decision=decision,

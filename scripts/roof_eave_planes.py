@@ -195,58 +195,6 @@ def _primary_extent(lines):
     return [*bounds, bounds[0], bounds[2]]
 
 
-def _network_ridge_evidence(poly, cells, start, end, ridge_height, scoring, safe=None):
-    """MODULE network evidence: require a crest, not just a nearby fitted plane.
-
-    Uses already downsampled cells and inexpensive along-line bins. This is
-    not the 30-profile diagnostic analysis used by the HTML report. Missing
-    evidence is a soft penalty, never proof that a real narrow wing is absent.
-    """
-    xy=np.asarray(cells[:,:2]);z=np.asarray(cells[:,2])
-    start=np.asarray(start,float);end=np.asarray(end,float)
-    vector=end-start;length=float(np.linalg.norm(vector))
-    if length<1e-6:return {'supported':False,'reasons':['zero_length_branch']}
-    axis=vector/length;normal=np.array([-axis[1],axis[0]])
-    delta=xy-start;along=delta@axis;across=delta@normal
-    if safe is None:
-        safe=shapely.distance(shapely.points(xy),poly.boundary)>=scoring['network_edge_exclusion_m']
-    in_span=(along>=0)&(along<=length)&safe
-    center=in_span&(abs(across)<=scoring['network_ridge_band_m'])
-    crest=center&(abs(z-ridge_height)<=scoring['network_ridge_height_tolerance_m'])
-    clipped=LineString([start,end]).intersection(poly)
-    visible_length=float(clipped.length)
-    positions=along[crest]
-    measured_span=float(np.ptp(np.quantile(positions,[.1,.9]))) if len(positions)>1 else 0.
-    span_fraction=measured_span/max(visible_length,1e-6)
-    bin_m=scoring['network_ridge_bin_m'];bins=np.floor(along/bin_m).astype(int)
-    positive=in_span&(across>scoring['network_ridge_band_m'])&(across<=scoring['network_flank_band_m'])
-    negative=in_span&(across<-scoring['network_ridge_band_m'])&(across>=-scoring['network_flank_band_m'])
-    drops=[]
-    for key in np.unique(bins[crest]):
-        mid=z[crest&(bins==key)];left=z[negative&(bins==key)];right=z[positive&(bins==key)]
-        if len(mid) and len(left) and len(right):
-            top=float(np.median(mid))
-            drops.append({'bin':int(key),'left_drop_m':top-float(np.median(left)),
-                          'right_drop_m':top-float(np.median(right))})
-    strong=[row['bin'] for row in drops if min(row['left_drop_m'],row['right_drop_m'])>=scoring['network_flank_min_drop_m']]
-    longest=run=0;previous=None
-    for key in sorted(strong):
-        run=run+1 if previous is not None and key==previous+1 else 1
-        longest=max(longest,run);previous=key
-    fraction=len(strong)/max(1,len(drops));reasons=[]
-    if int(crest.sum())<scoring['network_ridge_min_cells']:reasons.append('too_few_crest_cells')
-    if measured_span<scoring['network_ridge_min_span_m'] or span_fraction<scoring['network_ridge_min_span_fraction']:
-        reasons.append('short_crest_support')
-    if longest<scoring['network_flank_min_bins'] or fraction<scoring['network_flank_min_fraction']:
-        reasons.append('no_sustained_two_sided_drop')
-    return {'supported':not reasons,'reasons':reasons,'crest_cells':int(crest.sum()),
-            'visible_length_m':visible_length,'supported_span_m':measured_span,
-            'supported_span_fraction':float(span_fraction),'two_sided_bins':len(drops),
-            'two_sided_supported_bins':len(strong),'consecutive_supported_bins':longest,
-            'two_sided_supported_fraction':float(fraction),'flank_drops':drops,
-            'edge_exclusion_m':scoring['network_edge_exclusion_m']}
-
-
 def _network_proposal(poly, matrix, extent, cells, missing_side=None, scoring=None):
     """Three/four joined roof wings, with shared outer planes and ridge Z.
 
@@ -319,8 +267,6 @@ def _network_proposal(poly, matrix, extent, cells, missing_side=None, scoring=No
     # A new branch must be supported by nearby measured cells, not only by
     # the footprint. Preserve weak evidence as a diagnostic and score penalty.
     branch_support = []
-    use_evidence=scoring.get('network_branch_evidence',True)
-    safe=(shapely.distance(shapely.points(cells[:,:2]),poly.boundary)>=scoring['network_edge_exclusion_m']) if use_evidence else None
     for first, last in zip(path[:-1], path[1:]):
         start, end = np.asarray(first), np.asarray(last)
         vector = end-start; length = np.linalg.norm(vector)
@@ -329,11 +275,8 @@ def _network_proposal(poly, matrix, extent, cells, missing_side=None, scoring=No
         distance = np.abs(delta[:, 0]*vector[1]-delta[:, 1]*vector[0])/length
         near = (t > .05) & (t < .95) & (distance < .9)
         supported = int(np.sum(near & (residual < .6)))
-        evidence=_network_ridge_evidence(poly,cells,matrix@start,matrix@end,float(fit.x[-3]+fit.x[-2]),scoring,safe) if use_evidence else None
-        weak=(not evidence['supported']) if evidence is not None else supported<5
-        branch_support.append({'nearby_cells':int(near.sum()),'supported_cells':supported,
-            'ridge_evidence':evidence,'penalty_m':scoring['weak_branch_penalty_m'] if weak else 0.})
-        if weak:
+        branch_support.append({'nearby_cells':int(near.sum()), 'supported_cells':supported})
+        if supported < 5:
             score += scoring['weak_branch_penalty_m']
             support_penalty += scoring['weak_branch_penalty_m']
     def world(planes):
@@ -422,85 +365,6 @@ def _near_candidates(ordered, poly, scoring):
         if proposal['score'] <= best['score']+tolerance:
             near.append(proposal)
     return near, protected
-
-
-def _guard_point_fit_simplification(best, near, scoring):
-    """Limit measured fit loss independently of already penalized total scores.
-
-    Complexity is priced in the score before fewer planes break near-ties.
-    A cheaper family must not spend both advantages on a large point-fit loss.
-    Unpromoted candidates remain available as geometric fallbacks.
-    """
-    enabled=scoring.get('protect_point_fit',True)
-    limit=float(scoring.get('max_simplification_data_error_increase_m',.10))
-    reference=best.get('data_error_m')
-    meta=dict(enabled=enabled,maximum_data_error_increase_m=limit,
-        reference_data_error_m=reference,candidates_not_promoted=[])
-    if not enabled or reference is None:return near,meta
-    accepted=[]
-    for candidate in near:
-        error=candidate.get('data_error_m')
-        increase=float(error-reference) if error is not None else None
-        if increase is not None and increase>limit+1e-12:
-            record=dict(reason='point_error_degradation',kind=candidate['kind'],
-                candidate_label=candidate.get('candidate_label'),data_error_m=error,
-                reference_data_error_m=reference,increase_m=increase,limit_m=limit)
-            candidate['point_fit_simplification_guard']=record
-            meta['candidates_not_promoted'].append(record)
-        else:accepted.append(candidate)
-    return accepted,meta
-
-
-def _guard_wing_fit_simplification(poly, best, near, cells, scoring):
-    """A small wing must not disappear inside a good whole-building average.
-
-    Compare already fitted regions on each supported wing's exclusive area,
-    away from the building boundary. This only prevents simplicity promotion;
-    alternative roofs remain available if the preferred mesh is invalid.
-    """
-    enabled=scoring.get('protect_wing_fit',True) and scoring.get('protect_point_fit',True)
-    limit=float(scoring['max_simplification_data_error_increase_m'])
-    meta=dict(enabled=enabled,maximum_data_error_increase_m=limit,
-        reference_wings=[],candidates_not_promoted=[])
-    if not enabled or best.get('kind')!='connected_wings' or '_regions' not in best:
-        return near,meta
-    info=best.get('connected_wings',{});settings=info.get('settings',{})
-    domains=[shape(p) for p in info.get('wing_domains_xy',[])]
-    supported={r['wing_index'] for r in best.get('branch_support',[])
-        if r.get('supported_cells',0)>=settings.get('min_ridge_support_cells',8)
-        and r.get('supported_cells',0)/max(1,r.get('nearby_cells',0))
-        >=settings.get('min_ridge_support_fraction',.35)}
-    cells=np.asarray(cells,float);xy=cells[:,:2]
-    safe=poly.buffer(-scoring.get('wing_fit_inset_m',.8))
-    reference=predict_regions(best['_regions'],xy)
-    references=[]
-    for index,domain in enumerate(domains):
-        if index not in supported:continue
-        exclusive=domain.difference(unary_union([p for i,p in enumerate(domains) if i!=index])).intersection(safe)
-        mask=shapely.contains_xy(exclusive,xy[:,0],xy[:,1]) & np.isfinite(reference)
-        if int(mask.sum())<scoring.get('wing_fit_min_cells',8):continue
-        error=float(point_error(abs(reference[mask]-cells[mask,2]),scoring))
-        references.append((index,mask,error))
-        meta['reference_wings'].append(dict(wing_index=index,cells=int(mask.sum()),data_error_m=error))
-    accepted=[]
-    for candidate in near:
-        if candidate is best or not references:
-            accepted.append(candidate);continue
-        predicted=predict_regions(candidate.get('_regions',[]),xy)
-        failures=[]
-        for index,mask,error in references:
-            finite=bool(np.isfinite(predicted[mask]).all())
-            candidate_error=float(point_error(abs(predicted[mask]-cells[mask,2]),scoring)) if finite else None
-            if not finite or candidate_error-error>limit+1e-12:
-                failures.append(dict(wing_index=index,data_error_m=candidate_error,
-                    reference_data_error_m=error,increase_m=candidate_error-error if finite else None))
-        if failures:
-            detail=dict(reason='supported_wing_point_error_degradation',candidate_label=candidate.get('candidate_label'),
-                kind=candidate['kind'],wings=failures)
-            candidate['wing_fit_simplification_guard']=detail
-            meta['candidates_not_promoted'].append(detail)
-        else:accepted.append(candidate)
-    return accepted,meta
 
 
 def _guard_main_eave_simplification(poly, best, near, scoring):
@@ -797,7 +661,6 @@ def infer_eave_roof(footprint, xyz, allow_networks=False, allow_flat=False, allo
     ordered = sorted(proposals, key=lambda p:p['score'])
     best_score = ordered[0]['score'] if ordered else None
     near, courtyard_topology_protected = _near_candidates(ordered, poly, scoring)
-    near, point_fit_guard = _guard_point_fit_simplification(ordered[0], near, scoring) if ordered else (near, {})
     # Near-equivalent fits prefer fewer distinct planes, independent of type.
     # This avoids selecting a more complex topology for a few centimetres.
     for candidate in near:
@@ -809,7 +672,6 @@ def infer_eave_roof(footprint, xyz, allow_networks=False, allow_flat=False, allo
             candidate['plane_count'] = float('inf')
         record_attempt(_family(candidate['kind'],candidate['hips']),candidate.get('candidate_label',''),count=0,stage='regions',geometry_seconds=time.perf_counter()-region_tick)
     near, main_eave_guard = _guard_main_eave_simplification(poly, ordered[0], near, scoring) if ordered else (near, {})
-    near, wing_fit_guard = _guard_wing_fit_simplification(poly, ordered[0], near, cells, scoring) if ordered else (near, {})
     near.sort(key=lambda p:(p['plane_count'],p['score']))
     for candidate in near+[p for p in ordered if not any(p is q for q in near)]:
         mesh_tick=time.perf_counter()
@@ -980,8 +842,6 @@ def infer_eave_roof(footprint, xyz, allow_networks=False, allow_flat=False, allo
             'data_error_m':candidate.get('data_error_m'),
             'complexity_penalty_m':candidate.get('complexity_penalty_m'),
             'support_penalty_m':candidate.get('support_penalty_m'),
-            'point_fit_simplification_guard':candidate.get('point_fit_simplification_guard'),
-            'wing_fit_simplification_guard':candidate.get('wing_fit_simplification_guard'),
             'parameters':candidate['parameters'].tolist(), 'hip_ends':list(candidate['hips']),
             'reference_frame_xy':candidate['matrix'].tolist(),
             'reference_extent_uv':candidate['extent'],
@@ -1013,11 +873,9 @@ def infer_eave_roof(footprint, xyz, allow_networks=False, allow_flat=False, allo
                             'flags': flags, 'train': {'n': len(points)}, 'fit_cells':len(cells),
                             'candidate_fit_errors':proposal_errors,
                             'candidate_evidence_rejections':evidence_rejections,
-                            'selection_rule':'Robust point error + complexity + support penalty; within total-score and point-error tolerances prefer fewer planes. Real courtyard network topology has a tighter cross-family tolerance; simplification cannot deform supported main eaves. Closed geometry required.',
+                            'selection_rule':'Robust point error + complexity + support penalty; within tolerance prefer fewer planes. Real courtyard network topology has a tighter cross-family tolerance; simplification cannot deform supported main eaves. Closed geometry required.',
                             'simplification_tolerance_m':scoring['simplification_tolerance_m'],
                             'main_eave_simplification_guard':main_eave_guard,
-                            'wing_fit_simplification_guard':wing_fit_guard,
-                            'point_fit_simplification_guard':point_fit_guard,
                             'courtyard_topology_protected':courtyard_topology_protected,
                             'courtyard_topology_tolerance_m':scoring['courtyard_topology_tolerance_m'],
                             'best_unadjusted_score':best_score,

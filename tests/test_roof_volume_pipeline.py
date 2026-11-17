@@ -4,7 +4,7 @@ from unittest.mock import patch
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 import numpy as np
 from shapely.geometry import box,mapping
-from roof_volume_pipeline import infer_volume_roof, _select_volume_variant, _variant_support_penalty
+from roof_volume_pipeline import infer_volume_roof, _select_volume_variant
 
 POLY=box(0,0,10,10)
 POINTS=np.array([[x,y,5.] for x in range(1,10) for y in range(1,10)])
@@ -140,26 +140,5 @@ class FootprintConnectorPipelineTests(unittest.TestCase):
              patch('roof_volume_pipeline.detect_longitudinal_split',return_value=checked) as profiles:
             infer_volume_roof(POLY,POINTS,config={'modules':{'footprint_connector':False}})
         connector.assert_not_called();profiles.assert_called_once()
-
-class VolumeSupportPenaltyTests(unittest.TestCase):
-    def child(self,penalty):
-        r=model(5);r['candidates']=[dict(selected=True,support_penalty_m=penalty),
-            dict(selected=False,support_penalty_m=50.)]
-        return r
-    def test_selected_penalties_are_area_weighted_not_summed(self):
-        split=model(5);split['_child_results']=[self.child(.2),self.child(0.)]
-        split['model']['metadata']['bodies']=[dict(area_m2=75.),dict(area_m2=25.)]
-        self.assertAlmostEqual(_variant_support_penalty(split),.15)
-        self.assertAlmostEqual(_variant_support_penalty(self.child(.1)),.1)
-    def test_split_does_not_bypass_uncertain_roof_penalty(self):
-        for enabled,expected in ((True,1),(False,2)):
-            split=model(5);split['_child_results']=[self.child(.3),self.child(.3)]
-            with patch('roof_volume_pipeline.infer_modular_roof',return_value=model(4.6)), \
-                 patch('roof_volume_pipeline.detect_longitudinal_split',return_value=detection()), \
-                 patch('roof_volume_pipeline.fit_partition',return_value=split):
-                r=infer_volume_roof(POLY,POINTS,config={'scoring':{'volume_inherit_support_penalty':enabled}})
-            self.assertEqual(r['model']['metadata']['volume_count'],expected)
-            score=r['model']['metadata']['volume_decision']['scores']['split_1']
-            self.assertAlmostEqual(score['roof_support_penalty_m'],.3 if enabled else 0.)
 
 if __name__=='__main__':unittest.main()

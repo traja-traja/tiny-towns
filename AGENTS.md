@@ -8,6 +8,8 @@ Projekt sdílí renderer Izomapy pro Velešín a České Budějovice. Nejdřív 
 - Vlastní geometrii a městská data drž odděleně od rendereru, aby šla později použít v živé 3D mapě. Animace aut není kalibrovaný dopravní model.
 - U většího množství samostatných úloh rozděl práci mezi agenty; model a rozsah uvažování zvol podle náročnosti. Přiděl každému vlastní soubory, aby si nepřepisovali změny.
 
+- Po každém menším funkčním kroku vytvoř samostatný commit s relevantním ověřením. Neodkládej zálohu algoritmu až na několik dalších verzí; samotný seznam připravených souborů není commit. Pokud je zápis do Git blokovaný, výslovně uveď, že commit nevznikl, a ulož úplný obsah změn do obnovitelného snapshotu.
+
 ---
 
 # Návod pro AI agenta

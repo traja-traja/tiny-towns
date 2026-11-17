@@ -2,9 +2,8 @@
 import unittest
 import numpy as np
 import shapely
-from shapely.geometry import Polygon,shape,box
-from shapely.affinity import rotate
-from roof_connected_wings import _paired_ridge_proposals,_paired_layout_evidence,_wing_boxes,DEFAULTS
+from shapely.geometry import Polygon,shape
+from roof_connected_wings import _paired_ridge_proposals,DEFAULTS
 from roof_config import resolve_config
 from roof_v2_geometry import build_mesh
 
@@ -30,8 +29,6 @@ class PairedRidgeTests(unittest.TestCase):
         self.assertAlmostEqual(best['eave_height_m'],8.,delta=.03)
         self.assertEqual(len(set(np.round(best['ridge_heights_m'],6))),1)
         self.assertTrue(best['connected_wings']['common_ridge'])
-        self.assertTrue(best['connected_wings']['opposing_slopes_symmetric'])
-        self.assertFalse(best['connected_wings']['ridge_offsets_fitted'])
         mesh=build_mesh(poly,best['strip_regions'])
         self.assertTrue(mesh['diagnostics']['valid'])
 
@@ -58,42 +55,5 @@ class PairedRidgeTests(unittest.TestCase):
         poly=Polygon([(0,0),(18,0),(18,8),(0,8)])
         _,cells=self.cloud()
         self.assertEqual(_paired_ridge_proposals(poly,cells,resolve_config(),DEFAULTS),[])
-
-    def test_local_pairs_do_not_use_two_whole_building_strips(self):
-        poly=box(0,0,20,5).union(box(8,0,20,17))
-        for angle in (0,27):
-            current=rotate(poly,angle,origin=(0,0))
-            boxes,_=_wing_boxes(current,{**DEFAULTS,'_outer_ends':True},all_candidates=True)
-            local=[min(boxes,key=lambda w:abs(w['width']-width)) for width in (5,12)]
-            broad=[min(boxes,key=lambda w:abs(w['width']-width)) for width in (17,20)]
-            self.assertTrue(_paired_layout_evidence(current,local,DEFAULTS)['accepted'])
-            rejected=_paired_layout_evidence(current,broad,DEFAULTS)
-            self.assertFalse(rejected['accepted'])
-            self.assertEqual(rejected['reason'],'redundant_wing_width')
-
-    def test_small_facade_tab_does_not_set_wing_width(self):
-        poly=box(0,0,20,5).union(box(8,0,20,17)).union(box(7,9,9,10))
-        boxes,_=_wing_boxes(poly,{**DEFAULTS,'_outer_ends':True},all_candidates=True)
-        local=[min(boxes,key=lambda w:abs(w['width']-width)) for width in (5,12)]
-        evidence=_paired_layout_evidence(poly,local,DEFAULTS)
-        self.assertTrue(evidence['accepted'])
-        self.assertTrue(all(len(w['probes'])>=2 for w in evidence['wings']))
-
-    def test_strong_point_evidence_can_keep_asymmetric_slopes(self):
-        poly,cells=self.cloud()
-        x,y=cells[:,0],cells[:,1]
-        a=np.minimum.reduce([y/2.4,(8-y)/5.6,x/1.8])
-        b=np.minimum.reduce([x/1.8,(6-x)/4.2,y/2.4])
-        cells[:,2]=8+4*np.maximum(a,b)
-        best=min(_paired_ridge_proposals(poly,cells,resolve_config(),DEFAULTS),key=lambda p:p['score'])
-        self.assertLess(best['data_error_m'],.03)
-        self.assertTrue(best['connected_wings']['ridge_offsets_fitted'])
-        self.assertGreater(best['connected_wings']['symmetry_preference_penalty_m'],0)
-
-    def test_width_guard_can_be_disabled_for_reproduction(self):
-        poly=box(0,0,20,5).union(box(8,0,20,17))
-        boxes,_=_wing_boxes(poly,{**DEFAULTS,'_outer_ends':True},all_candidates=True)
-        broad=[min(boxes,key=lambda w:abs(w['width']-width)) for width in (17,20)]
-        self.assertTrue(_paired_layout_evidence(poly,broad,{**DEFAULTS,'paired_local_widths':False})['accepted'])
 
 if __name__=='__main__':unittest.main()
