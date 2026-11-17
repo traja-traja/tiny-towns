@@ -168,3 +168,7 @@ Připraveny `night_roof_inputs.py` (plán, husté podklady, obnovitelná extrakc
 - Aktivní čas obnovené dávky se sčítá po relacích; ranní odstávka se nepočítá do dvouhodinové podmínky. Historie chyby se zachovává. 11 cílených testů prošlo včetně reálného Windows zámku.
 - Noční běh dokončil 35 domů; další generování uživatel pozastavil kvůli rohům střech.
 - Izolovaný adaptér knihovny a tři varianty jednoho domu: viz [ROOF_STRAIGHT_SKELETON.md](ROOF_STRAIGHT_SKELETON.md). Produkční generátor 4.9.1 zůstává beze změny.
+
+## 2026-11-17 — řezy, parametry střech a výškové objemy
+
+Izolovaný experiment 15 domů Velešína/ČB porovnává pět variant s původním modelem; výsledkem je 90 validních modelů. Přidány přepínatelné robustní profily, vyhledání výškových skoků a pomocná bloková reprezentace. 17 syntetických testů prošlo. Ve třetím kole výpočet experimentů 20,212 s, dělení doloženo u čp.94; ostatní změny/krajní odchylky viz [ROOF_VOLUME_SECTIONS.md](ROOF_VOLUME_SECTIONS.md). Produkční pipeline a plošná dávka se nemění.
